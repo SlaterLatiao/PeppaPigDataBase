@@ -1,7 +1,6 @@
 package fileSystem;
 
-import fileAccess.*;
-
+import FileAccess.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,21 +17,20 @@ public class Table {
     }
 
     //TODO: NEED IMPORT OBJECT CLASS 'RECORD' FROM fileAccess PACKAGE
-
     public void insert(Record record){
-        bplusTree.insertOrUpdate(record);
+        bplusTree.insert(record);
     }
 
     public List<Record> getAllRecord(){
-        List<Record> allRecords = new List<Record>();
+        List<Record> allRecords = new ArrayList<Record>();
         allRecords = bplusTree.getAll();
         return allRecords;
     }
 
     public List<Record> getRowidsRecord(List<Integer> row_ids){
-        List<Record> allRecords = new List<Record>();
-        allRecords = bplusTree.getAll(row_ids);
-        return allRecords;
+        List<Record> rowids_Records = new ArrayList<Record>();
+        rowids_Records = bplusTree.getByID(row_ids);
+        return rowids_Records;
     }
 
 
