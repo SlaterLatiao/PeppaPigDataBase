@@ -3,6 +3,7 @@ package fileSystem;
 import fileAccess.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author LI LIU 2018-07-21
@@ -17,21 +18,22 @@ public class Table {
     }
 
     //TODO: NEED IMPORT OBJECT CLASS 'RECORD' FROM fileAccess PACKAGE
+
     public void insert(Record record){
-        //TODO: NEED METHOD SUPPORT FROM BplusTree
-        bplusTree.insert(record);
+        bplusTree.insertOrUpdate(record);
     }
 
-    public ArrayList<Record> getAllRecord(){
-        ArrayList<Record> allRecords = new ArrayList<>();
-        //TODO: NEED METHOD SUPPORT FROM BplusTree
-        allRecords = bplusTree.getAllRecord;
+    public List<Record> getAllRecord(){
+        List<Record> allRecords = new List<Record>();
+        allRecords = bplusTree.getAll();
         return allRecords;
     }
 
-
-
-
+    public List<Record> getRowidsRecord(List<Integer> row_ids){
+        List<Record> allRecords = new List<Record>();
+        allRecords = bplusTree.getAll(row_ids);
+        return allRecords;
+    }
 
 
 }

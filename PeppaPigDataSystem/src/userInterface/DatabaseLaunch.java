@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import Common.Constants;
 
+import databaseAPI.QueriesExe.CreateTableQueryExe;
 import userInterface.QueriesInfo.*;
 import userInterface.Utils.Errors;
 

@@ -18,7 +18,6 @@ public class Page{
     private ArrayList<Short> recordAddrList;
     private ArrayList<Record> RecordList;
     private int pageNum;
-    private Constants constants;
 
     //################################################################
     // plan to store fileName, need to discuss
@@ -27,11 +26,10 @@ public class Page{
     //Constructor for root page
     public Page(String fileName){
         super();
-        constants = new Constants();
-        setPageType(constants.INTERIOR_TABLE_PAGE);
+        setPageType(Constants.INTERIOR_TABLE_PAGE);
         setNumOfRecords((byte)0x00);
-        setStartAddr((constants.PAGE_SIZE - 1));
-        setRightNodeAddr(constants.RIGET_MOST_PAGE);
+        setStartAddr((Constants.PAGE_SIZE - 1));
+        setRightNodeAddr(Constants.RIGET_MOST_PAGE);
         this.RecordList = new ArrayList<Record>();
         setPageNum(0);
     }
@@ -39,10 +37,9 @@ public class Page{
     //Constructor for inner page
     public Page(byte pageType){
         super();
-        constants = new Constants();
         setPageType(pageType);
         setNumOfRecords((byte)0x00);
-        setStartAddr((constants.PAGE_SIZE - 1));
+        setStartAddr((Constants.PAGE_SIZE - 1));
 //        setRightNodeAddr(constants.RIGET_MOST_PAGE);
         this.RecordList = new ArrayList<Record>();
 //        setPageNum(0);
@@ -51,10 +48,9 @@ public class Page{
     //Constructor for leaf page
     public Page(byte pageType){
         super();
-        constants = new Constants();
         setPageType(pageType);
         setNumOfRecords((byte)0x00);
-        setStartAddr((constants.PAGE_SIZE - 1));
+        setStartAddr((Constants.PAGE_SIZE - 1));
 //        setRightNodeAddr(constants.RIGET_MOST_PAGE);
         this.recordAddrList = new ArrayList<Short>();
         this.RecordList = new ArrayList<Record>();
@@ -70,7 +66,7 @@ public class Page{
 
     //check is it is a leaf page
     public boolean isLeaf() {
-        if(this.pageType==constants.LEAF_INDEX_PAGE||this.pageType==constants.LEAF_TABLE_PAGE){
+        if(this.pageType==Constants.LEAF_INDEX_PAGE||this.pageType==Constants.LEAF_TABLE_PAGE){
             return true;
         }
         return false;
@@ -106,12 +102,12 @@ public class Page{
         File newFile = new File("userTable" + File.separatorChar + this.fileName);
         RandomAccessFile rAFile;
         rAFile = new RandomAccessFile(newFile, "r");
-        rAFile.setLength(constants.PAGE_SIZE);
+        rAFile.setLength(Constants.PAGE_SIZE);
         if (newFile.exists()) {
             return;
         }
         try {
-            rAFile.seek(this.getPageNum() * constants.PAGE_SIZE);
+            rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE);
             this.setPageType(rAFile.readByte());
             this.setNumOfRecords(rAFile.readByte());
             this.setStartAddr(rAFile.readShort());
@@ -121,7 +117,7 @@ public class Page{
             }
             for (int i =0;i<this.getNumOfRecords();i++) {
                 Record record=new Record();
-                rAFile.seek(this.getPageNum() * constants.PAGE_SIZE+ this.getRecordAddrList().get(i));
+                rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE+ this.getRecordAddrList().get(i));
                 record.setPayLoad(rAFile.readByte());
                 record.setRowid(rAFile.readShort());
                 record.setNumOfColumn(rAFile.readByte());
