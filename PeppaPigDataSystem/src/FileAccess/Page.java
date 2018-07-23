@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.Map.Entry;
 import Common.Constants;
 import fileSystem.Record;
-
+import Common.DataType;
 /**
  *
  */
@@ -21,7 +19,7 @@ public class Page{
     private ArrayList<Record> RecordList;
     private int pageNum;
     private String filePath;
-
+    private DataType data = new DataType();
     //Constructor for root page
     public Page(String filePath){
         super();
@@ -93,14 +91,13 @@ public class Page{
      * @param key read page by index
      */
     private void readPage(int key) {
-        File newFile = new File("userTable" + File.separatorChar + this.filePath);
+        File newFile = new File(this.filePath);
         RandomAccessFile rAFile=null;
-        if (newFile.exists()) {
+        if (!newFile.exists()) {
             return;
         }
         try {
             rAFile = new RandomAccessFile(newFile, "r");
-            rAFile.setLength(Constants.PAGE_SIZE);
             rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE);
             this.setPageType(rAFile.readByte());
             this.setNumOfRecords(rAFile.readByte());
@@ -124,35 +121,34 @@ public class Page{
 
                 ArrayList<Object> valuesOfColumns= new ArrayList<Object>();
                 for(int j=0;j<record.getNumOfColumn();j++) {
-                    //#############################################################################
-                    //need datatype byte class, need to read more
-                    if(record.getDataTypes().get(i)==(byte) 0x00) {
+                    if(record.getDataTypes().get(i)==data.nameToSerialCode("null")) {
+                        valuesOfColumns.add("null");
                     }
-                    if(record.getDataTypes().get(i)==(byte) 0x04) {
+                    if(record.getDataTypes().get(i)==data.nameToSerialCode("tinyint")) {
                         valuesOfColumns.add(rAFile.readByte());
                     }
-                    if(record.getDataTypes().get(i)==(byte) 0x05) {
+                    if(record.getDataTypes().get(i)==data.nameToSerialCode("smallint")) {
                         valuesOfColumns.add(rAFile.readShort());
                     }
-                    if(record.getDataTypes().get(i)==(byte) 0x06) {
+                    if(record.getDataTypes().get(i)==data.nameToSerialCode("int")) {
                         valuesOfColumns.add(rAFile.readInt());
                     }
-                    if(record.getDataTypes().get(i)==(byte) 0x07) {
+                    if(record.getDataTypes().get(i)==data.nameToSerialCode("bigint")) {
                         valuesOfColumns.add(rAFile.readLong());
                     }
-                    if(record.getDataTypes().get(i)==(byte) 0x08) {
-//		        		 valuesOfColumns.add(rAFile.readReal());
+                    if(record.getDataTypes().get(i)==data.nameToSerialCode("float")) {
+		        		 valuesOfColumns.add(rAFile.readFloat());
                     }
-                    if(record.getDataTypes().get(i)==(byte) 0x09) {
+                    if(record.getDataTypes().get(i)==data.nameToSerialCode("double")) {
                         valuesOfColumns.add(rAFile.readDouble());
                     }
-                    if(record.getDataTypes().get(i)==(byte) 0x0A) {
-
+                    if(record.getDataTypes().get(i)==data.nameToSerialCode("datatime")) {
+                        valuesOfColumns.add(rAFile.readLong());
                     }
-                    if(record.getDataTypes().get(i)==(byte) 0x0B) {
-
+                    if(record.getDataTypes().get(i)==data.nameToSerialCode("date")) {
+                        valuesOfColumns.add(rAFile.readLong());
                     }
-                    if(record.getDataTypes().get(i)==(byte) 0x0C) {
+                    if(record.getDataTypes().get(i)>=data.nameToSerialCode("text")){
 
                     }
                 }
