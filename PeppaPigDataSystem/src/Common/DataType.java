@@ -10,7 +10,7 @@ public class DataType {
     public static final String SMALLINT = "smallint";
     public static final String INT = "int";
     public static final String BIGINT = "bigint";
-    public static final String REAL = "real";
+    public static final String FLOAT = "float";
     public static final String DOUBLE = "double";
     public static final String DATETIME = "datetime";
     public static final String DATE = "date";
@@ -24,7 +24,7 @@ public class DataType {
         serialCodeMap.put(SMALLINT, (byte) 0x02);
         serialCodeMap.put(INT, (byte) 0x03);
         serialCodeMap.put(BIGINT, (byte) 0x04);
-        serialCodeMap.put(REAL, (byte) 0x05);
+        serialCodeMap.put(FLOAT, (byte) 0x05);
         serialCodeMap.put(DOUBLE, (byte) 0x06);
         serialCodeMap.put(DATETIME, (byte) 0x07);
         serialCodeMap.put(DATE, (byte) 0x08);
@@ -40,7 +40,7 @@ public class DataType {
         typeNameMap.put((byte) 0x02,SMALLINT);
         typeNameMap.put((byte) 0x03,INT);
         typeNameMap.put((byte) 0x04,BIGINT);
-        typeNameMap.put((byte) 0x05,REAL);
+        typeNameMap.put((byte) 0x05,FLOAT);
         typeNameMap.put((byte) 0x06,DOUBLE);
         typeNameMap.put((byte) 0x07,DATETIME);
         typeNameMap.put((byte) 0x08,DATE);
@@ -56,7 +56,7 @@ public class DataType {
         sizeMap.put(SMALLINT, 2);
         sizeMap.put(INT, 4);
         sizeMap.put(BIGINT, 8);
-        sizeMap.put(REAL, 4);
+        sizeMap.put(FLOAT, 4);
         sizeMap.put(DOUBLE, 8);
         sizeMap.put(DATETIME, 8);
         sizeMap.put(DATE, 8);
