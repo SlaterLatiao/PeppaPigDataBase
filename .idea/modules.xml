@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/PeppaPigDataBase.iml" filepath="$PROJECT_DIR$/.idea/PeppaPigDataBase.iml" />
       <module fileurl="file://$PROJECT_DIR$/PeppaPigDataSystem/PeppaPigDataSystem.iml" filepath="$PROJECT_DIR$/PeppaPigDataSystem/PeppaPigDataSystem.iml" />
     </modules>
   </component>
