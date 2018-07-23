@@ -27,59 +27,60 @@ public class BplusTree {
 		return list;
 	}
 	
-	public void insert(Record value) {
+	public void insert(Record record) {
 		int key = root.getMaxIndex();
-		insertOrUpdate(key+1, value);
+		record.setRowId(key);
+		insertOrUpdate(key+1, record);
 	}
 	
 	public void update(Integer key, Record value) {
 		insertOrUpdate(key, value);
 	}
 
-	private void insertOrUpdate(Integer key, Record value) {
+	private void insertOrUpdate(Integer key, Record record) {
 		Entry<Node, Integer> entry = root.searchNode(key);
-		Entry<Integer, Record> row = new SimpleEntry<Integer, Record>(key, value);
 		Node node = entry.getKey();
 		int k = entry.getValue();
 
 		// found the key, update
 		if (k > 0) {
 			// TODO: check length of new record
-			node.updateRecord(row, k);
+			node.updateRecord(k, record);
 			// not found, insert
 		} else
-			insert(row, node, null);
+			insert(record, node, null);
 	}
 	
 	public boolean remove(Integer key) {
 		root.remove(key);
 	}
 
-	private void insert(Entry<Integer, Record> row, Node node, Node child) {
+	private void insert(Record record, Node node, Node child) {
 		// new record fits, just insert
-		if (row.getValue().getSpace() < node.getEmptySpace()) {
-			node.addEntry(row);
+		if (record.getSpace() < node.getEmptySpace()) {
+			node.addRecord(record);
 			if (child != null)
 				node.addChild(child);
 			// new record doesn't fit, split
 		} else {
 			// mid key in this node
-			int key = row.getKey();
+			int key = record.getRowId();
 			// create new entry for pop up
-			SimpleEntry<Integer, Record> newEntry= new SimpleEntry<Integer, Record>(key, null);
-			Node newNode = node.split(row);
+			Node newNode = node.split(record);
 			
+			Record r = new InnerRecord();
+			r.setRowId(key);
 			// no parent, create one
 			if (node.getParent() == null) {
 				// create a new root node
 				root = Node.newRoot();
-				root.addEntry(row);
+				root.addInner(r);
 				root.addChild(node);
 				root.addChild(newNode);
 			}
 			// parent exists, insert mid into parent
 			else {
-				insert(newEntry, node.getParent(), newNode);
+				insert(r, node.getParent(), newNode);
 			}
 		}
 	}
