@@ -9,7 +9,7 @@ public class Record {
 
     private int pageNumOfRec;
     private short payLoad;
-    private int rowId;
+    protected int rowId;
     private byte numOfColumn;
     private ArrayList<Byte> dataTypes;
     private ArrayList<Object> valuesOfColumns;
@@ -32,7 +32,7 @@ public class Record {
         this.payLoad = payLoad;
     }
 
-    public int getRowId() {
+    public Integer getRowId() {
         return rowId;
     }
 

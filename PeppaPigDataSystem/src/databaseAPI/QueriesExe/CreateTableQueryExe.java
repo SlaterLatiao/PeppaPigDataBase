@@ -1,15 +1,14 @@
 package databaseAPI.QueriesExe;
 
 import fileSystem.Table;
+import fileSystem.Record;
 import userInterface.QueriesInfo.CreateTableQueryInfo;
 import Common.Column;
-
 import java.util.ArrayList;
 
 public class CreateTableQueryExe {
     public static boolean checkTableExists(String tableName){
         Table davisTable = new Table("catalog/davisTable");
-
         ArrayList<Record> records = davisTable.getAllRecord();
 
         //TODO Search if tableName exists in davisTable records, and return corresponding boolean

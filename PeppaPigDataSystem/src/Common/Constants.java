@@ -20,7 +20,7 @@ public class Constants {
     public static String SYSTEM_CATALOG_PATH = "data/catalog";
     public static final String USE_HELP_MESSAGE = "Please use 'HELP' to see a list of commands";
 
-    public static final String[] DATATYPE_LIST = new String[]{"tinyint", "smallint", "int","bigint","real","double","datetime","date","text"};
+    public static final String[] DATATYPE_LIST = new String[]{"tinyint", "smallint", "int","bigint","float","double","datetime","date","text"};
 
     public static final short PAGE_SIZE = 512;
     public static final byte INTERIOR_INDEX_PAGE = 0x02;
