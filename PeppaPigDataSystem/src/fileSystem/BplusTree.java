@@ -68,20 +68,20 @@ public class BplusTree {
 			// mid key in this node
 			int key = row.getKey();
 			// create new entry for pop up
-			SimpleEntry<Integer, Record> = new SimpleEntry<Integer, Record>(key, null);
-			Node newNode = node.split();
+			SimpleEntry<Integer, Record> newEntry= new SimpleEntry<Integer, Record>(key, null);
+			Node newNode = node.split(row);
 			
 			// no parent, create one
 			if (node.getParent() == null) {
 				// create a new root node
 				root = Node.newRoot();
-				root.addEntry(midEntry);
+				root.addEntry(row);
 				root.addChild(node);
 				root.addChild(newNode);
 			}
 			// parent exists, insert mid into parent
 			else {
-				insert(midEntry, node.getParent(), newNode);
+				insert(newEntry, node.getParent(), newNode);
 			}
 		}
 	}
