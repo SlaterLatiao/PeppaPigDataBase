@@ -1,28 +1,20 @@
 package fileSystem;
-
 import java.util.ArrayList;
 
 
 /**
- * @author LI LIU 2018-07-16
+ * @author Jinru Shi 2018-07-23
  * */
 public class Record {
 
     private int pageNumOfRec;
     private short payLoad;
-    private int rowid;
+    private int rowId;
     private byte numOfColumn;
     private ArrayList<Byte> dataTypes;
     private ArrayList<Object> valuesOfColumns;
-
-    /*public Record(int pageNumOfRec,int rowid,byte numOfColumn,ArrayList<Byte> dataTypes,ArrayList<String> valuesOfColumns){
-        this.pageNumOfRec = pageNumOfRec;
-        this.rowid = rowid;
-        this.numOfColumn = numOfColumn;
-        this.dataTypes = dataTypes;
-        this.valuesOfColumns = valuesOfColumns;
-
-    }*/
+    // only for inner page
+    private short childrenRecord;
 
     public int getPageNumOfRec() {
         return pageNumOfRec;
@@ -40,12 +32,12 @@ public class Record {
         this.payLoad = payLoad;
     }
 
-    public int getRowid() {
-        return rowid;
+    public int getRowId() {
+        return rowId;
     }
 
-    public void setRowid(int rowid) {
-        this.rowid = rowid;
+    public void setRowId(int rowId) {
+        this.rowId = rowId;
     }
 
     public byte getNumOfColumn() {
@@ -71,7 +63,13 @@ public class Record {
     public void setValuesOfColumns(ArrayList<Object> valuesOfColumns) {
         this.valuesOfColumns = valuesOfColumns;
     }
-    public short getChildrenRecord(){return 0;}
+
+    public short getChildrenRecord(){
+        return this.childrenRecord;}
+
+    public void setChildrenRecord(short childrenRecord){
+        this.childrenRecord=childrenRecord;
+    }
 
 }
 
