@@ -114,11 +114,11 @@ class Node {
 		return page.getEmptySpace();
 	}
 	
-	Node split(Record row) {
+	Node split(Record r) {
 		// get split page
 		Page split = page.getNewPage(true);
 		Node newLeaf = new Node(split);
-		newLeaf.addRecord(row);
+		newLeaf.addRecord(r);
 		return newLeaf;
 	}
 
@@ -135,7 +135,7 @@ class Node {
 		page.update(k, r);
 	}
 	
-	void addEntry(Record r) {
+	void addRecord(Record r) {
 		records.add(r);
 		page.addRecord(r);
 	}
@@ -143,6 +143,12 @@ class Node {
 	void addChild(Node child) {
 		children.add(child);
 		page.addChild(child);
+	}
+	
+	void addInner(Record r) {
+		records.add(r);
+		int key = r.getRowId();
+		page.addInner(key);
 	}
 	
 	static Node newRoot() {
