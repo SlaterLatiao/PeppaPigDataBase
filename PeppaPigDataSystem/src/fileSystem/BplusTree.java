@@ -4,12 +4,14 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map.Entry;
 
+import com.sun.prism.impl.Disposer.Record;
+
 public class BplusTree {
 	
 	protected Node root;
 
-	public BplusTree(String fileName) {
-		root = new Node(new Page(fileName));
+	public BplusTree(String path) {
+		root = new Node(new Page(path));
 	}
 	
 	public Record get(int key) {
@@ -20,11 +22,23 @@ public class BplusTree {
 		return null;
 	}
 	// TODO:
-	public Table getAll(List<Integer> row_ids) {
-		return null;
+	public List<Record> getByID(List<Integer> row_ids) {
+		List<Record> list = new ArrayList<Record>();
+		for (int i : row_ids)
+			list.add(get(i));
+		return list;
+	}
+	
+	public void insert(Record value) {
+		int key = root.getMaxIndex();
+		insertOrUpdate(key, value);
+	}
+	
+	public void update(Integer key, Record value) {
+		insertOrUpdate(key, value);
 	}
 
-	public void insertOrUpdate(Integer key, Record value) {
+	private void insertOrUpdate(Integer key, Record value) {
 		Entry<Node, Integer> entry = root.searchNode(key);
 		Entry<Integer, Record> row = new SimpleEntry<Integer, Record>(key, value);
 		Node node = entry.getKey();
@@ -52,11 +66,10 @@ public class BplusTree {
 			// new record doesn't fit, split
 		} else {
 			// mid key in this node
-			int mid = node.getEntryKey((node.getEntrySize() + 1) / 2);
-			// create new entry on mid for pop up
-			Entry<Integer, Record> midEntry = new SimpleEntry<Integer, Record>(mid, null);
+			int key = row.getKey();
+			// create new entry for pop up
+			SimpleEntry<Integer, Record> = new SimpleEntry<Integer, Record>(key, null);
 			Node newNode = node.split();
-			// TODO: add new node to page list
 			
 			// no parent, create one
 			if (node.getParent() == null) {
