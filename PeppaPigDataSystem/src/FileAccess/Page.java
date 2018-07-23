@@ -4,11 +4,12 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 //###################################################################
-//import Record
 //add a getChildrenRecord() in Record
 import Common.Constants;
+import fileSystem.Record;
 
 public class Page{
     private byte pageType;
@@ -18,41 +19,26 @@ public class Page{
     private ArrayList<Short> recordAddrList;
     private ArrayList<Record> RecordList;
     private int pageNum;
-
-    //################################################################
-    // plan to store fileName, need to discuss
-    private String fileName;
+    private String filePath;
 
     //Constructor for root page
-    public Page(String fileName){
+    public Page(String filePath){
         super();
         setPageType(Constants.INTERIOR_TABLE_PAGE);
         setNumOfRecords((byte)0x00);
-        setStartAddr((Constants.PAGE_SIZE - 1));
+        setStartAddr((short)(Constants.PAGE_SIZE - 1));
         setRightNodeAddr(Constants.RIGET_MOST_PAGE);
         this.RecordList = new ArrayList<Record>();
         setPageNum(0);
     }
-
-    //Constructor for inner page
+    //###################################################################
+    //Constructor for a page(need page type)
     public Page(byte pageType){
         super();
         setPageType(pageType);
         setNumOfRecords((byte)0x00);
-        setStartAddr((Constants.PAGE_SIZE - 1));
+        setStartAddr((short)(Constants.PAGE_SIZE - 1));
 //        setRightNodeAddr(constants.RIGET_MOST_PAGE);
-        this.RecordList = new ArrayList<Record>();
-//        setPageNum(0);
-    }
-
-    //Constructor for leaf page
-    public Page(byte pageType){
-        super();
-        setPageType(pageType);
-        setNumOfRecords((byte)0x00);
-        setStartAddr((Constants.PAGE_SIZE - 1));
-//        setRightNodeAddr(constants.RIGET_MOST_PAGE);
-        this.recordAddrList = new ArrayList<Short>();
         this.RecordList = new ArrayList<Record>();
 //        setPageNum(0);
     }
@@ -75,9 +61,7 @@ public class Page{
     public List<Entry<Integer, Record>> getEntries(){
         ArrayList<Entry<Integer, Record>> entries = new  ArrayList<Entry<Integer, Record>>();
         for(int i = 0;i<RecordList.size();i++) {
-            Entry<Integer, Record> e;
-            e.setKey(i);
-            e.setValue(RecordList.get(i));
+            SimpleEntry<Integer, Record> e = new SimpleEntry<Integer, Record>(i,RecordList.get(i));
             entries.add(e);
         }
         return entries;
@@ -99,14 +83,14 @@ public class Page{
     //################################################################
     //needs fileName
     private void readPage(int key) {
-        File newFile = new File("userTable" + File.separatorChar + this.fileName);
-        RandomAccessFile rAFile;
-        rAFile = new RandomAccessFile(newFile, "r");
-        rAFile.setLength(Constants.PAGE_SIZE);
+        File newFile = new File("userTable" + File.separatorChar + this.filePath);
+        RandomAccessFile rAFile=null;
         if (newFile.exists()) {
             return;
         }
         try {
+            rAFile = new RandomAccessFile(newFile, "r");
+            rAFile.setLength(Constants.PAGE_SIZE);
             rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE);
             this.setPageType(rAFile.readByte());
             this.setNumOfRecords(rAFile.readByte());
@@ -165,10 +149,11 @@ public class Page{
                 record.setValuesOfColumns(valuesOfColumns);
                 addRecordList(record);
             }
+            rAFile.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        rAFile.close();
+
     }
 
     public byte getPageType() {
@@ -216,6 +201,11 @@ public class Page{
     public void addRecordAddrList(short addr) {
         this.recordAddrList.add(addr);
     }
-
+    public void setFilePath(String filePath){
+        this.filePath = filePath;
+    }
+    public String getFilePath(){
+        return this.filePath;
+    }
 }
 
