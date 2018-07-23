@@ -17,22 +17,7 @@ public class DataType {
     public static final String TEXT = "text";
     public static final String NULL ="null";
 
-    public String dataTypeName;
-    public byte serialCode;
-    public int contentSize;
-
-    public DataType(byte serialCode){
-        this.serialCode = serialCode;
-    }
-
-    public DataType(String typeName){
-
-        this.dataTypeName = typeName;
-        this.serialCode = nameToSerialCode(dataTypeName);
-        this.contentSize = nameToSize(dataTypeName);
-    }
-
-    public byte nameToSerialCode(String dataTypeName){
+    public static byte nameToSerialCode(String dataTypeName){
         HashMap<String,Byte> serialCodeMap = new HashMap<>();
         serialCodeMap.put(NULL,(byte) 0x00);
         serialCodeMap.put(TINYINT, (byte) 0x01);
@@ -48,7 +33,7 @@ public class DataType {
         return serialCodeMap.get(dataTypeName);
     }
 
-    public String serialCodeToName(Byte serialCode){
+    public static String serialCodeToName(Byte serialCode){
         HashMap<Byte,String> typeNameMap = new HashMap<>();
         typeNameMap.put((byte) 0x00,NULL);
         typeNameMap.put((byte) 0x01,TINYINT);
@@ -64,7 +49,7 @@ public class DataType {
         return typeNameMap.get(serialCode);
     }
 
-    public int nameToSize(String dataTypeName){
+    public static int nameToSize(String dataTypeName){
         HashMap<String,Integer> sizeMap = new HashMap<>();
         sizeMap.put(NULL, 0);
         sizeMap.put(TINYINT, 1);
