@@ -3,7 +3,6 @@ package userInterface.QueriesInfo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import Common.Column;
 import Common.Constants;
 import Common.DataType;
