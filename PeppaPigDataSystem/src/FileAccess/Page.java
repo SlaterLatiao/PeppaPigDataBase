@@ -30,6 +30,7 @@ public class Page{
         this.RecordList = new ArrayList<Record>();
         setPageNum(0);
     }
+
     //###################################################################
     //Constructor for a page(need page type)
     public Page(byte pageType){
@@ -47,7 +48,7 @@ public class Page{
         super();
         readPage(key);
     }
-
+    //###################################################################
 
     //check is it is a leaf page
     public boolean isLeaf() {
@@ -118,7 +119,6 @@ public class Page{
                 }
                 record.setDataTypes(dataTypeList);
 
-
                 ArrayList<Object> valuesOfColumns= new ArrayList<Object>();
                 for(int j=0;j<record.getNumOfColumn();j++) {
                     if(record.getDataTypes().get(i)==data.nameToSerialCode("null")) {
@@ -148,9 +148,14 @@ public class Page{
                     if(record.getDataTypes().get(i)==data.nameToSerialCode("date")) {
                         valuesOfColumns.add(rAFile.readLong());
                     }
-                    if(record.getDataTypes().get(i)>=data.nameToSerialCode("text")){
-
-                    }
+                    if(record.getDataTypes().get(i)>data.nameToSerialCode("text")){
+                        byte length = (byte) (record.getDataTypes().get(i) - data.nameToSerialCode("text"));
+                        char[] text = new char[length];
+                        for (byte k = 0; k < length; k++) {
+                            text[k] = (char) rAFile.readByte();
+                        }
+                        valuesOfColumns.add(new String(text));
+                     }
                 }
                 record.setValuesOfColumns(valuesOfColumns);
                 addRecordList(record);
@@ -159,8 +164,11 @@ public class Page{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
+    public byte getMaxIndex(){
+        return 0;
+    }
+
 
     public byte getPageType() {
         return pageType;
