@@ -2,6 +2,9 @@ package fileSystem;
 
 import java.util.List;
 import java.util.Map.Entry;
+
+import FileAccess.Page;
+
 import java.util.AbstractMap.SimpleEntry;
 
 /**
@@ -21,7 +24,9 @@ class Node {
 		this.page = page;
 		this.isLeaf = page.isLeaf();
 		entries = page.getEntries();
-		children = page.getChildrenPlus();
+		List<Page> list = page.getChildren();
+		for	(Page p : list)
+			children.add(new Node(p));
 	}
 
 	Record get(Integer key) {
@@ -108,13 +113,12 @@ class Node {
 		return page.getEmptySpace();
 	}
 	
-	Node split() {
+	Node split(Record row) {
 		// get split page
-		Page split = page.split();
-		// refresh entries and children
-		entries = page.getEntries();
-		children = page.getChildren();
-		return new Node(split);
+		Page split = page.getNewPage(true);
+		Node newLeaf = new Node(split);
+		newLeaf.addEntry(row);
+		return newLeaf;
 	}
 
 	Node getParent() {
@@ -127,22 +131,22 @@ class Node {
 
 	void updateRecord(Entry<Integer, Record> row, int k) {
 		entries.set(k, row);
-		// TODO: Update in page
+		page.set(k, row);
 	}
 	
 	void addEntry(Entry<Integer, Record> row) {
 		entries.add(row);
-		// TODO: write into page
+		page.add(row);
 	}
 	
 	void addChild(Node child) {
 		children.add(child);
-		// TODO: write into page
+		page.addChild(child);
 	}
 	
 	static Node newRoot() {
 		// TODO: need to create a new inner page
-		Node newroot = new Node(new Page());
+		Node newroot = new Node(page.getNewPage(false));
 		return newroot;
 	}
 
