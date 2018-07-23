@@ -15,7 +15,7 @@ import java.util.AbstractMap.SimpleEntry;
 class Node {
 
 	protected boolean isLeaf;
-	protected List<Entry<Integer, Record>> entries;
+	protected List<Record> records;
 	protected List<Node> children;
 	protected Page page;
 	protected Node parent;
@@ -23,7 +23,7 @@ class Node {
 	Node(Page page) {
 		this.page = page;
 		this.isLeaf = page.isLeaf();
-		entries = page.getEntries();
+		records = page.getRecordList();
 		List<Page> list = page.getChildren();
 		for	(Page p : list)
 			children.add(new Node(p));
@@ -46,16 +46,17 @@ class Node {
 		// key not found
 		if (k < 0)
 			return false;
-		node.entries.remove(k);
-		node.page.remove(k);
+		int row_id = records.get(k).getRowId();
+		node.records.remove(k);
+		node.page.remove(row_id);
 		return true;
 	}
 
 	Entry<Node, Integer> searchNode(Integer key) {
 		// this node is a leaf node
 		if (isLeaf) {
-			for (int i = 0; i < entries.size(); i++) {
-				if (entries.get(i).getKey().equals(key))
+			for (int i = 0; i < records.size(); i++) {
+				if (records.get(i).getRowId().equals(key))
 					return new SimpleEntry<Node, Integer>(this, i);
 			}
 			// key not found
@@ -63,21 +64,21 @@ class Node {
 			// this node is an inner node
 		} else {
 			// key < leftmost value, go left
-			if (key < entries.get(0).getKey()) {
+			if (key < records.get(0).getRowId()) {
 				children.get(0).setParent(this);
 				return children.get(0).searchNode(key);
 				// key >= rightmost value, go right
-			} else if (key >= entries.get(entries.size() - 1).getKey()) {
+			} else if (key >= records.get(records.size() - 1).getRowId()) {
 				children.get(children.size() - 1).setParent(this);
 				return children.get(children.size() - 1).searchNode(key);
 				// find the correct child to go
 			} else {
-				int lo = 0, hi = entries.size() - 1, mid = 0;
+				int lo = 0, hi = records.size() - 1, mid = 0;
 				int diff;
 				// binary search
 				while (lo <= hi) {
 					mid = (lo + hi) / 2;
-					diff = key - entries.get(mid).getKey();
+					diff = key - records.get(mid).getRowId();
 					// found the key, go to right child
 					if (diff == 0) {
 						children.get(mid + 1).setParent(this);
@@ -101,12 +102,12 @@ class Node {
 	}
 	
 	
-	int getEntryKey(int k) {
-		return entries.get(k).getKey();
+	int getRecordRowID(int k) {
+		return records.get(k).getRowId();
 	}
 	
-	int getEntrySize() {
-		return entries.size();
+	int getRecordsSize() {
+		return records.size();
 	}
 	
 	int getEmptySpace() {
@@ -117,7 +118,7 @@ class Node {
 		// get split page
 		Page split = page.getNewPage(true);
 		Node newLeaf = new Node(split);
-		newLeaf.addEntry(row);
+		newLeaf.addRecord(row);
 		return newLeaf;
 	}
 
@@ -126,17 +127,17 @@ class Node {
 	}
 
 	private Record getRecord(int k) {
-		return entries.get(k).getValue();
+		return records.get(k);
 	}
 
-	void updateRecord(Entry<Integer, Record> row, int k) {
-		entries.set(k, row);
-		page.set(k, row);
+	void updateRecord(int k, Record r) {
+		records.set(k, r);
+		page.update(k, r);
 	}
 	
-	void addEntry(Entry<Integer, Record> row) {
-		entries.add(row);
-		page.add(row);
+	void addEntry(Record r) {
+		records.add(r);
+		page.addRecord(r);
 	}
 	
 	void addChild(Node child) {

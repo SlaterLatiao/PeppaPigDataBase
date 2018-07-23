@@ -1,10 +1,8 @@
 package fileSystem;
 
-import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
-
-import com.sun.prism.impl.Disposer.Record;
+import FileAccess.Page;
 
 public class BplusTree {
 	
@@ -31,7 +29,7 @@ public class BplusTree {
 	
 	public void insert(Record value) {
 		int key = root.getMaxIndex();
-		insertOrUpdate(key, value);
+		insertOrUpdate(key+1, value);
 	}
 	
 	public void update(Integer key, Record value) {
