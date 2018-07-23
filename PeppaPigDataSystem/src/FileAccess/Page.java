@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
-//###################################################################
-//add a getChildrenRecord() in Record
 import Common.Constants;
 import fileSystem.Record;
 
+/**
+ *
+ */
 public class Page{
     private byte pageType;
     private byte numOfRecords;
@@ -57,19 +58,23 @@ public class Page{
         }
         return false;
     }
-    //entry
-    public List<Entry<Integer, Record>> getEntries(){
-        ArrayList<Entry<Integer, Record>> entries = new  ArrayList<Entry<Integer, Record>>();
-        for(int i = 0;i<RecordList.size();i++) {
-            SimpleEntry<Integer, Record> e = new SimpleEntry<Integer, Record>(i,RecordList.get(i));
-            entries.add(e);
-        }
-        return entries;
-    }
+
+//    public List<Record> getRecords(){
+//        ArrayList<Record> records = new  ArrayList<Record>();
+//        for(int i = 0;i<RecordList.size();i++) {
+//           Record r = RecordList.get(i);
+//            records.add(r);
+//        }
+//        return records;
+//    }
 
     //################################################################
     //needs fileName
 
+    /**
+     *
+     * @return childrenList
+     */
     public List<Page> getChildrenPlus(){
         ArrayList<Page> childrenPlus = new ArrayList<Page>();
         for(int i = 0;i<RecordList.size();i++) {
@@ -82,6 +87,11 @@ public class Page{
 
     //################################################################
     //needs fileName
+
+    /**
+     *
+     * @param key read page by index
+     */
     private void readPage(int key) {
         File newFile = new File("userTable" + File.separatorChar + this.filePath);
         RandomAccessFile rAFile=null;
@@ -103,7 +113,7 @@ public class Page{
                 Record record=new Record();
                 rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE+ this.getRecordAddrList().get(i));
                 record.setPayLoad(rAFile.readByte());
-                record.setRowid(rAFile.readShort());
+                record.setRowId(rAFile.readShort());
                 record.setNumOfColumn(rAFile.readByte());
                 ArrayList<Byte> dataTypeList= new ArrayList<Byte>();
                 for(int j=0;j<record.getNumOfColumn();j++) {
