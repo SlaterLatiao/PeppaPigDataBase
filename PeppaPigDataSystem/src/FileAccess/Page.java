@@ -152,7 +152,7 @@ public class Page{
         }
         try {
             rAFile = new RandomAccessFile(newFile, "r");
-            rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE);
+            rAFile.seek((this.getPageNum()+1) * Constants.PAGE_SIZE);
             this.setPageType(rAFile.readByte());
             this.setNumOfRecords(rAFile.readByte());
             this.setStartAddr(rAFile.readShort());
@@ -162,7 +162,7 @@ public class Page{
             }
             for (int i =0;i<this.getNumOfRecords();i++) {
                 Record record=new Record();
-                rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE+ this.getRecordAddrList().get(i));
+                rAFile.seek((this.getPageNum()+1) * Constants.PAGE_SIZE+ this.getRecordAddrList().get(i));
                 record.setPayLoad(rAFile.readShort());
                 record.setRowId(rAFile.readInt());
                 record.setNumOfColumn(rAFile.readByte());
@@ -258,9 +258,9 @@ public class Page{
             }
             recordAddrList.remove(index_rowId);
             this.numOfRecords-=1;
-            rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE+1);
+            rAFile.seek((this.getPageNum()+1) * Constants.PAGE_SIZE+1);
             rAFile.writeByte(this.getNumOfRecords());
-            rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE+Constants.PAGE_HEADER_LENGTH);
+            rAFile.seek((this.getPageNum()+1) * Constants.PAGE_SIZE+Constants.PAGE_HEADER_LENGTH);
             for (int i =0;i<recordAddrList.size();i++){
                 rAFile.writeShort(recordAddrList.get(i));
             }
@@ -301,9 +301,9 @@ public class Page{
         try {
             rAFile = new RandomAccessFile(newFile, "w");
             rAFile.setLength(Constants.PAGE_SIZE);
-            rAFile.seek(this.pageNum * Constants.PAGE_SIZE+4);
+            rAFile.seek((this.pageNum+1) * Constants.PAGE_SIZE+4);
             rAFile.writeInt(this.rightNodeAddr);
-            rAFile.seek(page.pageNum * Constants.PAGE_SIZE);
+            rAFile.seek((page.pageNum+1) * Constants.PAGE_SIZE);
             rAFile.writeByte(page.pageType);
             rAFile.writeByte(page.numOfRecords);
             rAFile.writeShort(page.startAddr);
@@ -325,7 +325,7 @@ public class Page{
         }
         try {
             rAFile = new RandomAccessFile(newFile, "rw");
-            rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE+1);
+            rAFile.seek((this.getPageNum() +1)* Constants.PAGE_SIZE+1);
             this.setNumOfRecords((byte)((int)this.getNumOfRecords()+1));
             rAFile.writeByte(this.numOfRecords);
             this.setStartAddr((short)(this.startAddr - record.getPayLoad() - 6));
@@ -337,10 +337,10 @@ public class Page{
 //               rAFile.writeShort( this.recordAddrList.get(i));
 //            }
             this.addRecordAddrList(this.startAddr);
-            rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE + Constants.PAGE_HEADER_LENGTH+2*(this.recordAddrList.size()-1));
+            rAFile.seek((this.getPageNum()+1) * Constants.PAGE_SIZE + Constants.PAGE_HEADER_LENGTH+2*(this.recordAddrList.size()-1));
             rAFile.writeShort(this.startAddr);
             this.addRecordList(record);
-            rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE + this.startAddr);
+            rAFile.seek((this.getPageNum()+1) * Constants.PAGE_SIZE + this.startAddr);
             rAFile.writeShort(record.getPayLoad());
             rAFile.writeInt( record.getRowId());
             rAFile.writeByte(record.getNumOfColumn());
@@ -402,7 +402,7 @@ public class Page{
         }
         try {
             rAFile = new RandomAccessFile(newFile, "rw");
-            rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE+1);
+            rAFile.seek((this.getPageNum()+1) * Constants.PAGE_SIZE+1);
             this.setNumOfRecords((byte)((int)this.getNumOfRecords()+1));
             rAFile.writeByte(this.numOfRecords);
             this.setStartAddr((short)(this.startAddr - record.getPayLoad() - 6));
@@ -414,10 +414,10 @@ public class Page{
 //               rAFile.writeShort( this.recordAddrList.get(i));
 //            }
             this.addRecordAddrList(this.startAddr);
-            rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE + Constants.PAGE_HEADER_LENGTH+2*(this.recordAddrList.size()-1));
+            rAFile.seek((this.getPageNum()+1) * Constants.PAGE_SIZE + Constants.PAGE_HEADER_LENGTH+2*(this.recordAddrList.size()-1));
             rAFile.writeShort(this.startAddr);
             this.addRecordList(record);
-            rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE + this.startAddr);
+            rAFile.seek((this.getPageNum()+1) * Constants.PAGE_SIZE + this.startAddr);
             rAFile.writeShort(record.getPayLoad());
             rAFile.writeInt( record.getRowId());
             rAFile.writeByte(record.getNumOfColumn());
