@@ -27,6 +27,7 @@ public class Page{
         setNumOfRecords((byte)0x00);
         setStartAddr((short)(Constants.PAGE_SIZE - 1));
         setRightNodeAddr(Constants.RIGET_MOST_PAGE);
+        recordAddrList = new ArrayList<Short>();
         this.RecordList = new ArrayList<Record>();
         setPageNum(0);
     }
