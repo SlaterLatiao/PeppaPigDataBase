@@ -16,11 +16,7 @@ public class Record {
     // only for inner page
     private short childrenRecord;
 
-    public Record(byte numOfColumn,ArrayList<Byte> dataTypes,ArrayList<Object> valuesOfColumns ){
-        super();
-        this.numOfColumn = numOfColumn;
-        this.dataTypes = dataTypes;
-        this.valuesOfColumns = valuesOfColumns;
+    public Record(){
     }
 
 
