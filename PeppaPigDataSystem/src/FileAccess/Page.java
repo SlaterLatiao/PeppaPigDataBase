@@ -103,7 +103,7 @@ public class Page{
                 randomAccessFile.writeByte(Constants.LEAF_TABLE_PAGE);
                 randomAccessFile.writeByte((byte)0x00);
                 randomAccessFile.writeShort((short)(Constants.PAGE_SIZE - 1));
-                randomAccessFile.writeByte(Constants.RIGET_MOST_PAGE);
+                randomAccessFile.writeInt(Constants.RIGET_MOST_PAGE);
                 setPageNum(1);
             }
             randomAccessFile.close();
