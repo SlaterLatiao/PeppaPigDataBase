@@ -29,8 +29,8 @@ public class CreateTableQueryInfo {
     public ArrayList<Column> getColumns(ArrayList<String> col){
         //columns list
         ArrayList<Column> columns = new ArrayList<>();
-        Column rowid = new Column("rowid",new DataType("int"),false,true);
-        columns.add(rowid);
+        /*Column rowid = new Column("rowid",new DataType("int"),false,true);
+        columns.add(rowid);*/
 
         boolean isFirst = true;
         for(String c:col){
@@ -42,9 +42,9 @@ public class CreateTableQueryInfo {
                 if(c.contains("primary key")){ //user set first column as primary key
                     isPrimary = true;
                     isNotNull = true;
-                }else{
+                }/*else{
                     rowid.setPrimary(true); //if user doesn't set primary key, set rowid as default primary key
-                }
+                }*/
             }else{
                 if(c.contains("primary key")){
                     System.out.println(Errors.PRIMARY_KEY);
