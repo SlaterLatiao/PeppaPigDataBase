@@ -231,7 +231,12 @@ public class Page{
             rAFile = new RandomAccessFile(newFile, "rw");
             Page page = new Page((int)newFile.length()/Constants.PAGE_SIZE-1);
             rAFile.close();
-            return page.getRecordList().get(page.getRecordList().size()-1).getRowId();
+            if(page.getRecordList().size()>0){
+                return page.getRecordList().get(page.getRecordList().size()-1).getRowId();
+            }
+            else{
+                return 0;
+            }
         } catch (IOException e) {
             e.printStackTrace();
             return 0;
