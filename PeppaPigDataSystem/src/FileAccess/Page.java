@@ -25,7 +25,19 @@ public class Page{
         this.filePath = filePath;
         try {
             if(fileExist(filePath)){
-
+                File newFile = new File(this.filePath);
+                RandomAccessFile rAFile=null;
+                if (!newFile.exists()) {
+                    return;
+                }
+                try {
+                    rAFile = new RandomAccessFile(newFile, "rw");
+                    rAFile.seek(0);
+                    this.readPage(rAFile.readByte());
+                    rAFile.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             else{
                 setPageType(Constants.LEAF_TABLE_PAGE);
