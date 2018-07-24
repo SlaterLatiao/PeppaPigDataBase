@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 
 /**
- * @author Jinru Shi 2018-07-23
+ * @author Jinru Shi & Li Liu 2018-07-23
  * */
 public class Record {
 
@@ -15,6 +15,14 @@ public class Record {
     private ArrayList<Object> valuesOfColumns;
     // only for inner page
     private short childrenRecord;
+
+    public Record(int numOfCoulumn,ArrayList<Byte> dataTypes,ArrayList<Object> valuesOfColumns ){
+        super();
+        this.numOfCoulumn = numOfCoulumn;
+        this.dataTypes = dataTypes;
+        this.valuesOfColumns = valuesOfColumns;
+    }
+
 
     public int getPageNumOfRec() {
         return pageNumOfRec;
