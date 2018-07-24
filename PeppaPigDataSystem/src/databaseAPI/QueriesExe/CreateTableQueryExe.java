@@ -26,6 +26,11 @@ public class CreateTableQueryExe {
         return false;
     }
 
+    public static void initialCreateSystemTables(){
+        Table davisTable = new Table(Constants.SYSTEM_TABLES_PATH);
+        Table columnsTable = new Table(Constants.SYSTEM_COLUMNS_PATH);
+    }
+
     public static void executeQuery(CreateTableQueryInfo info){
 
         String tablePath;
