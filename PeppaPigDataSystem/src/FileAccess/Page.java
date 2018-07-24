@@ -259,7 +259,7 @@ public class Page{
             rAFile = new RandomAccessFile(newFile, "rw");
             Page page = new Page(this.filePath,(int)(newFile.length()/Constants.PAGE_SIZE-1));
             rAFile.close();
-            if(page.getRecordList().size()>0){
+            if(page.getRecordList()!=null){
                 return page.getRecordList().get(page.getRecordList().size()-1).getRowId();
             }
             else{
