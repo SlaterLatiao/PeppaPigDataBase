@@ -15,8 +15,8 @@ public class Page{
     private byte numOfRecords;
     private short startAddr;
     private int rightNodeAddr;
-    private ArrayList<Short> recordAddrList = new ArrayList<Short>();
-    private ArrayList<Record> RecordList = new ArrayList<Record>();
+    private ArrayList<Short> recordAddrList;
+    private ArrayList<Record> RecordList;
     private int pageNum;
     private String filePath;
     private DataType data = new DataType();
@@ -26,6 +26,8 @@ public class Page{
         try {
             if(fileExist(filePath)){
                 File newFile = new File(this.filePath);
+                recordAddrList = new ArrayList<Short>();
+                RecordList = new ArrayList<Record>();
                 RandomAccessFile rAFile=null;
                 if (!newFile.exists()) {
                     return;
