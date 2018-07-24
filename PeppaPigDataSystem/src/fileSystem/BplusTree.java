@@ -76,7 +76,7 @@ public class BplusTree {
 			if (node.getParent() == null) {
 				// create a new root node
 				root = root.newRoot();
-				root.setRootPointer();
+				//root.setRootPointer();
 				root.addInner(r);
 				root.addChild(node);
 				root.addChild(newNode);

@@ -216,6 +216,7 @@ public class DatabaseLaunch {
             String[] columnToBeCreate = restString.split(",");
             ArrayList<String> columns = getColumnsList(columnToBeCreate);
             CreateTableQueryInfo createTableQueryInfo = new CreateTableQueryInfo(tableName,columns);
+            CreateTableQueryExe.executeQuery(createTableQueryInfo);
 
         }/*else if(PartsEqual(userCommand, "create index")){
             String indexName;

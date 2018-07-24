@@ -140,7 +140,7 @@ class Node {
 
 	void addChild(Node child) {
 		children.add(child);
-		page.addChild(child.page);
+		//page.addChild(child.page);
 	}
 
 	void addInner(Record r) {
@@ -159,7 +159,7 @@ class Node {
 		return page.getMaxIndex();
 	}
 	
-	void setRootPointer() {
+	/*void setRootPointer() {
 		page.setRootPointer();
-	}
+	}*/
 }
