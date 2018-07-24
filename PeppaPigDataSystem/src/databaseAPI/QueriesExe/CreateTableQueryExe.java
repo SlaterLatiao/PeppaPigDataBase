@@ -18,7 +18,7 @@ public class CreateTableQueryExe {
             return false;
         }else{
             for(Record r:records){
-                if(tableName.equals(r.getValuesOfColumns().get(0))){
+                if(tableName.equals(r.getValuesOfColumns().get(1))){
                     return true;
                 }
             }
