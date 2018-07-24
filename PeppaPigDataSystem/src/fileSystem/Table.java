@@ -32,6 +32,5 @@ public class Table {
         rowids_Records = bplusTree.getByID(row_ids);
         return rowids_Records;
     }
-
-
+    
 }

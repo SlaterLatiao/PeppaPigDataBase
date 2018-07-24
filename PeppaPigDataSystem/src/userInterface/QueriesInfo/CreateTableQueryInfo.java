@@ -42,9 +42,7 @@ public class CreateTableQueryInfo {
                 if(c.contains("primary key")){ //user set first column as primary key
                     isPrimary = true;
                     isNotNull = true;
-                }/*else{
-                    rowid.setPrimary(true); //if user doesn't set primary key, set rowid as default primary key
-                }*/
+                }
             }else{
                 if(c.contains("primary key")){
                     System.out.println(Errors.PRIMARY_KEY);

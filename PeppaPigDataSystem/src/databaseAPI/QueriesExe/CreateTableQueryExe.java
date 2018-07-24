@@ -18,7 +18,7 @@ public class CreateTableQueryExe {
             return false;
         }else{
             for(Record r:records){
-                if(tableName.equals(r.getValuesOfColumns().get(0))){
+                if(tableName.equals(r.getValuesOfColumns().get(1))){
                     return true;
                 }
             }
@@ -61,23 +61,55 @@ public class CreateTableQueryExe {
         //Insert columns into colTable
         Table colTable = new Table(Constants.SYSTEM_COLUMNS_PATH);
 
+            //Insert column"rowid" into columns_talbe first
+        Record rowid = new Record();
+        rowid.setNumOfColumn(Constants.DAVIS_COLUMNS_NUM_OF_COLUMNS);
+
+        ArrayList<Byte> rowidDataType = new ArrayList<>();
+        rowidDataType.add((byte)(new DataType("text").serialCode + info.tableName.length())); // table_name
+        rowidDataType.add((byte)(new DataType("text").serialCode + "rowid".length())); // column_name
+        rowidDataType.add((byte)(new DataType("text").serialCode + "int".length()));//dataType
+        rowidDataType.add(new DataType("tinyint").serialCode); // ordinal_position
+        rowidDataType.add(new DataType("tinyint").serialCode); // is_nullable
+        rowidDataType.add(new DataType("tinyint").serialCode); // column_key
+
+        ArrayList<Object> rowidValues = new ArrayList<>();
+        rowidValues.add(info.tableName);
+        rowidValues.add("rowid");
+        rowidValues.add(0x03);
+        rowidValues.add(1);
+        rowidValues.add(0);
+        rowidValues.add(0);
+
+        rowid.setDataTypes(rowidDataType);
+        rowid.setValuesOfColumns(rowidValues);
+        colTable.insert(rowid);
+
+             //Insert other columns into columns_talbe
         for(int i=0; i<info.columns.size(); i++){
             Column c = info.columns.get(i);
             Record columnRecord =  new Record();
             columnRecord.setNumOfColumn(Constants.DAVIS_COLUMNS_NUM_OF_COLUMNS);
             ArrayList<Byte> colDataTypes = new ArrayList<>();
-            colDataTypes.add((byte)(new DataType("text").serialCode + info.tableName.length()));
-            colDataTypes.add((byte)(new DataType("text").serialCode + c.getColumnName().length()));
-            colDataTypes.add((byte)(new DataType("text").serialCode + c.getDataType().dataTypeName.length()));
-            colDataTypes.add(new DataType("tinyint").serialCode);
-            colDataTypes.add(new DataType("tinyint").serialCode);
+            colDataTypes.add((byte)(new DataType("text").serialCode + info.tableName.length())); // table_name
+            colDataTypes.add((byte)(new DataType("text").serialCode + c.getColumnName().length())); // column_name
+            colDataTypes.add((byte)(new DataType("text").serialCode + c.getDataType().dataTypeName.length()));//dataType
+            colDataTypes.add(new DataType("tinyint").serialCode); // ordinal_position
+            colDataTypes.add(new DataType("tinyint").serialCode); // is_nullable
+            colDataTypes.add(new DataType("tinyint").serialCode); // column_key
 
             ArrayList<Object> columnValues = new ArrayList<>();
+
             columnValues.add(info.tableName);
             columnValues.add(c.getColumnName());
             columnValues.add(c.getDataType());
-            columnValues.add(i+2);
+            columnValues.add(i+1);
             if(c.isNull()){
+                columnValues.add(1);
+            }else{
+                columnValues.add(0);
+            }
+            if(c.isPrimary()){
                 columnValues.add(1);
             }else{
                 columnValues.add(0);
