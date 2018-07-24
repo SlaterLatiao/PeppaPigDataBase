@@ -22,9 +22,16 @@ public class Page{
     private DataType data = new DataType();
     //Constructor for root page
     public Page(String filePath){
+        this.filePath = filePath;
         try {
             if(fileExist(filePath)){
-
+                setPageType(Constants.LEAF_TABLE_PAGE);
+                setNumOfRecords((byte)0x00);
+                setStartAddr((short)(Constants.PAGE_SIZE - 1));
+                setRightNodeAddr(Constants.RIGET_MOST_PAGE);
+                this.recordAddrList = new ArrayList<Short>();
+                this.RecordList = new ArrayList<Record>();
+                setPageNum(0);
             }
             else{
                 setPageType(Constants.LEAF_TABLE_PAGE);
@@ -86,8 +93,8 @@ public class Page{
             if (file.exists()) {
                 return;
             }
+            RandomAccessFile randomAccessFile=null;
             if (file.createNewFile()) {
-                RandomAccessFile randomAccessFile;
                 randomAccessFile = new RandomAccessFile(file, "rw");
                 randomAccessFile.setLength(2*Constants.PAGE_SIZE);
                 randomAccessFile.seek(0);
@@ -99,6 +106,7 @@ public class Page{
                 randomAccessFile.writeByte(Constants.RIGET_MOST_PAGE);
                 setPageNum(1);
             }
+            randomAccessFile.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
