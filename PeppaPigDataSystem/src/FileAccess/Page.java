@@ -168,7 +168,20 @@ public class Page{
     //################################################################################
     //if put this function into b+ tree? last node's last key should be max index
     public int getMaxIndex(){
-        return 0;
+        File newFile = new File(this.filePath);
+        RandomAccessFile rAFile=null;
+        if (!newFile.exists()) {
+            return 0;
+        }
+        try {
+            rAFile = new RandomAccessFile(newFile, "rw");
+            Page page = new Page((int)newFile.length()/Constants.PAGE_SIZE);
+            rAFile.close();
+            return page.getRecordList().get(page.getRecordList().size()-1).getRowId();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     //#################################################################################
