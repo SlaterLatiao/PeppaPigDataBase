@@ -175,7 +175,7 @@ public class Page{
         }
         try {
             rAFile = new RandomAccessFile(newFile, "rw");
-            Page page = new Page((int)newFile.length()/Constants.PAGE_SIZE);
+            Page page = new Page((int)newFile.length()/Constants.PAGE_SIZE-1);
             rAFile.close();
             return page.getRecordList().get(page.getRecordList().size()-1).getRowId();
         } catch (IOException e) {
