@@ -225,7 +225,7 @@ public class Page{
                     if(record.getDataTypes().get(i)==data.nameToSerialCode("double")) {
                         valuesOfColumns.add(rAFile.readDouble());
                     }
-                    if(record.getDataTypes().get(i)==data.nameToSerialCode("datatime")) {
+                    if(record.getDataTypes().get(i)==data.nameToSerialCode("datetime")) {
                         valuesOfColumns.add(rAFile.readLong());
                     }
                     if(record.getDataTypes().get(i)==data.nameToSerialCode("date")) {
