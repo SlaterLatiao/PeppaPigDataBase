@@ -20,6 +20,9 @@ public class Constants {
     public static String SYSTEM_CATALOG_PATH = "data/catalog";
     public static final String USE_HELP_MESSAGE = "Please use 'HELP' to see a list of commands";
 
+    public static final byte DAVIS_TABLES_NUM_OF_COLUMNS = 0x02;
+    public static final byte DAVIS_COLUMNS_NUM_OF_COLUMNS = 0x05;
+
     public static final String[] DATATYPE_LIST = new String[]{"tinyint", "smallint", "int","bigint","float","double","datetime","date","text"};
 
     public static final short PAGE_SIZE = 512;

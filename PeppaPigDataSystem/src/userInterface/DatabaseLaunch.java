@@ -88,10 +88,10 @@ public class DatabaseLaunch {
     }
 
     public static void initCatalog(){
-        String cmd_create_tablesTable = "create table davisbase_tables (table_name TEXT NOT NULL, record_count int, root_page smallint)";
+        String cmd_create_tablesTable = "create table davisbase_tables (table_name TEXT NOT NULL,root_page smallint)";
         String cmd_create_columnsTable = "create table davisbase_columns (table_name TEXT NOT NULL," +
                 "column_name TEXT NOT NULL, data_type TEXT NOT NULL, ordinal_position TINYINT," +
-                "is_nullable TEXT)";
+                "is_nullable TINYINT)";
         parseUserCommand(cmd_create_tablesTable);
         parseUserCommand(cmd_create_columnsTable);
     }
@@ -217,7 +217,7 @@ public class DatabaseLaunch {
             ArrayList<String> columns = getColumnsList(columnToBeCreate);
             CreateTableQueryInfo createTableQueryInfo = new CreateTableQueryInfo(tableName,columns);
             //TODO: NEED METHOD SUPPORT FROM databaseAPI.QueriesExe.CreateTableQueryExe WHICH RETURNS A BOOLEAN VALUE
-            isCreated = CreateTableQueryExe.executeQuery(createTableQueryInfo);
+            CreateTableQueryExe.executeQuery(createTableQueryInfo);
         }/*else if(PartsEqual(userCommand, "create index")){
             String indexName;
             String columnName;
@@ -241,11 +241,6 @@ public class DatabaseLaunch {
         }*/else{
             System.out.println("Unrecognised Command: " + userCommand + "\nType \"help;\" to display supported commands.");
             return;
-        }
-        if(isCreated){
-            System.out.println("Table < %1 > was created successfully!".replace("%1",tableName));
-        }else{
-            System.out.println(Errors.FAIL_CREATE_TABLE.replace("%1",tableName));
         }
     }
 

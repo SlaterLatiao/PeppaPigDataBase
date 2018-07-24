@@ -11,7 +11,6 @@ public class Errors{
     public static String TABLE_NAME_NEEDED = "ERROR: Table name need to be specified.";
     public static String COLUMNS_NEEDED = "ERROR: Columns and its type need to be specified.";
     public static String INVALID_TYPE = "ERROR: '%1' is not valid data type";
-    public static String FAIL_CREATE_TABLE = "ERROR: Fail to create table < %1 >";
     public static String PRIMARY_KEY ="ERROR: primary key must be specified at first column";
 
 }
