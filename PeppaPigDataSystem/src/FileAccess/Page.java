@@ -405,7 +405,7 @@ public class Page{
                 if(record.getDataTypes().get(i)==data.nameToSerialCode("double")) {
                     rAFile.writeDouble( (double)(object));
                 }
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("datatime")) {
+                if(record.getDataTypes().get(i)==data.nameToSerialCode("datetime")) {
                     rAFile.writeLong( (long)(object));
                 }
                 if(record.getDataTypes().get(i)==data.nameToSerialCode("date")) {
