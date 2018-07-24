@@ -153,12 +153,17 @@ public class Page{
      */
     public List<Page> getChildren(){
         ArrayList<Page> children = new ArrayList<Page>();
-        for(int i = 0;i<RecordList.size();i++) {
-            short key= RecordList.get(i).getChildrenRecord();
-            Page page = new Page(this.filePath, key);
-            children.add(page);
+        if(RecordList.size()==0){
+            return new ArrayList<Page>();
         }
-        return children;
+        else{
+            for(int i = 0;i<RecordList.size();i++) {
+                short key= RecordList.get(i).getChildrenRecord();
+                Page page = new Page(this.filePath, key);
+                children.add(page);
+            }
+            return children;
+        }
     }
 
     //################################################################
