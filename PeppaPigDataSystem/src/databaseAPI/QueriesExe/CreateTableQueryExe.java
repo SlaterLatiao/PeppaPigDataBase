@@ -26,19 +26,22 @@ public class CreateTableQueryExe {
         return false;
     }
 
+    public static void initialCreateSystemTables(){
+        Table davisTable = new Table(Constants.SYSTEM_TABLES_PATH);
+        Table columnsTable = new Table(Constants.SYSTEM_COLUMNS_PATH);
+    }
+
     public static void executeQuery(CreateTableQueryInfo info){
 
         String tablePath;
         // check whether the table is system talbes
-        if(info.tableName.equals(Constants.SYSTEM_TABLES_TABLENAME) || info.tableName.equals(Constants.SYSTEM_COLUMNS_TABLENAME)){
-            tablePath = Constants.SYSTEM_CATALOG_PATH;
-        }else{
+        if(!(info.tableName.equals(Constants.SYSTEM_TABLES_TABLENAME) || info.tableName.equals(Constants.SYSTEM_COLUMNS_TABLENAME))){
             tablePath = Constants.SYSTEM_USER_PATH;
+            // Create new table file
+            Table newTable = new Table(tablePath+"/"+info.tableName+Constants.DEFAULT_FILE_EXTENSION);
         }
 
-        // create new table file
-        Table newTable = new Table(tablePath+"/"+info.tableName+Constants.DEFAULT_FILE_EXTENSION);
-
+        //UPDATE SYSTEM TABLES-------------------------
 
         //Insert table name into davisTable
         Table davisTable = new Table(Constants.SYSTEM_TABLES_PATH);

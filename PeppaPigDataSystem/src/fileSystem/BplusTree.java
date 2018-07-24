@@ -3,11 +3,7 @@ package fileSystem;
 import java.util.ArrayList;
 import java.util.List;
 import FileAccess.Page;
-
-//################################################################################################
-//temporary
 import java.util.Map.Entry;
-//################################################################################################
 
 public class BplusTree {
 	
@@ -79,7 +75,8 @@ public class BplusTree {
 			// no parent, create one
 			if (node.getParent() == null) {
 				// create a new root node
-				root = Node.newRoot();
+				root = root.newRoot();
+				root.setRootPointer();
 				root.addInner(r);
 				root.addChild(node);
 				root.addChild(newNode);

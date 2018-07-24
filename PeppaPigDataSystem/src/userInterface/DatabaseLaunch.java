@@ -92,6 +92,7 @@ public class DatabaseLaunch {
         String cmd_create_columnsTable = "create table davisbase_columns (table_name TEXT NOT NULL," +
                 "column_name TEXT NOT NULL, data_type TEXT NOT NULL, ordinal_position TINYINT," +
                 "is_nullable TINYINT,column_key TINYINT)";
+        CreateTableQueryExe.initialCreateSystemTables();
         parseUserCommand(cmd_create_tablesTable);
         parseUserCommand(cmd_create_columnsTable);
     }
@@ -178,7 +179,6 @@ public class DatabaseLaunch {
         //get tableName
         String tableName;
         boolean isExist = false;
-        boolean isCreated = false;
 
         //if it is a create table command
         if(PartsEqual(userCommand, "create table")) {
@@ -216,8 +216,7 @@ public class DatabaseLaunch {
             String[] columnToBeCreate = restString.split(",");
             ArrayList<String> columns = getColumnsList(columnToBeCreate);
             CreateTableQueryInfo createTableQueryInfo = new CreateTableQueryInfo(tableName,columns);
-            //TODO: NEED METHOD SUPPORT FROM databaseAPI.QueriesExe.CreateTableQueryExe WHICH RETURNS A BOOLEAN VALUE
-            CreateTableQueryExe.executeQuery(createTableQueryInfo);
+
         }/*else if(PartsEqual(userCommand, "create index")){
             String indexName;
             String columnName;
@@ -297,15 +296,14 @@ public class DatabaseLaunch {
 
 
 
-    /*private static void parseInsert(String userCommand) {
-        *//**
+    private static void parseInsert(String userCommand) {
+        /**
          * insert into table [(<column_list>)] <table_name> values (<value_list>);
-         * *//*
+         * */
         String tableName;
         boolean isExist = false;
         ArrayList<String> columns = null;
         ArrayList<String> values;
-        StorageManager storageManager = new StorageManager();
 
         if(!PartsEqual(userCommand, "insert into table")) {
             System.out.println("Unrecognised Command: " + userCommand + "\nType \"help;\" to display supported commands.");
@@ -336,7 +334,7 @@ public class DatabaseLaunch {
         }
 
         // check whether the table is already exist
-        isExist = storageManager.checkTableExists(tableName);
+        isExist = CreateTableQueryExe.checkTableExists(tableName);
         if(!isExist){
             System.out.println(Errors.TABLE_NOT_EXISTS);
             return;
@@ -353,8 +351,7 @@ public class DatabaseLaunch {
         values = getColumnsList(valuesStrings);
 
         InsertQueryInfo insertQueryInfo = new InsertQueryInfo(tableName,columns,values);
-        // TODO EXECUTE QUERY
-    }*/
+    }
 
 
 

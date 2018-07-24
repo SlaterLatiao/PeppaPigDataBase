@@ -24,7 +24,7 @@ class Node {
 		this.isLeaf = page.isLeaf();
 		records = page.getRecordList();
 		List<Page> list = page.getChildren();
-		for	(Page p : list)
+		for (Page p : list)
 			children.add(new Node(p));
 	}
 
@@ -37,7 +37,7 @@ class Node {
 			return null;
 		return node.getRecord(k);
 	}
-	
+
 	boolean reomve(Integer key) {
 		Entry<Node, Integer> entry = searchNode(key);
 		Node node = entry.getKey();
@@ -99,20 +99,19 @@ class Node {
 	void setParent(Node parent) {
 		this.parent = parent;
 	}
-	
-	
+
 	int getRecordRowID(int k) {
 		return records.get(k).getRowId();
 	}
-	
+
 	int getRecordsSize() {
 		return records.size();
 	}
-	
+
 	int getEmptySpace() {
 		return page.getEmptySpace();
 	}
-	
+
 	Node split(Record r) {
 		// get split page
 		Page split = page.getNewPage(true);
@@ -133,34 +132,34 @@ class Node {
 		records.set(k, r);
 		page.update(k, r);
 	}
-	
+
 	void addRecord(Record r) {
 		records.add(r);
 		page.addRecord(r);
 	}
-	
+
 	void addChild(Node child) {
 		children.add(child);
-//######################################################################
-//		temporary
-//		page.addChild(child);
+		page.addChild(child.page);
 	}
-	
+
 	void addInner(Record r) {
 		records.add(r);
 		int key = r.getRowId();
 		page.addInner(key);
 	}
-//######################################################################
-//		temporary
-//	static Node newRoot() {
-//		// TODO: need to create a new inner page
-//		Node newroot = new Node(page.getNewPage(false));
-//		return newroot;
-//	}
 
-//######################################################################
-//		temporary
-    public int getMaxIndex(){return 0;}
-	static Node newRoot(){return null;}
+	 Node newRoot() {
+	 // TODO: need to create a new inner page
+	 Node newroot = new Node(page.getNewPage(false));
+	 return newroot;
+	 }
+
+	public int getMaxIndex() {
+		return page.getMaxIndex();
+	}
+	
+	void setRootPointer() {
+		page.setRootPointer();
+	}
 }
