@@ -23,7 +23,7 @@ public class Page{
     //Constructor for root page
     public Page(String filePath){
         super();
-        setPageType(Constants.INTERIOR_TABLE_PAGE);
+        setPageType(Constants.LEAF_TABLE_PAGE);
         setNumOfRecords((byte)0x00);
         setStartAddr((short)(Constants.PAGE_SIZE - 1));
         setRightNodeAddr(Constants.RIGET_MOST_PAGE);
@@ -55,7 +55,9 @@ public class Page{
         if(this.pageType==Constants.LEAF_INDEX_PAGE||this.pageType==Constants.LEAF_TABLE_PAGE){
             return true;
         }
-        return false;
+        else{
+            return false;
+        }
     }
 
 //    public List<Record> getRecords(){
