@@ -22,20 +22,29 @@ public class Page{
     private DataType data = new DataType();
     //Constructor for root page
     public Page(String filePath){
-        super();
-        setPageType(Constants.LEAF_TABLE_PAGE);
-        setNumOfRecords((byte)0x00);
-        setStartAddr((short)(Constants.PAGE_SIZE - 1));
-        setRightNodeAddr(Constants.RIGET_MOST_PAGE);
-        recordAddrList = new ArrayList<Short>();
-        this.RecordList = new ArrayList<Record>();
-        setPageNum(0);
+        try {
+            if(fileExist(filePath)){
+
+            }
+            else{
+                setPageType(Constants.LEAF_TABLE_PAGE);
+                setNumOfRecords((byte)0x00);
+                setStartAddr((short)(Constants.PAGE_SIZE - 1));
+                setRightNodeAddr(Constants.RIGET_MOST_PAGE);
+                this.recordAddrList = new ArrayList<Short>();
+                this.RecordList = new ArrayList<Record>();
+                setPageNum(0);
+                createFile(filePath);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //###################################################################
     //Constructor for a page(need page type)
     public Page(byte pageType){
-        super();
+
         setPageType(pageType);
         setNumOfRecords((byte)0x00);
         setStartAddr((short)(Constants.PAGE_SIZE - 1));
@@ -58,6 +67,40 @@ public class Page{
         }
         else{
             return false;
+        }
+    }
+
+    public boolean fileExist(String filePath){
+        File newFile = new File(this.filePath);
+        if (!newFile.exists()) {
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public void createFile(String filePath){
+        try {
+            File file = new File(filePath);
+            if (file.exists()) {
+                return;
+            }
+            if (file.createNewFile()) {
+                RandomAccessFile randomAccessFile;
+                randomAccessFile = new RandomAccessFile(file, "rw");
+                randomAccessFile.setLength(2*Constants.PAGE_SIZE);
+                randomAccessFile.seek(0);
+                randomAccessFile.writeInt(1);
+                randomAccessFile.seek(Constants.PAGE_SIZE);
+                randomAccessFile.writeByte(Constants.LEAF_TABLE_PAGE);
+                randomAccessFile.writeByte((byte)0x00);
+                randomAccessFile.writeShort((short)(Constants.PAGE_SIZE - 1));
+                randomAccessFile.writeByte(Constants.RIGET_MOST_PAGE);
+                setPageNum(1);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -228,36 +271,43 @@ public class Page{
     }
 
     //###################################################################################
-    public Page getNewPage(boolean pageType){ return null;}
+    public Page getNewPage(boolean pageType){
 //    public Page getNewPage(byte pageType){
-//        Page page = new Page(pageType);
-//        //#######################################################################
-//        //need discuss
-//        page.setRightNodeAddr(this.rightNodeAddr+1);
-//        page.pageNum = this.pageNum+1;
-//
-//
-//        File newFile = new File(this.filePath);
-//        RandomAccessFile rAFile=null;
-//        if (!newFile.exists()) {
-//            return null;
-//        }
-//        try {
-//            rAFile = new RandomAccessFile(newFile, "w");
-//            rAFile.setLength(Constants.PAGE_SIZE);
-//            rAFile.seek(page.pageNum * Constants.PAGE_SIZE);
-//            rAFile.writeByte(page.pageType);
-//            rAFile.writeByte(page.numOfRecords);
-//            rAFile.writeShort(page.startAddr);
-//            rAFile.writeInt(page.rightNodeAddr);
-//
-//            rAFile.close();
-//            return page;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
+        byte PageType;
+        if(pageType = true){
+            PageType=Constants.LEAF_TABLE_PAGE;
+        }
+        else{
+            PageType=Constants.INTERIOR_TABLE_PAGE;
+        }
+        Page page = new Page(PageType);
+        page.setRightNodeAddr(Constants.RIGET_MOST_PAGE);
+        page.pageNum = this.pageNum+1;
+
+
+        File newFile = new File(this.filePath);
+        RandomAccessFile rAFile=null;
+        if (!newFile.exists()) {
+            return null;
+        }
+        try {
+            rAFile = new RandomAccessFile(newFile, "w");
+            rAFile.setLength(Constants.PAGE_SIZE);
+            rAFile.seek(this.pageNum * Constants.PAGE_SIZE+4);
+            rAFile.writeInt(this.rightNodeAddr);
+            rAFile.seek(page.pageNum * Constants.PAGE_SIZE);
+            rAFile.writeByte(page.pageType);
+            rAFile.writeByte(page.numOfRecords);
+            rAFile.writeShort(page.startAddr);
+            rAFile.writeInt(page.rightNodeAddr);
+
+            rAFile.close();
+            return page;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public void addRecord(Record record){
         File newFile = new File(this.filePath);
