@@ -413,9 +413,7 @@ public class Page{
                 }
                 if(record.getDataTypes().get(i)>data.nameToSerialCode("text")){
                     byte length = (byte) (record.getDataTypes().get(i) - data.nameToSerialCode("text"));
-                    for (byte k = 0; k < length; k++) {
-                        rAFile.writeByte(((byte[])(object))[k]);
-                    }
+                    rAFile.writeBytes(object.toString().trim());
                 }
             }
             rAFile.close();
