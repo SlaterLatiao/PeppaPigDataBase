@@ -25,13 +25,7 @@ public class Page{
         this.filePath = filePath;
         try {
             if(fileExist(filePath)){
-                setPageType(Constants.LEAF_TABLE_PAGE);
-                setNumOfRecords((byte)0x00);
-                setStartAddr((short)(Constants.PAGE_SIZE - 1));
-                setRightNodeAddr(Constants.RIGET_MOST_PAGE);
-                this.recordAddrList = new ArrayList<Short>();
-                this.RecordList = new ArrayList<Record>();
-                setPageNum(0);
+
             }
             else{
                 setPageType(Constants.LEAF_TABLE_PAGE);
@@ -108,6 +102,22 @@ public class Page{
                 setPageNum(1);
             }
             randomAccessFile.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setRootPointer(){
+        File newFile = new File(this.filePath);
+        RandomAccessFile rAFile=null;
+        if (!newFile.exists()) {
+            return;
+        }
+        try {
+            rAFile = new RandomAccessFile(newFile, "rw");
+            rAFile.seek(0);
+            rAFile.writeByte(this.getPageNum());
+            rAFile.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -332,7 +342,7 @@ public class Page{
         try {
             rAFile = new RandomAccessFile(newFile, "rw");
             rAFile.seek((this.getPageNum() +1)* Constants.PAGE_SIZE+1);
-            this.setNumOfRecords((byte)((int)this.getNumOfRecords()+1));
+            this.setNumOfRecords((byte)(this.getNumOfRecords()+1));
             rAFile.writeByte(this.numOfRecords);
             this.setStartAddr((short)(this.startAddr - record.getPayLoad() - 6));
             rAFile.writeShort(this.startAddr);
