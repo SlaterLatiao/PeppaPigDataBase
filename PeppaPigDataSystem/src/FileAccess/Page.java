@@ -15,8 +15,8 @@ public class Page{
     private byte numOfRecords;
     private short startAddr;
     private int rightNodeAddr;
-    private ArrayList<Short> recordAddrList;
-    private ArrayList<Record> RecordList;
+    private ArrayList<Short> recordAddrList = new ArrayList<Short>();
+    private ArrayList<Record> RecordList = new ArrayList<Record>();
     private int pageNum;
     private String filePath;
     private DataType data = new DataType();
