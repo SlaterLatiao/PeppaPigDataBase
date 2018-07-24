@@ -153,8 +153,8 @@ public class Page{
      */
     public List<Page> getChildren(){
         ArrayList<Page> children = new ArrayList<Page>();
-        if(RecordList.size()==0){
-            return new ArrayList<Page>();
+        if(RecordList==null){
+            return children;
         }
         else{
             for(int i = 0;i<RecordList.size();i++) {
