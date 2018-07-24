@@ -66,18 +66,24 @@ public class CreateTableQueryExe {
             Record columnRecord =  new Record();
             columnRecord.setNumOfColumn(Constants.DAVIS_COLUMNS_NUM_OF_COLUMNS);
             ArrayList<Byte> colDataTypes = new ArrayList<>();
-            colDataTypes.add((byte)(new DataType("text").serialCode + info.tableName.length()));
-            colDataTypes.add((byte)(new DataType("text").serialCode + c.getColumnName().length()));
-            colDataTypes.add((byte)(new DataType("text").serialCode + c.getDataType().dataTypeName.length()));
-            colDataTypes.add(new DataType("tinyint").serialCode);
-            colDataTypes.add(new DataType("tinyint").serialCode);
+            colDataTypes.add((byte)(new DataType("text").serialCode + info.tableName.length())); // table_name
+            colDataTypes.add((byte)(new DataType("text").serialCode + c.getColumnName().length())); // column_name
+            colDataTypes.add((byte)(new DataType("text").serialCode + c.getDataType().dataTypeName.length()));//dataType
+            colDataTypes.add(new DataType("tinyint").serialCode); // ordinal_position
+            colDataTypes.add(new DataType("tinyint").serialCode); // is_nullable
+            colDataTypes.add(new DataType("tinyint").serialCode); // column_key
 
             ArrayList<Object> columnValues = new ArrayList<>();
             columnValues.add(info.tableName);
             columnValues.add(c.getColumnName());
             columnValues.add(c.getDataType());
-            columnValues.add(i+2);
+            columnValues.add(i+1);
             if(c.isNull()){
+                columnValues.add(1);
+            }else{
+                columnValues.add(0);
+            }
+            if(c.isPrimary()){
                 columnValues.add(1);
             }else{
                 columnValues.add(0);
