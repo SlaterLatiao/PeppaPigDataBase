@@ -142,7 +142,9 @@ class Node {
 	
 	void addChild(Node child) {
 		children.add(child);
-		page.addChild(child);
+//######################################################################
+//		temporary
+//		page.addChild(child);
 	}
 	
 	void addInner(Record r) {
@@ -150,11 +152,16 @@ class Node {
 		int key = r.getRowId();
 		page.addInner(key);
 	}
-	
-	static Node newRoot() {
-		// TODO: need to create a new inner page
-		Node newroot = new Node(page.getNewPage(false));
-		return newroot;
-	}
+//######################################################################
+//		temporary
+//	static Node newRoot() {
+//		// TODO: need to create a new inner page
+//		Node newroot = new Node(page.getNewPage(false));
+//		return newroot;
+//	}
 
+//######################################################################
+//		temporary
+    public int getMaxIndex(){return 0;}
+	static Node newRoot(){return null;}
 }

@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import FileAccess.Page;
 
+//################################################################################################
+//temporary
+import java.util.Map.Entry;
+//################################################################################################
+
 public class BplusTree {
 	
 	protected Node root;
@@ -52,7 +57,8 @@ public class BplusTree {
 	}
 	
 	public boolean remove(Integer key) {
-		root.remove(key);
+
+		return root.reomve(key);
 	}
 
 	private void insert(Record record, Node node, Node child) {

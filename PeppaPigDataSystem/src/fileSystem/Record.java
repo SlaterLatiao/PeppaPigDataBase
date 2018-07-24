@@ -23,7 +23,9 @@ public class Record {
     public int getPageNumOfRec() {
         return pageNumOfRec;
     }
-
+    public int getSpace(){
+        return this.payLoad+6;
+    }
     public void setPageNumOfRec(int pageNumOfRec) {
         this.pageNumOfRec = pageNumOfRec;
     }
