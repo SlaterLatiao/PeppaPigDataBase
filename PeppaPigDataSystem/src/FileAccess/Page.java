@@ -61,8 +61,9 @@ public class Page{
     }
 
     // get page by index
-    public Page(int key) {
+    public Page(String filePath, int key) {
         super();
+        setFilePath(filePath);
         readPage(key);
     }
     //###################################################################
@@ -132,7 +133,7 @@ public class Page{
         ArrayList<Page> children = new ArrayList<Page>();
         for(int i = 0;i<RecordList.size();i++) {
             short key= RecordList.get(i).getChildrenRecord();
-            Page page = new Page(key);
+            Page page = new Page(this.filePath, key);
             children.add(page);
         }
         return children;
@@ -229,7 +230,7 @@ public class Page{
         }
         try {
             rAFile = new RandomAccessFile(newFile, "rw");
-            Page page = new Page((int)newFile.length()/Constants.PAGE_SIZE-1);
+            Page page = new Page(this.filePath,(int)(newFile.length()/Constants.PAGE_SIZE-1));
             rAFile.close();
             if(page.getRecordList().size()>0){
                 return page.getRecordList().get(page.getRecordList().size()-1).getRowId();
