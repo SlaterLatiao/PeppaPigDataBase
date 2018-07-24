@@ -33,5 +33,8 @@ public class Table {
         return rowids_Records;
     }
 
+    public int getMaxRowid(){
+    }
+
 
 }

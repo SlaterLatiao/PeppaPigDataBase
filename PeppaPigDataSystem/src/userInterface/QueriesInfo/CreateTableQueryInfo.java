@@ -29,8 +29,8 @@ public class CreateTableQueryInfo {
     public ArrayList<Column> getColumns(ArrayList<String> col){
         //columns list
         ArrayList<Column> columns = new ArrayList<>();
-        Column rowid = new Column("rowid",new DataType("int"),false,true);
-        columns.add(rowid);
+        /*Column rowid = new Column("rowid",new DataType("int"),false,true);
+        columns.add(rowid);*/
 
         boolean isFirst = true;
         for(String c:col){

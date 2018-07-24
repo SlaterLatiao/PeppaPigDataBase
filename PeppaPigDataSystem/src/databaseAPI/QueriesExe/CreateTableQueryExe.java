@@ -61,6 +61,31 @@ public class CreateTableQueryExe {
         //Insert columns into colTable
         Table colTable = new Table(Constants.SYSTEM_COLUMNS_PATH);
 
+            //Insert column"rowid" into columns_talbe first
+        Record rowid = new Record();
+        rowid.setNumOfColumn(Constants.DAVIS_COLUMNS_NUM_OF_COLUMNS);
+
+        ArrayList<Byte> rowidDataType = new ArrayList<>();
+        rowidDataType.add((byte)(new DataType("text").serialCode + info.tableName.length())); // table_name
+        rowidDataType.add((byte)(new DataType("text").serialCode + "rowid".length())); // column_name
+        rowidDataType.add((byte)(new DataType("text").serialCode + "int".length()));//dataType
+        rowidDataType.add(new DataType("tinyint").serialCode); // ordinal_position
+        rowidDataType.add(new DataType("tinyint").serialCode); // is_nullable
+        rowidDataType.add(new DataType("tinyint").serialCode); // column_key
+
+        ArrayList<Object> rowidValues = new ArrayList<>();
+        rowidValues.add(info.tableName);
+        rowidValues.add("rowid");
+        rowidValues.add(0x03);
+        rowidValues.add(1);
+        rowidValues.add(0);
+        rowidValues.add(0);
+
+        rowid.setDataTypes(rowidDataType);
+        rowid.setValuesOfColumns(rowidValues);
+        colTable.insert(rowid);
+
+             //Insert other columns into columns_talbe
         for(int i=0; i<info.columns.size(); i++){
             Column c = info.columns.get(i);
             Record columnRecord =  new Record();
@@ -74,6 +99,7 @@ public class CreateTableQueryExe {
             colDataTypes.add(new DataType("tinyint").serialCode); // column_key
 
             ArrayList<Object> columnValues = new ArrayList<>();
+
             columnValues.add(info.tableName);
             columnValues.add(c.getColumnName());
             columnValues.add(c.getDataType());
