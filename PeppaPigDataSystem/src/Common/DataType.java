@@ -74,7 +74,7 @@ public class DataType {
         sizeMap.put(DOUBLE, 8);
         sizeMap.put(DATETIME, 8);
         sizeMap.put(DATE, 8);
-        sizeMap.put(TEXT, 2);
+        sizeMap.put(TEXT, 10);
 
         return sizeMap.get(dataTypeName);
     }
