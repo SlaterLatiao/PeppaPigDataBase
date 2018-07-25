@@ -26,15 +26,16 @@ public class General {
         return false;
     }
 
-    public List<Column> getColumns(String tableName) {
+    public ArrayList<Column> getColumns(String tableName) {
 
-        List<Column> columns = new ArrayList<>();
+        ArrayList<Column> columns = new ArrayList<>();
 
+        //get all the records in davisbase_columns table
         Table t = new Table(Constants.SYSTEM_COLUMNS_PATH);
         List<Record> allRecords = t.getAllRecord();
 
-        for (Record r : allRecords) {
-            if (r.getValuesOfColumns().get(0) == tableName){
+        for (Record r : allRecords) { // for each record, check whether the record belongs to targer table.
+            if (r.getValuesOfColumns().get(0).equals(tableName)){
                 String columnName = r.getValuesOfColumns().get(1);
                 DataType dataType = new DataType(r.getValuesOfColumns().get(2));
                 boolean is_primary;
