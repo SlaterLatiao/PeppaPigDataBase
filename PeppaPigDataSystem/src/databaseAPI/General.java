@@ -24,7 +24,7 @@ public class General {
         return false;
     }
 
-    public ArrayList<Column> getColumns(String tableName) {
+    public static ArrayList<Column> getColumns(String tableName) {
 
         ArrayList<Column> columns = new ArrayList<>();
 
