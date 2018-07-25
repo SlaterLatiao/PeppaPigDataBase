@@ -12,7 +12,7 @@ public class Record {
     protected int rowId;
     private byte numOfColumn;
     private ArrayList<Byte> dataTypes;
-    private ArrayList<Object> valuesOfColumns;
+    private ArrayList<String> valuesOfColumns;
     // only for inner page
     private short childrenRecord;
 
@@ -62,11 +62,11 @@ public class Record {
         this.dataTypes = dataTypes;
     }
 
-    public ArrayList<Object> getValuesOfColumns() {
+    public ArrayList<String> getValuesOfColumns() {
         return valuesOfColumns;
     }
 
-    public void setValuesOfColumns(ArrayList<Object> valuesOfColumns) {
+    public void setValuesOfColumns(ArrayList<String> valuesOfColumns) {
         this.valuesOfColumns = valuesOfColumns;
     }
 
