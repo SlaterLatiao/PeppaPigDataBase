@@ -17,6 +17,7 @@ public class Record {
     private short childrenRecord;
     private DataType data;
     public Record(){
+        payLoad=0;
         data = new DataType();
         calculatePayLoad();
     }
@@ -38,7 +39,6 @@ public class Record {
 
     public void calculatePayLoad() {
         for(int i=0;i<this.getNumOfColumn();i++) {
-            String object = this.getValuesOfColumns().get(i);
             if(this.getDataTypes().get(i)==data.nameToSerialCode("null")) {
             }
             if(this.getDataTypes().get(i)==data.nameToSerialCode("tinyint")) {
@@ -70,7 +70,7 @@ public class Record {
                 this.payLoad+= length;
             }
         }
-        this.payLoad+= 1;
+        this.payLoad+= 1+this.getNumOfColumn();
     }
 
     public void setPayLoad(short payLoad ) {
