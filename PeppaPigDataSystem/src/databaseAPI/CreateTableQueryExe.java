@@ -1,4 +1,4 @@
-package databaseAPI.QueriesExe;
+package databaseAPI;
 
 import Common.Constants;
 import Common.DataType;
@@ -11,20 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreateTableQueryExe {
-    public static boolean checkTableExists(String tableName){
-        Table davisTable = new Table(Constants.SYSTEM_TABLES_PATH);
-        List<Record> records = davisTable.getAllRecord();
-        if(records == null){
-            return false;
-        }else{
-            for(Record r:records){
-                if(tableName.equals(r.getValuesOfColumns().get(1))){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     public static void initialCreateSystemTables(){
         Table davisTable = new Table(Constants.SYSTEM_TABLES_PATH);
