@@ -22,7 +22,7 @@ public class Table {
     }
 
     public List<Record> getAllRecord(){
-        List<Record> allRecords = new ArrayList<Record>();
+        List<Record> allRecords = new ArrayList <Record>();
         allRecords = bplusTree.getAll();
         return allRecords;
     }
