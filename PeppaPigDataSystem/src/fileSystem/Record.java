@@ -18,6 +18,7 @@ public class Record {
     private DataType data;
     public Record(){
         data = new DataType();
+        calculatePayLoad();
     }
 
 
