@@ -26,8 +26,8 @@ public class Page{
         try {
             if(fileExist(filePath)){
                 File newFile = new File(this.filePath);
-                recordAddrList = new ArrayList<Short>();
-                RecordList = new ArrayList<Record>();
+                this.recordAddrList = new ArrayList<Short>();
+                this.RecordList = new ArrayList<Record>();
                 RandomAccessFile rAFile=null;
                 if (!newFile.exists()) {
                     return;
@@ -70,7 +70,8 @@ public class Page{
 
     // get page by index
     public Page(String filePath, int key) {
-        super();
+        this.recordAddrList = new ArrayList<Short>();
+        this.RecordList = new ArrayList<Record>();
         setFilePath(filePath);
         readPage(key);
     }
@@ -190,58 +191,60 @@ public class Page{
             for (int i =0;i<this.getNumOfRecords();i++) {
                 this.addRecordAddrList(rAFile.readShort());
             }
-            for (int i =0;i<this.getNumOfRecords();i++) {
-                Record record=new Record();
-                rAFile.seek((this.getPageNum()+1) * Constants.PAGE_SIZE+ this.getRecordAddrList().get(i));
-                record.setPayLoad(rAFile.readShort());
-                record.setRowId(rAFile.readInt());
-                record.setNumOfColumn(rAFile.readByte());
-                ArrayList<Byte> dataTypeList= new ArrayList<Byte>();
-                for(int j=0;j<record.getNumOfColumn();j++) {
-                    dataTypeList.add(rAFile.readByte());
-                }
-                record.setDataTypes(dataTypeList);
+            if(this.getNumOfRecords()>0){
+                for (int i =0;i<this.getNumOfRecords();i++) {
+                    Record record=new Record();
+                    rAFile.seek((this.getPageNum()+1) * Constants.PAGE_SIZE+ this.getRecordAddrList().get(i));
+                    record.setPayLoad(rAFile.readShort());
+                    record.setRowId(rAFile.readInt());
+                    record.setNumOfColumn(rAFile.readByte());
+                    ArrayList<Byte> dataTypeList= new ArrayList<Byte>();
+                    for(int j=0;j<record.getNumOfColumn();j++) {
+                        dataTypeList.add(rAFile.readByte());
+                    }
+                    record.setDataTypes(dataTypeList);
 
-                ArrayList<String> valuesOfColumns= new ArrayList<String>();
-                for(int j=0;j<record.getNumOfColumn();j++) {
-                    if(record.getDataTypes().get(i)==data.nameToSerialCode("null")) {
-                        valuesOfColumns.add("null");
-                    }
-                    if(record.getDataTypes().get(i)==data.nameToSerialCode("tinyint")) {
-                        valuesOfColumns.add(String.valueOf(rAFile.readByte()));
-                    }
-                    if(record.getDataTypes().get(i)==data.nameToSerialCode("smallint")) {
-                        valuesOfColumns.add(String.valueOf(rAFile.readShort()));
-                    }
-                    if(record.getDataTypes().get(i)==data.nameToSerialCode("int")) {
-                        valuesOfColumns.add(String.valueOf(rAFile.readInt()));
-                    }
-                    if(record.getDataTypes().get(i)==data.nameToSerialCode("bigint")) {
-                        valuesOfColumns.add(String.valueOf(rAFile.readLong()));
-                    }
-                    if(record.getDataTypes().get(i)==data.nameToSerialCode("float")) {
-		        		 valuesOfColumns.add(String.valueOf(rAFile.readFloat()));
-                    }
-                    if(record.getDataTypes().get(i)==data.nameToSerialCode("double")) {
-                        valuesOfColumns.add(String.valueOf(rAFile.readDouble()));
-                    }
-                    if(record.getDataTypes().get(i)==data.nameToSerialCode("datetime")) {
-                        valuesOfColumns.add(String.valueOf(rAFile.readLong()));
-                    }
-                    if(record.getDataTypes().get(i)==data.nameToSerialCode("date")) {
-                        valuesOfColumns.add(String.valueOf(rAFile.readLong()));
-                    }
-                    if(record.getDataTypes().get(i)>data.nameToSerialCode("text")){
-                        byte length = (byte) (record.getDataTypes().get(i) - data.nameToSerialCode("text"));
-                        char[] text = new char[length];
-                        for (byte k = 0; k < length; k++) {
-                            text[k] = (char) rAFile.readByte();
+                    ArrayList<String> valuesOfColumns= new ArrayList<String>();
+                    for(int j=0;j<record.getNumOfColumn();j++) {
+                        if(record.getDataTypes().get(i)==data.nameToSerialCode("null")) {
+                            valuesOfColumns.add("null");
                         }
-                        valuesOfColumns.add(new String(text));
-                     }
+                        if(record.getDataTypes().get(i)==data.nameToSerialCode("tinyint")) {
+                            valuesOfColumns.add(String.valueOf(rAFile.readByte()));
+                        }
+                        if(record.getDataTypes().get(i)==data.nameToSerialCode("smallint")) {
+                            valuesOfColumns.add(String.valueOf(rAFile.readShort()));
+                        }
+                        if(record.getDataTypes().get(i)==data.nameToSerialCode("int")) {
+                            valuesOfColumns.add(String.valueOf(rAFile.readInt()));
+                        }
+                        if(record.getDataTypes().get(i)==data.nameToSerialCode("bigint")) {
+                            valuesOfColumns.add(String.valueOf(rAFile.readLong()));
+                        }
+                        if(record.getDataTypes().get(i)==data.nameToSerialCode("float")) {
+                            valuesOfColumns.add(String.valueOf(rAFile.readFloat()));
+                        }
+                        if(record.getDataTypes().get(i)==data.nameToSerialCode("double")) {
+                            valuesOfColumns.add(String.valueOf(rAFile.readDouble()));
+                        }
+                        if(record.getDataTypes().get(i)==data.nameToSerialCode("datetime")) {
+                            valuesOfColumns.add(String.valueOf(rAFile.readLong()));
+                        }
+                        if(record.getDataTypes().get(i)==data.nameToSerialCode("date")) {
+                            valuesOfColumns.add(String.valueOf(rAFile.readLong()));
+                        }
+                        if(record.getDataTypes().get(i)>data.nameToSerialCode("text")){
+                            byte length = (byte) (record.getDataTypes().get(i) - data.nameToSerialCode("text"));
+                            char[] text = new char[length];
+                            for (byte k = 0; k < length; k++) {
+                                text[k] = (char) rAFile.readByte();
+                            }
+                            valuesOfColumns.add(new String(text));
+                        }
+                    }
+                    record.setValuesOfColumns(valuesOfColumns);
+                    addRecordList(record);
                 }
-                record.setValuesOfColumns(valuesOfColumns);
-                addRecordList(record);
             }
             rAFile.close();
         } catch (IOException e) {
@@ -261,7 +264,7 @@ public class Page{
             rAFile = new RandomAccessFile(newFile, "rw");
             Page page = new Page(this.filePath,(int)(newFile.length()/Constants.PAGE_SIZE-1));
             rAFile.close();
-            if(page.getRecordList()!=null){
+            if(page.getRecordList().size()>0){
                 return page.getRecordList().get(page.getRecordList().size()-1).getRowId();
             }
             else{
@@ -363,6 +366,7 @@ public class Page{
             rAFile.seek((this.getPageNum() +1)* Constants.PAGE_SIZE+1);
             this.setNumOfRecords((byte)(this.getNumOfRecords()+1));
             rAFile.writeByte(this.numOfRecords);
+
             this.setStartAddr((short)(this.startAddr - record.getPayLoad() - 6));
             rAFile.writeShort(this.startAddr);
 
