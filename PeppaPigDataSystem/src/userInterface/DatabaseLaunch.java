@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import Common.Constants;
 
-import databaseAPI.QueriesExe.CreateTableQueryExe;
+import databaseAPI.CreateTableQueryExe;
 import userInterface.QueriesInfo.*;
 import userInterface.Utils.Errors;
 
@@ -195,8 +195,8 @@ public class DatabaseLaunch {
             tableName = userCommand.toLowerCase().substring(startIndex, endIndex).trim();
 
             // check whether the table is already exist
-            //TODO: NEED METHOD SUPPORT FROM databaseAPI.QueriesExe.CreateTableQueryExe WHICH RETURNS A BOOLEAN VALUE
-            isExist = CreateTableQueryExe.checkTableExists(tableName);
+            //TODO: NEED METHOD SUPPORT FROM databaseAPI.CreateTableQueryExe WHICH RETURNS A BOOLEAN VALUE
+            isExist = databaseAPI.General.checkTableExists(tableName);
             if(isExist){
                 System.out.println(Errors.TABLE_EXISTS.replace("%1",tableName));
                 return;
@@ -335,7 +335,7 @@ public class DatabaseLaunch {
         }
 
         // check whether the table is already exist
-        isExist = CreateTableQueryExe.checkTableExists(tableName);
+        isExist = databaseAPI.General.checkTableExists(tableName);
         if(!isExist){
             System.out.println(Errors.TABLE_NOT_EXISTS);
             return;
