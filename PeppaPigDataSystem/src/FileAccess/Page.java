@@ -941,7 +941,7 @@ public class Page{
     }
 
     public void addRecord(Record record){
-
+        record.calculatePayLoad();
         File newFile = new File(this.filePath);
         RandomAccessFile rAFile=null;
         if (!newFile.exists()) {
