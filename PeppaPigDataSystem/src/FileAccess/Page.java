@@ -608,7 +608,7 @@ public class Page{
             else{
                 setPageType(Constants.LEAF_TABLE_PAGE);
                 setNumOfRecords((byte)0x00);
-                setStartAddr((short)(2*Constants.PAGE_SIZE - 1));
+                setStartAddr((short)(Constants.PAGE_SIZE - 1));
                 setRightNodeAddr(Constants.RIGET_MOST_PAGE);
                 this.recordAddrList = new ArrayList<Short>();
                 this.RecordList = new ArrayList<Record>();
@@ -677,7 +677,7 @@ public class Page{
                 randomAccessFile.seek(this.getPageNum()*Constants.PAGE_SIZE);
                 randomAccessFile.writeByte(Constants.LEAF_TABLE_PAGE);
                 randomAccessFile.writeByte((byte)0x00);
-                randomAccessFile.writeShort((short)(2*Constants.PAGE_SIZE - 1));
+                randomAccessFile.writeShort((short)(Constants.PAGE_SIZE - 1));
                 randomAccessFile.writeInt(Constants.RIGET_MOST_PAGE);
             }
             randomAccessFile.close();
@@ -749,7 +749,11 @@ public class Page{
             rAFile = new RandomAccessFile(newFile, "r");
             rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE);
             byte type = rAFile.readByte();
-            System.out.println("type "+type);
+
+//            #######################################################################################
+            System.out.println("type "+type);//access 0th page problem
+//            #######################################################################################
+
             this.setPageType(type);
             if(type == Constants.LEAF_TABLE_PAGE||type==Constants.LEAF_INDEX_PAGE){
                 this.setNumOfRecords(rAFile.readByte());
@@ -803,7 +807,9 @@ public class Page{
                                 byte length = (byte) (record.getDataTypes().get(i) - data.nameToSerialCode("text"));
                                 char[] text = new char[length];
                                 for (byte k = 0; k < length; k++) {
+//            #######################################################################################
                                     System.out.print((char)rAFile.readByte()+" ");
+//            #######################################################################################
                                     text[k] = (char) rAFile.readByte();
                                 }
 
@@ -946,7 +952,7 @@ public class Page{
             rAFile.seek(this.getPageNum()* Constants.PAGE_SIZE+1);
             this.setNumOfRecords((byte)(this.getNumOfRecords()+1));
             rAFile.writeByte(this.numOfRecords);
-            this.setStartAddr((short)(this.startAddr - record.getPayLoad() - 6));
+            this.setStartAddr((short)(this.getStartAddr() - record.getPayLoad() - 6));
             rAFile.writeShort(this.startAddr);
 
 //#################################################################################################
@@ -958,6 +964,7 @@ public class Page{
             rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE + Constants.PAGE_HEADER_LENGTH+2*(this.recordAddrList.size()-1));
             rAFile.writeShort(this.startAddr);
             this.addRecordList(record);
+            int test = this.getPageNum() * Constants.PAGE_SIZE + this.startAddr;
             rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE + this.startAddr);
             rAFile.writeShort(record.getPayLoad());
             rAFile.writeInt( record.getRowId());
