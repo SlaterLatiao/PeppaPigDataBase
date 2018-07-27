@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 import FileAccess.Page;
 
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 
 /**
  * @author Zenong 7-17-2018
@@ -24,6 +25,7 @@ class Node {
 		this.isLeaf = page.isLeaf();
 		records = page.getRecordList();
 		List<Page> list = page.getChildren();
+		children = new ArrayList<Node>();
 		for (Page p : list)
 			children.add(new Node(p));
 	}
@@ -140,7 +142,7 @@ class Node {
 
 	void addChild(Node child) {
 		children.add(child);
-		//page.addChild(child.page);
+		page.addChild(child.page);
 	}
 
 	void addInner(Record r) {
@@ -159,7 +161,7 @@ class Node {
 		return page.getMaxIndex();
 	}
 	
-	/*void setRootPointer() {
+	void setRootPointer() {
 		page.setRootPointer();
-	}*/
+	}
 }
