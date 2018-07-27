@@ -233,35 +233,37 @@ public class Page{
                         }
                         record.setDataTypes(dataTypeList);
                         ArrayList<String> valuesOfColumns= new ArrayList<String>();
+//                        rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE+ this.getRecordAddrList().get(i));
+                        byte dataTypes = record.getDataTypes().get(i);
                         for(int j=0;j<record.getNumOfColumn();j++) {
-                            if(record.getDataTypes().get(i)==data.nameToSerialCode("null")) {
+                            if(dataTypes==data.nameToSerialCode("null")) {
                                 valuesOfColumns.add("");
                             }
-                            if(record.getDataTypes().get(i)==data.nameToSerialCode("tinyint")) {
+                            if(dataTypes==data.nameToSerialCode("tinyint")) {
                                 valuesOfColumns.add(String.valueOf(rAFile.readByte()));
                             }
-                            if(record.getDataTypes().get(i)==data.nameToSerialCode("smallint")) {
+                            if(dataTypes==data.nameToSerialCode("smallint")) {
                                 valuesOfColumns.add(String.valueOf(rAFile.readShort()));
                             }
-                            if(record.getDataTypes().get(i)==data.nameToSerialCode("int")) {
+                            if(dataTypes==data.nameToSerialCode("int")) {
                                 valuesOfColumns.add(String.valueOf(rAFile.readInt()));
                             }
-                            if(record.getDataTypes().get(i)==data.nameToSerialCode("bigint")) {
+                            if(dataTypes==data.nameToSerialCode("bigint")) {
                                 valuesOfColumns.add(String.valueOf(rAFile.readLong()));
                             }
-                            if(record.getDataTypes().get(i)==data.nameToSerialCode("float")) {
+                            if(dataTypes==data.nameToSerialCode("float")) {
                                 valuesOfColumns.add(String.valueOf(rAFile.readFloat()));
                             }
-                            if(record.getDataTypes().get(i)==data.nameToSerialCode("double")) {
+                            if(dataTypes==data.nameToSerialCode("double")) {
                                 valuesOfColumns.add(String.valueOf(rAFile.readDouble()));
                             }
-                            if(record.getDataTypes().get(i)==data.nameToSerialCode("datetime")) {
+                            if(dataTypes==data.nameToSerialCode("datetime")) {
                                 valuesOfColumns.add(String.valueOf(rAFile.readLong()));
                             }
-                            if(record.getDataTypes().get(i)==data.nameToSerialCode("date")) {
+                            if(dataTypes==data.nameToSerialCode("date")) {
                                 valuesOfColumns.add(String.valueOf(rAFile.readLong()));
                             }
-                            if(record.getDataTypes().get(i)>data.nameToSerialCode("text")){
+                            if(dataTypes>data.nameToSerialCode("text")){
                                 byte length = (byte) (record.getDataTypes().get(i) - data.nameToSerialCode("text"));
                                 char[] text = new char[length];
                                 for (byte k = 0; k < length; k++) {
@@ -428,36 +430,38 @@ public class Page{
             for(int j=0;j<record.getNumOfColumn();j++) {
                 rAFile.writeByte(record.getDataTypes().get(j));
             }
+
             for(int i=0;i<record.getNumOfColumn();i++) {
                 String object = record.getValuesOfColumns().get(i);
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("null")) {
+                byte dataTypes =record.getDataTypes().get(i);
+                if(dataTypes==data.nameToSerialCode("null")) {
                 }
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("tinyint")) {
+                if(dataTypes==data.nameToSerialCode("tinyint")) {
                     rAFile.writeByte(new Byte(object));
                 }
 
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("smallint")) {
+                if(dataTypes==data.nameToSerialCode("smallint")) {
                     rAFile.writeShort(new Short(object));
                 }
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("int")) {
+                if(dataTypes==data.nameToSerialCode("int")) {
                     rAFile.writeInt(new Integer(object));
                 }
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("bigint")) {
+                if(dataTypes==data.nameToSerialCode("bigint")) {
                     rAFile.writeLong(new Long(object));
                 }
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("float")) {
+                if(dataTypes==data.nameToSerialCode("float")) {
                     rAFile.writeFloat(new Float(object));
                 }
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("double")) {
+                if(dataTypes==data.nameToSerialCode("double")) {
                     rAFile.writeDouble(new Double(object));
                 }
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("datetime")) {
+                if(dataTypes==data.nameToSerialCode("datetime")) {
                     rAFile.writeLong(new Long(object));
                 }
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("date")) {
+                if(dataTypes==data.nameToSerialCode("date")) {
                     rAFile.writeLong(new Long(object));
                 }
-                if(record.getDataTypes().get(i)>data.nameToSerialCode("text")){
+                if(dataTypes>data.nameToSerialCode("text")){
                     byte length = (byte) (record.getDataTypes().get(i) - data.nameToSerialCode("text"));
                     rAFile.writeBytes(object.trim());
                 }
