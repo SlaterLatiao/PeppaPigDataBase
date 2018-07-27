@@ -30,7 +30,7 @@ public class BplusTree {
 	
 	public void insert(Record record) {
 		int key = root.getMaxIndex();
-		record.setRowId(key);
+		record.setRowId(key+1);
 		insertOrUpdate(key+1, record);
 	}
 	
