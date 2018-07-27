@@ -65,7 +65,7 @@ public class CreateTableQueryExe {
         ArrayList<String> rowidValues = new ArrayList<>();
         rowidValues.add(info.tableName);
         rowidValues.add("rowid");
-        rowidValues.add("0x03");
+        rowidValues.add("INT");
         rowidValues.add("1");
         rowidValues.add("0");
         rowidValues.add("0");
@@ -91,7 +91,7 @@ public class CreateTableQueryExe {
 
             columnValues.add(info.tableName);
             columnValues.add(c.getColumnName());
-            columnValues.add(""+c.getDataType().serialCode);
+            columnValues.add(c.getDataType().dataTypeName);
             columnValues.add(""+i+1);
             if(c.isNull()){
                 columnValues.add("1");
