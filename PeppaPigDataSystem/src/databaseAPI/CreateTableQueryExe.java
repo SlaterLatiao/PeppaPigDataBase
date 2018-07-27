@@ -41,7 +41,7 @@ public class CreateTableQueryExe {
 
         ArrayList<String> values = new ArrayList<>();
         values.add(info.tableName); // value of 'table_name'column in tables_table
-        values.add("0"); // value of 'root_page'column in tables_table
+        values.add("1"); // value of 'root_page'column in tables_table
         newRec.setValuesOfColumns(values);
 
         davisTable.insert(newRec);
