@@ -275,13 +275,13 @@ public class Page{
                         this.addRecordList(record);
                     }
                 }
-                rAFile.close();
+
             }
             else{
                 //###############################################################################################
                 //need inner page read function
             }
-
+            rAFile.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

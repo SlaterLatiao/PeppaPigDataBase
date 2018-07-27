@@ -35,8 +35,8 @@ public class CreateTableQueryExe {
 
         newRec.setNumOfColumn(Constants.DAVIS_TABLES_NUM_OF_COLUMNS);
         ArrayList<Byte> dataTypes = new ArrayList<>();
-        dataTypes.add((byte)(new DataType("text").serialCode+info.tableName.length()));
-        dataTypes.add(new DataType("smallint").serialCode);
+        dataTypes.add((byte)(new DataType("text").serialCode+info.tableName.length())); //table_name
+        dataTypes.add(new DataType("smallint").serialCode); // root_page
         newRec.setDataTypes(dataTypes);
 
         ArrayList<String> values = new ArrayList<>();
@@ -65,7 +65,7 @@ public class CreateTableQueryExe {
         ArrayList<String> rowidValues = new ArrayList<>();
         rowidValues.add(info.tableName);
         rowidValues.add("rowid");
-        rowidValues.add("INT");
+        rowidValues.add("int");
         rowidValues.add("1");
         rowidValues.add("0");
         rowidValues.add("0");
@@ -93,7 +93,7 @@ public class CreateTableQueryExe {
             columnValues.add(c.getColumnName());
             columnValues.add(c.getDataType().dataTypeName);
             columnValues.add(""+i+1);
-            if(c.isNull()){
+            if(c.isNullable()){
                 columnValues.add("1");
             }else{
                 columnValues.add("0");

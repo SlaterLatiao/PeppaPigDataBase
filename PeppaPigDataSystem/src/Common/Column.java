@@ -6,14 +6,14 @@ public class Column {
     private String columnName;
     private DataType dataType;
     private boolean isPrimary;
-    private boolean isNull;
+    private boolean isNullable;
     private boolean hasIndex;
 
     public Column(String name,DataType type,boolean isPrimary,boolean isNull){
         this.columnName = name;
         this.dataType = type;
         this.isPrimary = isPrimary;
-        this.isNull = isNull;
+        this.isNullable = isNull;
         this.hasIndex = false;
     }
 
@@ -41,12 +41,12 @@ public class Column {
         isPrimary = primary;
     }
 
-    public boolean isNull() {
-        return isNull;
+    public boolean isNullable() {
+        return isNullable;
     }
 
-    public void setNull(boolean aNull) {
-        isNull = aNull;
+    public void setNullable(boolean aNull) {
+        isNullable = aNull;
     }
 
     public boolean isHasIndex() {
