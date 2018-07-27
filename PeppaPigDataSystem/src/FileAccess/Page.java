@@ -234,8 +234,8 @@ public class Page{
                         record.setDataTypes(dataTypeList);
                         ArrayList<String> valuesOfColumns= new ArrayList<String>();
 //                        rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE+ this.getRecordAddrList().get(i));
-                        byte dataTypes = record.getDataTypes().get(i);
                         for(int j=0;j<record.getNumOfColumn();j++) {
+                            byte dataTypes = record.getDataTypes().get(j);
                             if(dataTypes==data.nameToSerialCode("null")) {
                                 valuesOfColumns.add("");
                             }
@@ -308,7 +308,7 @@ public class Page{
                 }
             }
             if(page.getNumOfRecords()>0){
-                return readMaxRowId();
+                return readMaxRowId()+1;
             }
             else {
                 return 1;
@@ -509,34 +509,35 @@ public class Page{
             }
             for(int i=0;i<record.getNumOfColumn();i++) {
                 String object = record.getValuesOfColumns().get(i);
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("null")) {
+                byte dataTypes = record.getDataTypes().get(i);
+                if(dataTypes==data.nameToSerialCode("null")) {
                 }
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("tinyint")) {
+                if(dataTypes==data.nameToSerialCode("tinyint")) {
                     rAFile.writeByte(new Byte(object));
                 }
 
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("smallint")) {
+                if(dataTypes==data.nameToSerialCode("smallint")) {
                     rAFile.writeShort(new Short(object));
                 }
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("int")) {
+                if(dataTypes==data.nameToSerialCode("int")) {
                     rAFile.writeInt(new Integer(object));
                 }
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("bigint")) {
+                if(dataTypes==data.nameToSerialCode("bigint")) {
                     rAFile.writeLong(new Long(object));
                 }
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("float")) {
+                if(dataTypes==data.nameToSerialCode("float")) {
                     rAFile.writeFloat(new Float(object));
                 }
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("double")) {
+                if(dataTypes==data.nameToSerialCode("double")) {
                     rAFile.writeDouble(new Double(object));
                 }
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("datetime")) {
+                if(dataTypes==data.nameToSerialCode("datetime")) {
                     rAFile.writeLong(new Long(object));
                 }
-                if(record.getDataTypes().get(i)==data.nameToSerialCode("date")) {
+                if(dataTypes==data.nameToSerialCode("date")) {
                     rAFile.writeLong(new Long(object));
                 }
-                if(record.getDataTypes().get(i)>data.nameToSerialCode("text")){
+                if(dataTypes>data.nameToSerialCode("text")){
                     byte length = (byte) (record.getDataTypes().get(i) - data.nameToSerialCode("text"));
                     rAFile.writeBytes(object.trim());
                 }
