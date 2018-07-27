@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import Common.Constants;
 import fileSystem.Record;
@@ -46,7 +45,7 @@ public class Page{
             else{
                 setPageType(Constants.LEAF_TABLE_PAGE);
                 setNumOfRecords((byte)0x00);
-                setStartAddr((short)(Constants.PAGE_SIZE));
+                setStartAddr((short)(Constants.PAGE_SIZE-1));
                 setRightNodeAddr(Constants.RIGET_MOST_PAGE);
                 this.recordAddrList = new ArrayList<Short>();
                 this.RecordList = new ArrayList<Record>();
@@ -63,7 +62,7 @@ public class Page{
     public Page(byte pageType){
         setPageType(pageType);
         setNumOfRecords((byte)0x00);
-        setStartAddr((short)(Constants.PAGE_SIZE));
+        setStartAddr((short)(Constants.PAGE_SIZE-1));
 //        setRightNodeAddr(constants.RIGET_MOST_PAGE);
         this.RecordList = new ArrayList<Record>();
 //        setPageNum(0);
@@ -234,8 +233,8 @@ public class Page{
                         record.setDataTypes(dataTypeList);
                         ArrayList<String> valuesOfColumns= new ArrayList<String>();
 //                        rAFile.seek(this.getPageNum() * Constants.PAGE_SIZE+ this.getRecordAddrList().get(i));
-                        for(int j=0;j<record.getNumOfColumn();j++) {
-                            byte dataTypes = record.getDataTypes().get(j);
+                        for(int l = 0; l <record.getNumOfColumn(); l++) {
+                            byte dataTypes = record.getDataTypes().get(l);
                             if(dataTypes==data.nameToSerialCode("null")) {
                                 valuesOfColumns.add("");
                             }
@@ -273,7 +272,6 @@ public class Page{
                             }
                         }
                         record.setValuesOfColumns(valuesOfColumns);
-
                         this.addRecordList(record);
                     }
                 }
@@ -308,10 +306,10 @@ public class Page{
                 }
             }
             if(page.getNumOfRecords()>0){
-                return readMaxRowId()+1;
+                return readMaxRowId();
             }
             else {
-                return 1;
+                return 0;
             }
         } catch (Exception e) {
             e.printStackTrace();
