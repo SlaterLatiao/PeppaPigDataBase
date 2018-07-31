@@ -28,14 +28,13 @@ public class DataType {
     private static DataType instance;
     
     public DataType(String typeName){
-
         this.dataTypeName = typeName;
-        this.serialCode = nameToSerialCode(dataTypeName);
-        this.contentSize = nameToSize(dataTypeName);
+        getInstance();
+        this.serialCode = serialCodeMap.get(dataTypeName);
+        this.contentSize = sizeMap.get(dataTypeName);
     }
     
     private DataType() {
-        
         serialCodeMap = new HashMap<>();
         serialCodeMap.put(NULL,(byte) 0x00);
         serialCodeMap.put(TINYINT, (byte) 0x01);
@@ -91,6 +90,4 @@ public class DataType {
     public int nameToSize(String dataTypeName){
         return sizeMap.get(dataTypeName);
     }
-
-
 }
