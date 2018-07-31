@@ -26,6 +26,15 @@ public class Record {
 		calculatePayLoad();
 		data = DataType.getInstance();
 	}
+	
+	public Record(int rowId,short payLoad, byte numOfColumn,ArrayList<Byte> dataTypes,ArrayList<String> valuesOfColumns){
+		this.rowId = rowId;
+		this.payLoad = payLoad;
+		this.numOfColumn = numOfColumn;
+		this.dataTypes = dataTypes;
+		this.valuesOfColumns = valuesOfColumns;
+		data = DataType.getInstance();
+	}
 
 	/*public Record() {
 		payLoad = 0;

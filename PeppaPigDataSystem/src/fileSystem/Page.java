@@ -187,28 +187,27 @@ public class Page {
 					rStarts.add(raf.readShort());
 
 				for (int i = 0; i < nRecords; i++) {
-					Record r = new Record();
 					// goes to start of record content
 					raf.seek(getFileAddr(rStarts.get(i)));
+					
 					// read payload
-					r.setPayLoad(raf.readShort());
+					short payLoad = raf.readShort();
 					// read row id
-					r.setRowId(raf.readInt());
+					int rowId = raf.readInt();
 					// read number of columns
-					r.setNumOfColumn(raf.readByte());
+					byte nColumns = raf.readByte();
 					ArrayList<Byte> dataTypes = new ArrayList<Byte>();
 					// construct list of data types
-					for (int j = 0; i < r.getNumOfColumn(); j++)
+					for (int j = 0; i < nColumns; j++)
 						dataTypes.add(raf.readByte());
-					r.setDataTypes(dataTypes);
+					
 					ArrayList<String> values = new ArrayList<String>();
 					// read each record value and append to list
-					for (int j = 0; j < r.getNumOfColumn(); j++) {
+					for (int j = 0; j < nColumns; j++) {
 						byte dataType = dataTypes.get(j);
 						values = readDataByType(values, dataType);
-						r.setValuesOfColumns(values);
-						records.add(r);
 					}
+					records.add(new Record(rowId, payLoad, nColumns, dataTypes, values));
 				}
 			}
 		} catch (Exception e) {
