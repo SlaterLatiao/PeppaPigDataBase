@@ -17,7 +17,13 @@ public class BplusTree {
 	}
 	// TODO: 
 	public List<Record> getAll() {
-		return null;
+		Node node = root.getLeftMost();
+		List<Record> list = new ArrayList<Record>();
+		while (node != null) {
+			list.addAll(node.getRecords());
+			node = node.getNext();
+		}
+		return list;
 	}
 	// TODO:
 	public List<Record> getByID(List<Integer> row_ids) {
