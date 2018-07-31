@@ -17,22 +17,15 @@ public class DataType {
     public static final String TEXT = "text";
     public static final String NULL ="null";
 
-    public String dataTypeName;
-    public byte serialCode;
-    public int contentSize;
+    private HashMap<String,Byte> serialCodeMap;
+    private HashMap<Byte,String> typeNameMap;
+    private HashMap<String,Integer> sizeMap;
 
-    public DataType(){
-    }
-
-    public DataType(String typeName){
-
-        this.dataTypeName = typeName;
-        this.serialCode = nameToSerialCode(dataTypeName);
-        this.contentSize = nameToSize(dataTypeName);
-    }
-
-    public byte nameToSerialCode(String dataTypeName){
-        HashMap<String,Byte> serialCodeMap = new HashMap<>();
+    private static DataType instance;
+    
+    private DataType(){
+        
+        serialCodeMap = new HashMap<>();
         serialCodeMap.put(NULL,(byte) 0x00);
         serialCodeMap.put(TINYINT, (byte) 0x01);
         serialCodeMap.put(SMALLINT, (byte) 0x02);
@@ -43,12 +36,8 @@ public class DataType {
         serialCodeMap.put(DATETIME, (byte) 0x07);
         serialCodeMap.put(DATE, (byte) 0x08);
         serialCodeMap.put(TEXT, (byte) 0x0A);
-
-        return serialCodeMap.get(dataTypeName);
-    }
-
-    public String serialCodeToName(Byte serialCode){
-        HashMap<Byte,String> typeNameMap = new HashMap<>();
+        
+        typeNameMap = new HashMap<>();
         typeNameMap.put((byte) 0x00,NULL);
         typeNameMap.put((byte) 0x01,TINYINT);
         typeNameMap.put((byte) 0x02,SMALLINT);
@@ -59,12 +48,8 @@ public class DataType {
         typeNameMap.put((byte) 0x07,DATETIME);
         typeNameMap.put((byte) 0x08,DATE);
         typeNameMap.put((byte) 0x0A,TEXT);
-
-        return typeNameMap.get(serialCode);
-    }
-
-    public int nameToSize(String dataTypeName){
-        HashMap<String,Integer> sizeMap = new HashMap<>();
+        
+        sizeMap = new HashMap<>();
         sizeMap.put(NULL, 0);
         sizeMap.put(TINYINT, 1);
         sizeMap.put(SMALLINT, 2);
@@ -75,7 +60,24 @@ public class DataType {
         sizeMap.put(DATETIME, 8);
         sizeMap.put(DATE, 8);
         sizeMap.put(TEXT, 10);
+    }
+    
+    public static DataType getInstance() {
+    	if (instance == null) {
+            instance = new DataType();
+        }
+        return instance;
+    }
 
+    public byte nameToSerialCode(String dataTypeName){
+        return serialCodeMap.get(dataTypeName);
+    }
+
+    public String serialCodeToName(Byte serialCode){
+        return typeNameMap.get(serialCode);
+    }
+
+    public int nameToSize(String dataTypeName){
         return sizeMap.get(dataTypeName);
     }
 
