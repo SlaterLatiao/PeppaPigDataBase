@@ -21,16 +21,26 @@ public class Page {
 	File tableFile;
 	private RandomAccessFile raf;
 
-//	private static final byte TINYINT_SC = DataType.getInstance().nameToSerialCode("tinyint");
-//	private static final byte SMALLINT_SC = DataType.getInstance().nameToSerialCode("smallint");
-//	private static final byte INT_SC = DataType.getInstance().nameToSerialCode("int");
-//	private static final byte BIGINT_SC = DataType.getInstance().nameToSerialCode("bigint");
-//	private static final byte FLOAT_SC = DataType.getInstance().nameToSerialCode("float");
-//	private static final byte DOUBLE_SC = DataType.getInstance().nameToSerialCode("double");
-//	private static final byte DATETIME_SC = DataType.getInstance().nameToSerialCode("datetime");
-//	private static final byte DATE_SC = DataType.getInstance().nameToSerialCode("date");
-//	private static final byte TEXT_SC = DataType.getInstance().nameToSerialCode("text");
-//	private static final byte NULL_SC = DataType.getInstance().nameToSerialCode("null");
+	// private static final byte TINYINT_SC =
+	// DataType.getInstance().nameToSerialCode("tinyint");
+	// private static final byte SMALLINT_SC =
+	// DataType.getInstance().nameToSerialCode("smallint");
+	// private static final byte INT_SC =
+	// DataType.getInstance().nameToSerialCode("int");
+	// private static final byte BIGINT_SC =
+	// DataType.getInstance().nameToSerialCode("bigint");
+	// private static final byte FLOAT_SC =
+	// DataType.getInstance().nameToSerialCode("float");
+	// private static final byte DOUBLE_SC =
+	// DataType.getInstance().nameToSerialCode("double");
+	// private static final byte DATETIME_SC =
+	// DataType.getInstance().nameToSerialCode("datetime");
+	// private static final byte DATE_SC =
+	// DataType.getInstance().nameToSerialCode("date");
+	// private static final byte TEXT_SC =
+	// DataType.getInstance().nameToSerialCode("text");
+	// private static final byte NULL_SC =
+	// DataType.getInstance().nameToSerialCode("null");
 
 	public Page(String filePath) {
 		pNum = 0;
@@ -38,25 +48,125 @@ public class Page {
 		tableFile = new File(filePath);
 
 		try {
+			// table exists, retrieve data
 			if (tableFile.exists()) {
 				raf = new RandomAccessFile(tableFile, "r");
 				raf.seek(0);
 				readContent();
-
 				raf.close();
+				// table doesn't exist, create a new root
 			} else {
-//				setPageType(Constants.LEAF_TABLE_PAGE);
-//				setNumOfRecords((byte) 0x00);
-//				setStartAddr((short) (Constants.PAGE_SIZE - 1));
-//				setRightNodeAddr(Constants.RIGET_MOST_PAGE);
-//				this.recordAddrList = new ArrayList<Short>();
-//				this.RecordList = new ArrayList<Record>();
-//				setPageNum(1);
-//				createFile(filePath);
+				raf = new RandomAccessFile(tableFile, "rw");
+
+				type = Constants.LEAF_TABLE_PAGE;
+
+				if (tableFile.createNewFile()) {
+
+					raf = new RandomAccessFile(tableFile, "rw");
+					raf.setLength(Constants.PAGE_SIZE);
+					raf.seek(0);
+
+					// write page type = table leaf into both page and file
+					type = Constants.LEAF_TABLE_PAGE;
+					raf.writeByte(type);
+					// number of records is 0
+					nRecords = 0;
+					raf.writeByte(nRecords);
+					// list of record start addresses is empty
+					rStarts = new ArrayList<Short>();
+					// start of content is end of page
+					raf.writeShort(Constants.PAGE_SIZE);
+					// root is rightmost page in initialization
+					rPointer = Constants.RIGET_MOST_PAGE;
+					raf.writeInt(rPointer);
+					raf.close();
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Page(byte type, int pno, File tableFile) {
+		pNum = pno;
+
+		this.tableFile = tableFile;
+		records = new ArrayList<Record>();
+
+		try {
+			raf = new RandomAccessFile(tableFile, "rw");
+			raf.setLength(Constants.PAGE_SIZE);
+			raf.seek(0);
+
+			// write page type into both page and file
+			this.type = type;
+			raf.writeByte(type);
+			// number of records is 0
+			nRecords = 0;
+			raf.writeByte(nRecords);
+			// list of record start addresses is empty
+			rStarts = new ArrayList<Short>();
+			// start of content is end of page
+			raf.writeShort(Constants.PAGE_SIZE);
+			// new node is rightmost page in initialization
+			rPointer = Constants.RIGET_MOST_PAGE;
+			raf.writeInt(rPointer);
+			raf.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		type = Constants.LEAF_TABLE_PAGE;
+
+	}
+
+	public Page getNewPage(byte type) {
+		Page page = new Page(type, getMaxPnum() + 1, tableFile);
+		page.pNum = this.pNum + 1;
+		return page;
+	}
+
+	public boolean isLeaf() {
+		if (type == Constants.LEAF_INDEX_PAGE || type == Constants.LEAF_TABLE_PAGE)
+			return true;
+		return false;
+	}
+
+	public int getEmptySpace() {
+		int space = 0;
+		space = (int) startAddr - Constants.PAGE_HEADER_LENGTH - 2 * rStarts.size();
+		return space;
+	}
+
+	public int getMaxPnum() {
+		try {
+			raf = new RandomAccessFile(tableFile, "r");
+			int size = (int) raf.length();
+			raf.close();
+			return size / Constants.PAGE_SIZE - 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+	public void setRPointer(Page p) {
+		int pnum = p.getPNum();
+		try {
+			raf = new RandomAccessFile(tableFile, "wr");
+			// set right pointer to page p
+			rPointer = pnum;
+			// move to r pointer position
+			raf.seek(getFileAddr(4));
+			raf.writeInt(rPointer);
+			raf.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public int getPNum() {
+		return pNum;
 	}
 
 	private void readContent() {
@@ -107,8 +217,8 @@ public class Page {
 		}
 	}
 
-	private long getFileAddr(Short offset) {
-		return pNum * Constants.PAGE_SIZE;
+	private long getFileAddr(int offset) {
+		return pNum * Constants.PAGE_SIZE + offset;
 	}
 
 	private ArrayList<String> readDataByType(ArrayList<String> values, byte dataType) {
