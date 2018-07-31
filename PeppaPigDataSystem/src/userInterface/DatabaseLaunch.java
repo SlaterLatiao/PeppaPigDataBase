@@ -236,11 +236,16 @@ public class DatabaseLaunch {
             tableName = userCommand.toLowerCase().substring(onIndex+1,openBrkIndex).trim();
             columnName = userCommand.toLowerCase().substring(openBrkIndex+1,closeBrkIndex).trim();
 
-            CreateIndexQueryInfo createIndexQueryInfo = new CreateIndexQueryInfo(indexName,tableName,columnName);
-            // TODO EXECUTE QUERY QUERY
+            isExist = databaseAPI.General.checkCreateIndex(tableName,columnName,indexName);
+            if(isExist){
+                System.out.println(Errors.TABLE_EXISTS.replace("%1",tableName));
+                return;
+            }else{
+                CreateIndexQueryInfo createIndexQueryInfo = new CreateIndexQueryInfo(indexName,tableName,columnName);
+                // TODO EXECUTE QUERY QUERY
+            }
         }else{
             System.out.println("Unrecognised Command: " + userCommand + "\nType \"help;\" to display supported commands.");
-            return;
         }
     }
 

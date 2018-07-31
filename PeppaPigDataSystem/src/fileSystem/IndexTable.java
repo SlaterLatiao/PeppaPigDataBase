@@ -10,8 +10,8 @@ public class IndexTable {
 
     private BTree bTree;
 
-    public IndexTable(String tablePath){
-        bTree = new BTree(tablePath);
+    public IndexTable(String indexTablePath){
+        bTree = new BTree(indexTablePath);
     }
 
     public List<IndexRecord> getAllIndexRecord(){
