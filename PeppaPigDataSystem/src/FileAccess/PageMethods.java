@@ -186,16 +186,82 @@ public class PageMethods {
 //##################################################################################################################
 //FOR FUNCTION exchangeContent()
 
-    public void exchangeContent(Page page) {
+    public void exchangeContent(PageMethods page) {
+        try {
+            //write page into root(0th page)
+            raf = new RandomAccessFile(tableFile, "rw");
+            raf.seek(getFileAddr(0));
+            raf.writeByte(page.type);
+            raf.writeByte(page.nRecords);
+            raf.writeShort(page.startAddr);
+            raf.writeInt(page.rPointer);
 
+            for(int i =0;i<page.nRecords;i++){
+                raf.writeShort(page.rStarts.get(i));
+            }
+            List<Record> recordsBuffer = page.records;
+            Record rBuffer;
+            List<Byte> tBuffer;
+            List<String> cBuffer;
+            for(int j=0;j<nRecords;j++){
+                rBuffer = recordsBuffer.get(j);
+                raf.writeShort(rBuffer.getPayLoad());
+                raf.writeInt(rBuffer.getRowId());
+                raf.writeByte(rBuffer.getNumOfColumn());
 
+                tBuffer = rBuffer.getDataTypes();
+                for(int k=0;k<rBuffer.getNumOfColumn();k++){
+                    raf.writeByte(tBuffer.get(k));
+                }
 
+                cBuffer = rBuffer.getValuesOfColumns();
+                for(int m=0;m<rBuffer.getNumOfColumn();m++){
+                    writeDataByType(cBuffer.get(m), tBuffer.get(m));
+                }
+            }
+            //write previous 0th page into page.position
+            raf = new RandomAccessFile(tableFile, "rw");
+            raf.seek(page.getFileAddr(0));
+            raf.writeByte(type);
+            raf.writeByte(nRecords);
+            raf.writeShort(startAddr);
+            raf.writeInt(rPointer);
+
+            for(int i =0;i<nRecords;i++){
+                raf.writeShort(rStarts.get(i));
+            }
+
+            for(int j=0;j<nRecords;j++){
+                rBuffer = records.get(j);
+                raf.writeShort(rBuffer.getPayLoad());
+                raf.writeInt(rBuffer.getRowId());
+                raf.writeByte(rBuffer.getNumOfColumn());
+
+                tBuffer = rBuffer.getDataTypes();
+                for(int k=0;k<rBuffer.getNumOfColumn();k++){
+                    raf.writeByte(tBuffer.get(k));
+                }
+
+                cBuffer = rBuffer.getValuesOfColumns();
+                for(int m=0;m<rBuffer.getNumOfColumn();m++){
+                    writeDataByType(cBuffer.get(m), tBuffer.get(m));
+                }
+            }
+            raf.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 //##################################################################################################################
 
 
 //##################################################################################################################
+//FOR FUNCTION getChildren()
 
+    public List<Page> getChildren() {
+
+        return null;
+    }
 //##################################################################################################################
 
 //##################################################################################################################
