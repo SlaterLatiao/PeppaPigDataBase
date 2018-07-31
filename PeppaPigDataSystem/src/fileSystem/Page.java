@@ -56,7 +56,6 @@ public class Page {
 				raf.close();
 				// table doesn't exist, create a new root
 			} else {
-				raf = new RandomAccessFile(tableFile, "rw");
 
 				type = Constants.LEAF_TABLE_PAGE;
 
