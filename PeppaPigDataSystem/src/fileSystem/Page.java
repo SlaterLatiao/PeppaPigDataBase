@@ -74,7 +74,7 @@ public class Page {
 					// list of record start addresses is empty
 					rStarts = new ArrayList<Short>();
 					// start of content is end of page
-					raf.writeShort(Constants.PAGE_SIZE);
+					raf.writeShort(Constants.PAGE_SIZE-1);
 					// root is rightmost page in initialization
 					rPointer = Constants.RIGET_MOST_PAGE;
 					raf.writeInt(rPointer);
@@ -106,7 +106,7 @@ public class Page {
 			// list of record start addresses is empty
 			rStarts = new ArrayList<Short>();
 			// start of content is end of page
-			raf.writeShort(Constants.PAGE_SIZE);
+			raf.writeShort(Constants.PAGE_SIZE-1);
 			// new node is rightmost page in initialization
 			rPointer = Constants.RIGET_MOST_PAGE;
 			raf.writeInt(rPointer);
