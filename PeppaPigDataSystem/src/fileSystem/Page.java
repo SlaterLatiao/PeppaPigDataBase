@@ -232,7 +232,7 @@ public class Page {
 
 			// update rStarts in both file and page
 			rStarts.add(startAddr);
-			raf.skipBytes(4 + 2 * nRecords - 1);
+			raf.skipBytes(4 + 2 * (nRecords - 1));
 			raf.writeShort(this.startAddr);
 
 			// add record in both file and page
@@ -383,8 +383,31 @@ public class Page {
 	}
 
 	public int getMaxRowID() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+		int maxRowId = 0;
+		int pnum = (int) (tableFile.length() / (long) Constants.PAGE_SIZE);
+		byte pt = -1;
+		try {
+			raf = new RandomAccessFile(tableFile, "r");
+			while (pt != Constants.LEAF_TABLE_PAGE && pt != Constants.LEAF_INDEX_PAGE) {
+				pnum--;
+				raf.seek(pnum * Constants.PAGE_SIZE);
+				pt = raf.readByte();
+			}
 
+			raf.seek(pnum * Constants.PAGE_SIZE + 1);
+			byte recordNum = raf.readByte();
+			if (recordNum != 0) {
+				raf.seek(pnum * Constants.PAGE_SIZE + Constants.PAGE_HEADER_LENGTH + 2 * (recordNum - 1));
+				byte maxRecordAddr = raf.readByte();
+				raf.seek(pnum * Constants.PAGE_SIZE + maxRecordAddr + 2);
+				maxRowId = raf.readInt();
+			}
+			raf.close();
+			return maxRowId;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+
+	}
 }
