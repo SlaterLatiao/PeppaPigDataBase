@@ -18,21 +18,29 @@ public class Record {
 	private short childrenRecord;
 	private DataType data;
 
-	public Record() {
-		payLoad = 0;
+	public Record(int pageNumOfRec,byte numOfColumn,ArrayList<Byte> dataTypes,ArrayList<String> valuesOfColumns){
+		this.pageNumOfRec = pageNumOfRec;
+		this.numOfColumn = numOfColumn;
+		this.dataTypes = dataTypes;
+		this.valuesOfColumns = valuesOfColumns;
+		calculatePayLoad();
 		data = DataType.getInstance();
 	}
+
+	/*public Record() {
+		payLoad = 0;
+		data = DataType.getInstance();
+	}*/
 
 	public int getPageNumOfRec() {
 		return pageNumOfRec;
 	}
+	public void setPageNumOfRec(int pageNumOfRec) {
+		this.pageNumOfRec = pageNumOfRec;
+	}
 
 	public int getSpace() {
 		return this.payLoad + 6;
-	}
-
-	public void setPageNumOfRec(int pageNumOfRec) {
-		this.pageNumOfRec = pageNumOfRec;
 	}
 
 	public short getPayLoad() {

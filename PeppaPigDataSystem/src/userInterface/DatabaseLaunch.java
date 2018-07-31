@@ -91,7 +91,7 @@ public class DatabaseLaunch {
         String cmd_create_tablesTable = "create table davisbase_tables (table_name TEXT NOT NULL,root_page smallint)";
         String cmd_create_columnsTable = "create table davisbase_columns (table_name TEXT NOT NULL," +
                 "column_name TEXT NOT NULL, data_type TEXT NOT NULL, ordinal_position TINYINT," +
-                "is_nullable TINYINT,column_key TINYINT)";
+                "is_nullable TINYINT,is_pirmary TINYINT,index_name TEXT)";
         CreateTableQueryExe.initialCreateSystemTables();
         parseUserCommand(cmd_create_tablesTable);
         parseUserCommand(cmd_create_columnsTable);
@@ -218,19 +218,19 @@ public class DatabaseLaunch {
             CreateTableQueryInfo createTableQueryInfo = new CreateTableQueryInfo(tableName,columns);
             CreateTableQueryExe.executeQuery(createTableQueryInfo);
 
-        }/*else if(PartsEqual(userCommand, "create index")){
+        }else if(PartsEqual(userCommand, "create index")){
             String indexName;
             String columnName;
             int onIndex = userCommand.toLowerCase().indexOf("on");
             if(onIndex == -1) {
-                out.println(Errors.SYNTAX_ERROR.replace("%1", userCommand));
+                System.out.println(Errors.SYNTAX_ERROR.replace("%1", userCommand));
                 return;
             }
             indexName = userCommand.toLowerCase().substring("create index".length(),onIndex).trim();
             int openBrkIndex = userCommand.toLowerCase().indexOf("(");
             int closeBrkIndex = userCommand.toLowerCase().indexOf(")");
             if(openBrkIndex == -1 || closeBrkIndex == -1){
-                out.println(Errors.SYNTAX_ERROR.replace("%1", userCommand));
+                System.out.println(Errors.SYNTAX_ERROR.replace("%1", userCommand));
                 return;
             }
             tableName = userCommand.toLowerCase().substring(onIndex+1,openBrkIndex).trim();
@@ -238,7 +238,7 @@ public class DatabaseLaunch {
 
             CreateIndexQueryInfo createIndexQueryInfo = new CreateIndexQueryInfo(indexName,tableName,columnName);
             // TODO EXECUTE QUERY QUERY
-        }*/else{
+        }else{
             System.out.println("Unrecognised Command: " + userCommand + "\nType \"help;\" to display supported commands.");
             return;
         }
