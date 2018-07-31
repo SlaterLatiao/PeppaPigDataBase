@@ -17,12 +17,9 @@ public class InsertQueryExe {
 
         Table currTable = new Table(tablePath+"/"+info.tableName+Constants.DEFAULT_FILE_EXTENSION);
 
-        Record newRec = new Record();
-
         ArrayList<Column> tableColumns = databaseAPI.General.getColumns(info.tableName);
 
         //1) Every record needs set num of columns
-        newRec.setNumOfColumn((byte)tableColumns.size());
 
         ArrayList<String> userColumnsNames = info.columns;
         ArrayList<String> userValues = info.values;
@@ -54,15 +51,14 @@ public class InsertQueryExe {
                 dataTypes.add(col.getDataType().serialCode);
             }
         }
-        newRec.setDataTypes(dataTypes);
 
         //3) Every record needs to set values
         ArrayList<String> values = new ArrayList<>();
         for(String colValStr : colVal) {
             values.add(colValStr);
         }
-        newRec.setValuesOfColumns(values);
 
+        Record newRec = new Record((byte)tableColumns.size(),(byte)dataTypes.size(),dataTypes,values);
         currTable.insert(newRec);
 
     }
