@@ -20,10 +20,21 @@ public class DataType {
     private HashMap<String,Byte> serialCodeMap;
     private HashMap<Byte,String> typeNameMap;
     private HashMap<String,Integer> sizeMap;
+    
+    public String dataTypeName;
+    public byte serialCode;
+    public int contentSize;
 
     private static DataType instance;
     
-    private DataType(){
+    public DataType(String typeName){
+
+        this.dataTypeName = typeName;
+        this.serialCode = nameToSerialCode(dataTypeName);
+        this.contentSize = nameToSize(dataTypeName);
+    }
+    
+    private DataType() {
         
         serialCodeMap = new HashMap<>();
         serialCodeMap.put(NULL,(byte) 0x00);
