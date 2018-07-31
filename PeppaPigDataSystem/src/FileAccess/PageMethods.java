@@ -186,7 +186,7 @@ public class PageMethods {
 //##################################################################################################################
 //FOR FUNCTION exchangeContent()
 
-    public void exchangeContent(PageMethods page) {
+    public void exchangeContent(Page page) {
         try {
             //write page into root(0th page)
             raf = new RandomAccessFile(tableFile, "rw");
@@ -259,12 +259,36 @@ public class PageMethods {
 //FOR FUNCTION getChildren()
 
     public List<Page> getChildren() {
-
-        return null;
+        Record cRecord;
+        ArrayList<Page> children = new ArrayList<Page>();
+        Page page;
+        int pnBuffer;
+        for(int i =0;i<nRecords;i++){
+            cRecord=records.get(i);
+            pnBuffer=Integer.valueOf(cRecord.getValuesOfColumns().get(0));
+            page = new Page(tableFile.getAbsolutePath(),pnBuffer);
+            children.add(page);
+        }
+        return children;
     }
 //##################################################################################################################
 
 //##################################################################################################################
+//FOR CONSTRUCTOR page()
+    public Page(String filePath,int pNum){
+        this.pNum = pNum;
+        records = new ArrayList<Record>();
+        tableFile = new File(filePath);
+
+        try {
+            raf = new RandomAccessFile(tableFile, "r");
+            raf.seek(getFileAddr(0));
+            readContent();
+            raf.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 //##################################################################################################################
 
