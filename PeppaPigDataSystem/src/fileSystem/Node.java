@@ -20,7 +20,8 @@ class Node {
 	protected List<Node> children;
 	protected Page page;
 	protected Node parent;
-
+	protected Node next;
+	
 	Node(Page page) {
 		this.page = page;
 		this.isLeaf = page.isLeaf();
@@ -30,6 +31,8 @@ class Node {
 			children = new ArrayList<Node>();
 			for (Page p : list)
 				children.add(new Node(p));
+		} else {
+			next = new Node(page.getNext());
 		}
 	}
 
@@ -112,6 +115,10 @@ class Node {
 	int getRecordsSize() {
 		return records.size();
 	}
+	
+	List<Record> getRecords() {
+		return records;
+	}
 
 	int getEmptySpace() {
 		return page.getEmptySpace();
@@ -179,6 +186,16 @@ class Node {
 
 	public int getMaxRowID() {
 		return page.getMaxRowID();
+	}
+
+	public Node getLeftMost() {
+		if (isLeaf)
+			return this;
+		return children.get(0).getLeftMost();
+	}
+
+	public Node getNext() {
+		return next;
 	}
 
 }

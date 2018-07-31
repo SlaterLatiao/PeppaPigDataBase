@@ -189,7 +189,7 @@ public class Page {
 				for (int i = 0; i < nRecords; i++) {
 					// goes to start of record content
 					raf.seek(getFileAddr(rStarts.get(i)));
-					
+
 					// read payload
 					short payLoad = raf.readShort();
 					// read row id
@@ -200,7 +200,7 @@ public class Page {
 					// construct list of data types
 					for (int j = 0; i < nColumns; j++)
 						dataTypes.add(raf.readByte());
-					
+
 					ArrayList<String> values = new ArrayList<String>();
 					// read each record value and append to list
 					for (int j = 0; j < nColumns; j++) {
@@ -216,7 +216,6 @@ public class Page {
 	}
 
 	public void addRecord(Record r) {
-		r.calculatePayLoad();
 
 		try {
 			raf = new RandomAccessFile(tableFile, "rw");
@@ -233,7 +232,7 @@ public class Page {
 
 			// update rStarts in both file and page
 			rStarts.add(startAddr);
-			raf.skipBytes(4 + nRecords - 1);
+			raf.skipBytes(4 + 2 * nRecords - 1);
 			raf.writeShort(this.startAddr);
 
 			// add record in both file and page

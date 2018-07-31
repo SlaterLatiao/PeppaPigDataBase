@@ -8,6 +8,7 @@ import Common.Constants;
 
 import databaseAPI.CreateTableQueryExe;
 import userInterface.QueriesInfo.*;
+import userInterface.Utils.Condition;
 import userInterface.Utils.Errors;
 
 
@@ -144,11 +145,11 @@ public class DatabaseLaunch {
 
 
 
-    /*public static void showTable(String userCommand) {
-        *//**
+    public static void showTable(String userCommand) {
+        /**
          * show table;
          *   == select * from davisbase_tables;
-         * *//*
+         * */
         if(!PartsEqual(userCommand, "show tables")) {
             System.out.println("Unrecognised Command: " + userCommand + "\nType \"help;\" to display supported commands.");
             return;
@@ -159,9 +160,7 @@ public class DatabaseLaunch {
         ArrayList<Condition> selectCondition = new ArrayList<>();
         SelectQueryInfo showTable = new SelectQueryInfo(columnsList,tableName,selectCondition,null);
         // TODO EXECUTE QUERY
-        showTable.ExecuteQuery();
     }
-*/
 
 
 
@@ -253,19 +252,18 @@ public class DatabaseLaunch {
 
 
 
-    /*public static void parseDrop(String dropString) {
-        *//**
+    public static void parseDrop(String dropString) {
+        /**
          * drop table <table_name>;
          *
          * drop index <table_name>.<column_name>;
-         * *//*
+         * */
         boolean isExist = false;
-        StorageManager storageManager = new StorageManager();
         String tableName;
         if(PartsEqual(dropString, "drop table")){
             tableName = dropString.toLowerCase().substring("drop table".length()).trim();
             // check whether the table is already exist
-            isExist = storageManager.checkTableExists(tableName);
+            isExist = databaseAPI.General.checkTableExists(tableName);
             if(!isExist){
                 System.out.println(Errors.TABLE_NOT_EXISTS.replace("%1",tableName));
                 return;
@@ -281,7 +279,7 @@ public class DatabaseLaunch {
 
             tableName = dropString.toLowerCase().substring("drop index".length(),dotIndex).trim();
             // check whether the table is already exist
-            isExist = storageManager.checkTableExists(tableName);
+            isExist = databaseAPI.General.checkTableExists(tableName);
             if(!isExist){
                 System.out.println(Errors.TABLE_NOT_EXISTS);
                 return;
@@ -294,7 +292,7 @@ public class DatabaseLaunch {
             System.out.println("Unrecognised Command: " + dropString + "\nType \"help;\" to display supported commands.");
             return;
         }
-    }*/
+    }
 
 
 
@@ -363,16 +361,15 @@ public class DatabaseLaunch {
 
 
 
-    /*private static void parseDelete(String userCommand) {
-        *//**
+    private static void parseDelete(String userCommand) {
+        /**
          * delete from <table_name> where <condition_list>;
-         * *//*
+         * */
         String tableName;
         String logiOper;
         int value = -1;
         boolean isExist =false;
         ArrayList<Condition> conditions = new ArrayList<>();
-        StorageManager storageManager = new StorageManager();
 
         if(!PartsEqual(userCommand, "delete from")) {
             System.out.println("Unrecognised Command: " + userCommand + "\nType \"help;\" to display supported commands.");
@@ -393,12 +390,15 @@ public class DatabaseLaunch {
                 }
                 logiOperIndex = restString.indexOf(logiOper);
             }
-            conditions = getSelectConditionList(restString,logiOper,logiOperIndex);
             tableName = userCommand.toLowerCase().substring("delete from".length(),whereIndex).trim();
+            conditions = getSelectConditionList(tableName,restString,logiOper,logiOperIndex);
+            if(conditions == null){
+                return;
+            }
         }
 
         // check whether the table is already exist
-        isExist = storageManager.checkTableExists(tableName);
+        isExist = databaseAPI.General.checkTableExists(tableName);
         if(!isExist){
             System.out.println(Errors.TABLE_NOT_EXISTS);
             return;
@@ -406,16 +406,16 @@ public class DatabaseLaunch {
 
         DeleteQueryInfo deleteQueryInfo = new DeleteQueryInfo(tableName,value,conditions,logiOper);
         // TODO EXECUTE QUERY
-    }*/
+    }
 
 
 
 
 
-    /*public static void parseUpdate(String updateString) {
-        *//**
+    public static void parseUpdate(String updateString) {
+        /**
          * update table <table_name> set <column_name> = <value> [where <condition_list>];
-         * *//*
+         * */
         if(!PartsEqual(updateString, "update table")) {
             System.out.println("Unrecognised Command: " + updateString + "\nType \"help;\" to display supported commands.");
             return;
@@ -426,7 +426,6 @@ public class DatabaseLaunch {
         String value;
         ArrayList<Condition> conditions;
         boolean isExist = false;
-        StorageManager storageManager = new StorageManager();
 
         if(setIndex == -1){
             System.out.println(Errors.SYNTAX_ERROR.replace("%1",updateString));
@@ -434,7 +433,7 @@ public class DatabaseLaunch {
         }
         tableName = updateString.toLowerCase().substring("update table".length(),setIndex).trim();
         // check whether the table is already exist
-        isExist = storageManager.checkTableExists(tableName);
+        isExist = databaseAPI.General.checkTableExists(tableName);
         if(!isExist){
             System.out.println(Errors.TABLE_NOT_EXISTS);
             return;
@@ -469,21 +468,23 @@ public class DatabaseLaunch {
             }
             logiOperIndex = restString.indexOf(logiOper);
         }
-        conditions = getSelectConditionList(restString,logiOper,logiOperIndex);
-
+        conditions = getSelectConditionList(tableName,restString,logiOper,logiOperIndex);
+        if(conditions == null){
+            return;
+        }
         UpdateQueryInfo updateQueryInfo = new UpdateQueryInfo(tableName,columnName,value,conditions,logiOper);
         // TODO EXECUTE QUERY
-    }*/
+    }
 
 
 
 
 
 
-    /*public static void parseSelect(String queryString){
-        *//**
+    public static void parseSelect(String queryString){
+        /**
          * select <column_name_list> from <table_name> [where <selectConditions_list>];
-         * *//*
+         * */
         //get the attributesList
         int fromIndex = queryString.toLowerCase().indexOf("from");
         if(fromIndex == -1) {
@@ -497,14 +498,13 @@ public class DatabaseLaunch {
 
         //get the table name
         boolean isExist = false;
-        StorageManager storageManager = new StorageManager();
         String tableName;
         String restQueryString = queryString.substring(fromIndex + "from".length());
         int whereIndex = restQueryString.toLowerCase().indexOf("where");// check whether the query has 'where' select condition.
         if(whereIndex == -1){ // query without select condition
             tableName = restQueryString.trim();
             // check whether the table is already exist
-            isExist = storageManager.checkTableExists(tableName);
+            isExist = databaseAPI.General.checkTableExists(tableName);
             if(!isExist){
                 System.out.println(Errors.TABLE_NOT_EXISTS.replace("%1",tableName));
             }else{
@@ -516,7 +516,7 @@ public class DatabaseLaunch {
         }else{// query with select condition
             tableName = restQueryString.substring(0, whereIndex).trim();
             // check whether the table is already exist
-            isExist = storageManager.checkTableExists(tableName);
+            isExist = databaseAPI.General.checkTableExists(tableName);
             if(!isExist){
                 System.out.println(Errors.TABLE_NOT_EXISTS.replace("%1",tableName));
             }else{
@@ -530,12 +530,15 @@ public class DatabaseLaunch {
                     }
                     logiOperIndex = whereString.indexOf(logiOper);
                 }
-                ArrayList<Condition> selectCondition = getSelectConditionList(whereString,logiOper,logiOperIndex);
+                ArrayList<Condition> selectCondition = getSelectConditionList(tableName,whereString,logiOper,logiOperIndex);
+                if(selectCondition == null){
+                    return;
+                }
                 SelectQueryInfo selectQueryInfo = new SelectQueryInfo(columns,tableName,selectCondition,logiOper);
                 // TODO EXECUTE QUERY
             }
         }
-    }*/
+    }
 
 
 
@@ -588,7 +591,7 @@ public class DatabaseLaunch {
         return columns;
     }
 
-    /*public static String getLogicalOperator(String whereString){
+    public static String getLogicalOperator(String whereString){
         if(whereString.contains("not")){
             int notIndex = whereString.indexOf("not");
             if(notIndex != 0){
@@ -624,9 +627,9 @@ public class DatabaseLaunch {
         }else{
             return null;
         }
-    }*/
+    }
 
-    /*public static ArrayList<Condition> getSelectConditionList(String whereString,String logiOper,int logiOperIndex){
+    public static ArrayList<Condition> getSelectConditionList(String tableName,String whereString,String logiOper,int logiOperIndex){
         ArrayList<Condition> selectConditions = new ArrayList<>();
         ArrayList<String> subCondition = new ArrayList<>();
 
@@ -646,39 +649,61 @@ public class DatabaseLaunch {
             Condition con = null;
             if(s.contains("<=")){
                 String[] tmp = s.split("<=");
-                con = new Condition(tmp[0],"<=",tmp[1]);
+                if(databaseAPI.General.checkColumnExists(tableName,tmp[0])){
+                    con = new Condition(tmp[0],"<=",tmp[1]);
+                }else{
+                    System.out.println(Errors.SYNTAX_ERROR);
+                    return null;
+                }
             }
             else if(s.contains(">=")){
                 String[] tmp = s.split(">=");
-                con = new Condition(tmp[0],">=",tmp[1]);
-
+                if(databaseAPI.General.checkColumnExists(tableName,tmp[0])){
+                    con = new Condition(tmp[0],">=",tmp[1]);
+                }else{
+                    System.out.println(Errors.SYNTAX_ERROR);
+                    return null;
+                }
             }
             else if(s.contains(">")){
                 String[] tmp = s.split(">");
-                con = new Condition(tmp[0],">",tmp[1]);
-
+                if(databaseAPI.General.checkColumnExists(tableName,tmp[0])){
+                    con = new Condition(tmp[0],">",tmp[1]);
+                }else{
+                    System.out.println(Errors.SYNTAX_ERROR);
+                    return null;
+                }
             }
             else if(s.contains("<")){
                 String[] tmp = s.split("<");
-                con = new Condition(tmp[0],"<",tmp[1]);
-
+                if(databaseAPI.General.checkColumnExists(tableName,tmp[0])){
+                    con = new Condition(tmp[0],"<",tmp[1]);
+                }else{
+                    System.out.println(Errors.SYNTAX_ERROR);
+                    return null;
+                }
             }
             else if(s.contains("=")){
                 String[] tmp = s.split("=");
-                con = new Condition(tmp[0],"=",tmp[1]);
+                if(databaseAPI.General.checkColumnExists(tableName,tmp[0])){
+                    con = new Condition(tmp[0],"=",tmp[1]);
+                }else{
+                    System.out.println(Errors.SYNTAX_ERROR);
+                    return null;
+                }
             }
-            else if(s.contains("<>")){
+            /*else if(s.contains("<>")){
                 String[] tmp = s.split("<>");
                 con = new Condition(tmp[0],"<>",tmp[1]);
-            }
+            }*/
             selectConditions.add(con);
         }
 
-        out.println(selectConditions.get(0).getColumn()+" "+selectConditions.get(0).getValue());
-        out.println(selectConditions.get(1).getColumn()+" "+selectConditions.get(1).getValue());
+        /*System.out.println(selectConditions.get(0).getColumn()+" "+selectConditions.get(0).getValue());
+        System.out.println(selectConditions.get(1).getColumn()+" "+selectConditions.get(1).getValue());*/
 
         return selectConditions;
-    }*/
+    }
 
     static boolean PartsEqual(String userCommand, String expectedCommand) {
         String[] userParts = userCommand.toLowerCase().split(" ");
