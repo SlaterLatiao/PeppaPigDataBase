@@ -2,7 +2,6 @@ package fileSystem;
 
 import java.util.ArrayList;
 import java.util.List;
-import FileAccess.Page;
 import java.util.Map.Entry;
 
 public class BplusTree {
@@ -29,7 +28,7 @@ public class BplusTree {
 	}
 	
 	public void insert(Record record) {
-		int key = root.getMaxIndex();
+		int key = root.getMaxRowID();
 		record.setRowId(key+1);
 		insertOrUpdate(key+1, record);
 	}

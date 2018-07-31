@@ -268,4 +268,48 @@ public class Page {
 		return null;
 	}
 
+	public List<Record> getRecordList() {
+		return records;
+	}
+
+	public List<Page> getChildren() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void remove(int row_id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void update(int k, Record r) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addRecord(Record r) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addInner(int key) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setPNum(int n) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void exchangeContent(Node node) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public int getMaxRowID() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

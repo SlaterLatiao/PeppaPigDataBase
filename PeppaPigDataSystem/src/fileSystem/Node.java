@@ -2,7 +2,8 @@ package fileSystem;
 
 import java.util.List;
 import java.util.Map.Entry;
-import FileAccess.Page;
+
+import Common.Constants;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
@@ -24,10 +25,12 @@ class Node {
 		this.page = page;
 		this.isLeaf = page.isLeaf();
 		records = page.getRecordList();
-		List<Page> list = page.getChildren();
-		children = new ArrayList<Node>();
-		for (Page p : list)
-			children.add(new Node(p));
+		if (!isLeaf) {
+			List<Page> list = page.getChildren();
+			children = new ArrayList<Node>();
+			for (Page p : list)
+				children.add(new Node(p));
+		}
 	}
 
 	Record get(Integer key) {
@@ -116,7 +119,7 @@ class Node {
 
 	Node split(Record r) {
 		// get split page
-		Page split = page.getNewPage(true);
+		Page split = page.getNewPage(Constants.LEAF_TABLE_PAGE);
 		Node newLeaf = new Node(split);
 		newLeaf.addRecord(r);
 		return newLeaf;
@@ -142,7 +145,7 @@ class Node {
 
 	void addChild(Node child) {
 		children.add(child);
-//		page.addChild(child.page);
+		// page.addChild(child.page);
 	}
 
 	void addInner(Record r) {
@@ -151,35 +154,31 @@ class Node {
 		page.addInner(key);
 	}
 
-	 Node newRoot() {
-	 // TODO: need to create a new inner page
-	 Node newroot = new Node(page.getNewPage(false));
-	 return newroot;
-	 }
+	Node newRoot() {
+		// TODO: need to create a new inner page
+		Node newroot = new Node(page.getNewPage(Constants.INTERIOR_TABLE_PAGE));
+		return newroot;
+	}
 
-	public int getMaxIndex() {
-		return page.getMaxIndex();
-	}
-	
-	void setRootPointer() {
-		page.setRootPointer();
-	}
-	
 
 	public boolean isLeaf() {
 		return isLeaf;
 	}
 
 	int getPageNum() {
-		return page.getPageNum();
+		return page.getPNum();
 	}
 
 	void setPNum(int n) {
-		page.setPageNum(n);
+		page.setPNum(n);
 	}
 
 	public void exchangeContent(Node node) {
 		page.exchangeContent(node);
 	}
-	
+
+	public int getMaxRowID() {
+		return page.getMaxRowID();
+	}
+
 }

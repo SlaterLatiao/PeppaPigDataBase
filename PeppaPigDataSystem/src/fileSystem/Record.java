@@ -1,118 +1,122 @@
 package fileSystem;
+
 import java.util.ArrayList;
 import Common.DataType;
 
 /**
  * @author Jinru Shi & Li Liu 2018-07-23
- * */
+ */
 public class Record {
 
-    private int pageNumOfRec;
-    private short payLoad;
-    protected int rowId;
-    private byte numOfColumn;
-    private ArrayList<Byte> dataTypes;
-    private ArrayList<String> valuesOfColumns;
-    // only for inner page
-    private short childrenRecord;
-    private DataType data;
-    public Record(){
-        payLoad=0;
-        data = new DataType();
-    }
+	private int pageNumOfRec;
+	private short payLoad;
+	protected int rowId;
+	private byte numOfColumn;
+	private ArrayList<Byte> dataTypes;
+	private ArrayList<String> valuesOfColumns;
+	// only for inner page
+	private short childrenRecord;
+	private DataType data;
 
+	public Record() {
+		payLoad = 0;
+		data = DataType.getInstance();
+	}
 
-    public int getPageNumOfRec() {
-        return pageNumOfRec;
-    }
-    public int getSpace(){
-        return this.payLoad+6;
-    }
-    public void setPageNumOfRec(int pageNumOfRec) {
-        this.pageNumOfRec = pageNumOfRec;
-    }
+	public int getPageNumOfRec() {
+		return pageNumOfRec;
+	}
 
-    public short getPayLoad() {
-        return payLoad;
-    }
+	public int getSpace() {
+		return this.payLoad + 6;
+	}
 
-    public void calculatePayLoad() {
-        for(int i=0;i<this.getNumOfColumn();i++) {
-            if(this.getDataTypes().get(i)==data.nameToSerialCode("null")) {
-            }
-            if(this.getDataTypes().get(i)==data.nameToSerialCode("tinyint")) {
-                this.payLoad+= 1;
-            }
-            if(this.getDataTypes().get(i)==data.nameToSerialCode("smallint")) {
-                this.payLoad+= 2;
-            }
-            if(this.getDataTypes().get(i)==data.nameToSerialCode("int")) {
-                this.payLoad+= 4;
-            }
-            if(this.getDataTypes().get(i)==data.nameToSerialCode("bigint")) {
-                this.payLoad+= 8;
-            }
-            if(this.getDataTypes().get(i)==data.nameToSerialCode("float")) {
-                this.payLoad+= 4;
-            }
-            if(this.getDataTypes().get(i)==data.nameToSerialCode("double")) {
-                this.payLoad+= 8;
-            }
-            if(this.getDataTypes().get(i)==data.nameToSerialCode("datetime")) {
-                this.payLoad+= 8;
-            }
-            if(this.getDataTypes().get(i)==data.nameToSerialCode("date")) {
-                this.payLoad+= 8;
-            }
-            if(this.getDataTypes().get(i)>data.nameToSerialCode("text")){
-                byte length = (byte) (this.getDataTypes().get(i) - data.nameToSerialCode("text"));
-                this.payLoad+= length;
-            }
-        }
-        this.payLoad+= 1+this.getNumOfColumn();
-    }
+	public void setPageNumOfRec(int pageNumOfRec) {
+		this.pageNumOfRec = pageNumOfRec;
+	}
 
-    public void setPayLoad(short payLoad ) {
-        this.payLoad = payLoad ;
-    }
-    public Integer getRowId() {
-        return rowId;
-    }
+	public short getPayLoad() {
+		return payLoad;
+	}
 
-    public void setRowId(int rowId) {
-        this.rowId = rowId;
-    }
+	public void calculatePayLoad() {
+		for (int i = 0; i < this.getNumOfColumn(); i++) {
+			if (this.getDataTypes().get(i) == data.nameToSerialCode("null")) {
+			}
+			if (this.getDataTypes().get(i) == data.nameToSerialCode("tinyint")) {
+				this.payLoad += 1;
+			}
+			if (this.getDataTypes().get(i) == data.nameToSerialCode("smallint")) {
+				this.payLoad += 2;
+			}
+			if (this.getDataTypes().get(i) == data.nameToSerialCode("int")) {
+				this.payLoad += 4;
+			}
+			if (this.getDataTypes().get(i) == data.nameToSerialCode("bigint")) {
+				this.payLoad += 8;
+			}
+			if (this.getDataTypes().get(i) == data.nameToSerialCode("float")) {
+				this.payLoad += 4;
+			}
+			if (this.getDataTypes().get(i) == data.nameToSerialCode("double")) {
+				this.payLoad += 8;
+			}
+			if (this.getDataTypes().get(i) == data.nameToSerialCode("datetime")) {
+				this.payLoad += 8;
+			}
+			if (this.getDataTypes().get(i) == data.nameToSerialCode("date")) {
+				this.payLoad += 8;
+			}
+			if (this.getDataTypes().get(i) > data.nameToSerialCode("text")) {
+				byte length = (byte) (this.getDataTypes().get(i) - data.nameToSerialCode("text"));
+				this.payLoad += length;
+			}
+		}
+		this.payLoad += 1 + this.getNumOfColumn();
+	}
 
-    public byte getNumOfColumn() {
-        return numOfColumn;
-    }
+	public void setPayLoad(short payLoad) {
+		this.payLoad = payLoad;
+	}
 
-    public void setNumOfColumn(byte numOfColumn) {
-        this.numOfColumn = numOfColumn;
-    }
+	public Integer getRowId() {
+		return rowId;
+	}
 
-    public ArrayList<Byte> getDataTypes() {
-        return dataTypes;
-    }
+	public void setRowId(int rowId) {
+		this.rowId = rowId;
+	}
 
-    public void setDataTypes(ArrayList<Byte> dataTypes) {
-        this.dataTypes = dataTypes;
-    }
+	public byte getNumOfColumn() {
+		return numOfColumn;
+	}
 
-    public ArrayList<String> getValuesOfColumns() {
-        return valuesOfColumns;
-    }
+	public void setNumOfColumn(byte numOfColumn) {
+		this.numOfColumn = numOfColumn;
+	}
 
-    public void setValuesOfColumns(ArrayList<String> valuesOfColumns) {
-        this.valuesOfColumns = valuesOfColumns;
-    }
+	public ArrayList<Byte> getDataTypes() {
+		return dataTypes;
+	}
 
-    public short getChildrenRecord(){
-        return this.childrenRecord;}
+	public void setDataTypes(ArrayList<Byte> dataTypes) {
+		this.dataTypes = dataTypes;
+	}
 
-    public void setChildrenRecord(short childrenRecord){
-        this.childrenRecord=childrenRecord;
-    }
+	public ArrayList<String> getValuesOfColumns() {
+		return valuesOfColumns;
+	}
+
+	public void setValuesOfColumns(ArrayList<String> valuesOfColumns) {
+		this.valuesOfColumns = valuesOfColumns;
+	}
+
+	public short getChildrenRecord() {
+		return this.childrenRecord;
+	}
+
+	public void setChildrenRecord(short childrenRecord) {
+		this.childrenRecord = childrenRecord;
+	}
 
 }
-
