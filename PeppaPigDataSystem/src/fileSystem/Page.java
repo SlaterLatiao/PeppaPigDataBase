@@ -74,7 +74,7 @@ public class Page {
 					// list of record start addresses is empty
 					rStarts = new ArrayList<Short>();
 					// start of content is end of page
-					raf.writeShort(Constants.PAGE_SIZE-1);
+					raf.writeShort(Constants.PAGE_SIZE);
 					// root is rightmost page in initialization
 					rPointer = Constants.RIGET_MOST_PAGE;
 					raf.writeInt(rPointer);
@@ -106,7 +106,7 @@ public class Page {
 			// list of record start addresses is empty
 			rStarts = new ArrayList<Short>();
 			// start of content is end of page
-			raf.writeShort(Constants.PAGE_SIZE-1);
+			raf.writeShort(Constants.PAGE_SIZE);
 			// new node is rightmost page in initialization
 			rPointer = Constants.RIGET_MOST_PAGE;
 			raf.writeInt(rPointer);
@@ -216,6 +216,49 @@ public class Page {
 		}
 	}
 
+	public void addRecord(Record r) {
+		r.calculatePayLoad();
+
+		try {
+			raf = new RandomAccessFile(tableFile, "rw");
+
+			// move to position of nRecords
+			raf.seek(getFileAddr(1));
+
+			// increment nRecords in both file and page
+			raf.writeByte(++nRecords);
+
+			// update start address in both file and page
+			startAddr -= r.getSpace();
+			raf.writeShort(this.startAddr);
+
+			// update rStarts in both file and page
+			rStarts.add(startAddr);
+			raf.skipBytes(4 + nRecords - 1);
+			raf.writeShort(this.startAddr);
+
+			// add record in both file and page
+			records.add(r);
+			// go to start of records
+			raf.seek(getFileAddr(startAddr - 1));
+			raf.writeShort(r.getPayLoad());
+			raf.writeInt(r.getRowId());
+			raf.writeByte(r.getNumOfColumn());
+			// write column types
+			for (int i = 0; i < r.getNumOfColumn(); i++)
+				raf.writeByte(r.getDataTypes().get(i));
+			// write column contents
+			for (int i = 0; i < r.getNumOfColumn(); i++) {
+				String content = r.getValuesOfColumns().get(i);
+				byte dataType = r.getDataTypes().get(i);
+				writeDataByType(content, dataType);
+			}
+			raf.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private long getFileAddr(int offset) {
 		return pNum * Constants.PAGE_SIZE + offset;
 	}
@@ -267,6 +310,46 @@ public class Page {
 		return null;
 	}
 
+	private void writeDataByType(String content, byte dataType) {
+		try {
+			switch (dataType) {
+			case 1:
+				raf.writeByte(new Byte(content));
+				break;
+			case 2:
+				raf.writeShort(new Short(content));
+				break;
+			case 3:
+				raf.writeInt(new Integer(content));
+				break;
+			case 4:
+				raf.writeLong(new Long(content));
+				break;
+			case 5:
+				raf.writeFloat(new Float(content));
+				break;
+			case 6:
+				raf.writeDouble(new Double(content));
+				break;
+			case 7:
+				raf.writeLong(new Long(content));
+				break;
+			case 8:
+				raf.writeLong(new Long(content));
+				break;
+			case 0:
+				// do nothing
+				break;
+			// none of above, it is a string
+			default:
+				raf.writeBytes(content);
+				break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public List<Record> getRecordList() {
 		return records;
 	}
@@ -278,32 +361,27 @@ public class Page {
 
 	public void remove(int row_id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void update(int k, Record r) {
 		// TODO Auto-generated method stub
-		
-	}
 
-	public void addRecord(Record r) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void addInner(int key) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setPNum(int n) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void exchangeContent(Node node) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public int getMaxRowID() {
