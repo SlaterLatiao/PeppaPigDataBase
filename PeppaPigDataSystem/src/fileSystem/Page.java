@@ -227,7 +227,7 @@ public class Page {
 			raf.writeByte(++nRecords);
 
 			// update start address in both file and page
-			startAddr -= r.getSpace();
+			startAddr = (short) (r.getSpace() - startAddr -1);
 			raf.writeShort(this.startAddr);
 
 			// update rStarts in both file and page
@@ -377,7 +377,7 @@ public class Page {
 
 	}
 
-	public void exchangeContent(Node node) {
+	public void exchangeContent(Page page) {
 		// TODO Auto-generated method stub
 
 	}
