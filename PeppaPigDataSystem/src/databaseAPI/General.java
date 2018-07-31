@@ -63,6 +63,10 @@ public class General {
         if(checkColumnExists(tableName, columnName)){
             return true;
         }
+
+        if(checkTableExists(indexName)){
+            return false;
+        }
         return false;
     }
 
