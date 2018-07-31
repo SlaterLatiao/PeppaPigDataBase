@@ -75,11 +75,15 @@ public class BplusTree {
 			// no parent, create one
 			if (node.getParent() == null) {
 				// create a new root node
-				root = root.newRoot();
-				//root.setRootPointer();
-				root.addInner(r);
-				root.addChild(node);
-				root.addChild(newNode);
+				Node newroot = root.newRoot();
+				int newRootPnum = newroot.getPageNum();
+				node.setPNum(newRootPnum);
+				newroot.setPNum(0);
+				newroot.addInner(r);
+				newroot.addChild(node);
+				newroot.addChild(newNode);
+				root.exchangeContent(newroot);
+				root = newroot;
 			}
 			// parent exists, insert mid into parent
 			else {

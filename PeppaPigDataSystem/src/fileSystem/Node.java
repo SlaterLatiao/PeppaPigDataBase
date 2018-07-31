@@ -164,4 +164,22 @@ class Node {
 	void setRootPointer() {
 		page.setRootPointer();
 	}
+	
+
+	public boolean isLeaf() {
+		return isLeaf;
+	}
+
+	int getPageNum() {
+		return page.getPageNum();
+	}
+
+	void setPNum(int n) {
+		page.setPageNum(n);
+	}
+
+	public void exchangeContent(Node node) {
+		page.exchangeContent(node);
+	}
+	
 }
