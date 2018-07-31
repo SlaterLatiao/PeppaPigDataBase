@@ -29,9 +29,9 @@ public class DataType {
     
     public DataType(String typeName){
         this.dataTypeName = typeName;
-        getInstance();
-        this.serialCode = serialCodeMap.get(dataTypeName);
-        this.contentSize = sizeMap.get(dataTypeName);
+        DataType dt = DataType.getInstance();
+        this.serialCode = dt.nameToSerialCode(dataTypeName);
+        this.contentSize = dt.nameToSize(dataTypeName);
     }
     
     private DataType() {
