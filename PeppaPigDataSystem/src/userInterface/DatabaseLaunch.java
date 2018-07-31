@@ -89,7 +89,7 @@ public class DatabaseLaunch {
     }
 
     public static void initCatalog(){
-        String cmd_create_tablesTable = "create table davisbase_tables (table_name TEXT NOT NULL,root_page smallint)";
+        String cmd_create_tablesTable = "create table davisbase_tables (table_name TEXT NOT NULL)";
         String cmd_create_columnsTable = "create table davisbase_columns (table_name TEXT NOT NULL," +
                 "column_name TEXT NOT NULL, data_type TEXT NOT NULL, ordinal_position TINYINT," +
                 "is_nullable TINYINT,is_pirmary TINYINT,index_name TEXT)";
