@@ -32,11 +32,11 @@ public class CreateTableQueryExe {
 
         ArrayList<Byte> dataTypes = new ArrayList<>();
         dataTypes.add((byte)(new DataType("text").serialCode+info.tableName.length())); //table_name
-        dataTypes.add(new DataType("smallint").serialCode); // root_page
+        //dataTypes.add(new DataType("smallint").serialCode); // root_page
 
         ArrayList<String> values = new ArrayList<>();
         values.add(info.tableName); // value of 'table_name'column in tables_table
-        values.add("0"); // value of 'root_page'column in tables_table
+        //values.add("0"); // value of 'root_page'column in tables_table
 
         Record newRec = new Record(Constants.DAVIS_TABLES_NUM_OF_COLUMNS,(byte) dataTypes.size(),dataTypes,values);
 
