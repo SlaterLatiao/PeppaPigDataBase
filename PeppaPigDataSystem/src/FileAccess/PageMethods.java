@@ -2,6 +2,7 @@ package FileAccess;
 
 import Common.Constants;
 import Common.DataType;
+import fileSystem.Page;
 import fileSystem.Record;
 
 import java.io.File;
@@ -146,12 +147,50 @@ public class PageMethods {
 //##################################################################################################################
 
 //##################################################################################################################
+//FOR FUNCTION update()
+
+    public void update(int k, Record r) {
+        try {
+            raf = new RandomAccessFile(tableFile, "rw");
+            //get the position(address or index in this page) of the record with row_id k.
+            for (int i = 0;i<nRecords;i++){
+                raf.seek(getFileAddr(rStarts.get(i))+1);
+                if(raf.readInt()==k){
+                    raf.seek(getFileAddr(rStarts.get(i)));
+                    raf.writeShort(r.getPayLoad());
+                    raf.writeInt(r.getRowId());
+                    raf.writeByte(r.getNumOfColumn());
+                    for (int j = 0; j < r.getNumOfColumn(); j++)
+                        raf.writeByte(r.getDataTypes().get(j));
+                    // write column contents
+                    for (int m = 0; m< r.getNumOfColumn(); m++) {
+                        String content = r.getValuesOfColumns().get(m);
+                        byte dataType = r.getDataTypes().get(m);
+                        writeDataByType(content, dataType);
+                    }
+                }
+            }
+            raf.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 //##################################################################################################################
+//FOR FUNCTION setPNum()
 
+    public void setPNum(int n) {
+       pNum=n;
+    }
 
 //##################################################################################################################
+//FOR FUNCTION exchangeContent()
 
+    public void exchangeContent(Page page) {
+
+
+
+    }
 //##################################################################################################################
 
 
@@ -173,5 +212,9 @@ public class PageMethods {
     //hou mian shi mei sha yong de dong xi
     private long getFileAddr(int offset) {
         return pNum * Constants.PAGE_SIZE + offset;
+    }
+    private void writeDataByType(String content, byte dataType) {}
+    public List<Record> getRecordList() {
+        return records;
     }
 }
