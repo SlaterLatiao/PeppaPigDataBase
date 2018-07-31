@@ -6,9 +6,7 @@ import fileSystem.Table;
 import fileSystem.Record;
 import userInterface.QueriesInfo.CreateTableQueryInfo;
 import Common.Column;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class CreateTableQueryExe {
 
@@ -31,18 +29,16 @@ public class CreateTableQueryExe {
 
         //Insert table name into davisTable
         Table davisTable = new Table(Constants.SYSTEM_TABLES_PATH);
-        Record newRec = new Record();
 
-        newRec.setNumOfColumn(Constants.DAVIS_TABLES_NUM_OF_COLUMNS);
         ArrayList<Byte> dataTypes = new ArrayList<>();
         dataTypes.add((byte)(new DataType("text").serialCode+info.tableName.length())); //table_name
         dataTypes.add(new DataType("smallint").serialCode); // root_page
-        newRec.setDataTypes(dataTypes);
 
         ArrayList<String> values = new ArrayList<>();
         values.add(info.tableName); // value of 'table_name'column in tables_table
         values.add("0"); // value of 'root_page'column in tables_table
-        newRec.setValuesOfColumns(values);
+
+        Record newRec = new Record(Constants.DAVIS_TABLES_NUM_OF_COLUMNS,(byte) dataTypes.size(),dataTypes,values);
 
         davisTable.insert(newRec);
 
@@ -51,8 +47,6 @@ public class CreateTableQueryExe {
         Table colTable = new Table(Constants.SYSTEM_COLUMNS_PATH);
 
             //Insert column"rowid" into columns_talbe first
-        Record rowid = new Record();
-        rowid.setNumOfColumn(Constants.DAVIS_COLUMNS_NUM_OF_COLUMNS);
 
         ArrayList<Byte> rowidDataType = new ArrayList<>();
         rowidDataType.add((byte)(new DataType("text").serialCode + info.tableName.length())); // table_name
@@ -70,15 +64,13 @@ public class CreateTableQueryExe {
         rowidValues.add("0");
         rowidValues.add("0");
 
-        rowid.setDataTypes(rowidDataType);
-        rowid.setValuesOfColumns(rowidValues);
+        Record rowid = new Record(Constants.DAVIS_COLUMNS_NUM_OF_COLUMNS,(byte) rowidDataType.size(),rowidDataType,rowidValues);
         colTable.insert(rowid);
 
              //Insert other columns into columns_talbe
         for(int i=0; i<info.columns.size(); i++){
             Column c = info.columns.get(i);
-            Record columnRecord =  new Record();
-            columnRecord.setNumOfColumn(Constants.DAVIS_COLUMNS_NUM_OF_COLUMNS);
+
             ArrayList<Byte> colDataTypes = new ArrayList<>();
             colDataTypes.add((byte)(new DataType("text").serialCode + info.tableName.length())); // table_name
             colDataTypes.add((byte)(new DataType("text").serialCode + c.getColumnName().length())); // column_name
@@ -104,9 +96,7 @@ public class CreateTableQueryExe {
                 columnValues.add("0");
             }
 
-            columnRecord.setDataTypes(colDataTypes);
-            columnRecord.setValuesOfColumns(columnValues);
-
+            Record columnRecord =  new Record(Constants.DAVIS_COLUMNS_NUM_OF_COLUMNS,(byte)colDataTypes.size(),colDataTypes,columnValues);
             colTable.insert(columnRecord);
         }
     }
