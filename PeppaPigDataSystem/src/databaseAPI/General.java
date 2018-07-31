@@ -24,6 +24,48 @@ public class General {
         return false;
     }
 
+    public static boolean checkColumnExists(String tableName, String columnName){
+        if (checkTableExists(tableName)){
+            Table davisColumnTable = new Table(Constants.SYSTEM_COLUMNS_PATH);
+            List<Record> records = davisColumnTable.getAllRecord();
+            if (records == null) {
+                return false;
+            } else {
+                for (Record r : records) {
+                    if (tableName.equals(r.getValuesOfColumns().get(1))){
+                        if (columnName.equals(r.getValuesOfColumns().get(2))) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean checkIndexExists(String indexName){
+        Table davisColumnTable = new Table(Constants.SYSTEM_COLUMNS_PATH);
+        List<Record> records = davisColumnTable.getAllRecord();
+        for (Record r : records) {
+            if (indexName.equals(r.getValuesOfColumns().get(7))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean checkCreateIndex(String tableName, String columnName, String indexName){
+        //First check if indexName exists in any column of davis column table
+        if(checkIndexExists(indexName)){
+            return false;
+        }
+        //Second check if table,column for that index exists in Tables, table and column table
+        if(checkColumnExists(tableName, columnName)){
+            return true;
+        }
+        return false;
+    }
+
     public static ArrayList<Column> getColumns(String tableName) {
 
         ArrayList<Column> columns = new ArrayList<>();
