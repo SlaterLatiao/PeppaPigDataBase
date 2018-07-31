@@ -198,7 +198,7 @@ public class Page {
 					byte nColumns = raf.readByte();
 					ArrayList<Byte> dataTypes = new ArrayList<Byte>();
 					// construct list of data types
-					for (int j = 0; i < nColumns; j++)
+					for (int j = 0; j < nColumns; j++)
 						dataTypes.add(raf.readByte());
 
 					ArrayList<String> values = new ArrayList<String>();
@@ -227,7 +227,7 @@ public class Page {
 			raf.writeByte(++nRecords);
 
 			// update start address in both file and page
-			startAddr = (short) (r.getSpace() - startAddr -1);
+			startAddr = (short) (startAddr - r.getSpace() - 1);
 			raf.writeShort(this.startAddr);
 
 			// update rStarts in both file and page
@@ -238,7 +238,7 @@ public class Page {
 			// add record in both file and page
 			records.add(r);
 			// go to start of records
-			raf.seek(getFileAddr(startAddr - 1));
+			raf.seek(getFileAddr(startAddr));
 			raf.writeShort(r.getPayLoad());
 			raf.writeInt(r.getRowId());
 			raf.writeByte(r.getNumOfColumn());

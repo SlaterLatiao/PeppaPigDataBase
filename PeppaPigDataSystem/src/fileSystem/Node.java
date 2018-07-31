@@ -181,7 +181,7 @@ class Node {
 	}
 
 	public void exchangeContent(Node node) {
-		page.exchangeContent(node);
+		page.exchangeContent(page);
 	}
 
 	public int getMaxRowID() {
