@@ -3,14 +3,15 @@ package userInterface.Utils;
 import Common.Column;
 import fileSystem.Record;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TableView {
 
     private String tableName;
     private ArrayList<Column> columns;
-    private ArrayList<Record> records;
+    private List<Record> records;
 
-    public TableView(String tableName, ArrayList<Column> columns, ArrayList<Record> records){
+    public TableView(String tableName, ArrayList<Column> columns, List<Record> records){
         this.tableName = tableName;
         this.columns = columns;
         this.records = records;
