@@ -1,6 +1,7 @@
 package databaseAPI;
 
 import Common.Constants;
+import fileSystem.Record;
 import fileSystem.Table;
 import userInterface.QueriesInfo.DeleteQueryInfo;
 
@@ -21,8 +22,8 @@ public class DeleteQueryExe {
 
         Table targetTable = new Table(tablePath);
         //delete records by rowid_list
-        for(int i=0; i<rowids.size();i++){
-            targetTable.deleteRecord(rowids.get(i));
+        for(int rowid: rowids){
+            targetTable.deleteRecord(rowid);
         }
     }
 }
