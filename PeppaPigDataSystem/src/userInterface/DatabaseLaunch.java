@@ -111,7 +111,7 @@ public class DatabaseLaunch {
             case "create":
                 parseCreate(userCommand);
                 break;
-      /*      case "drop":
+            case "drop":
                 parseDrop(userCommand);
                 break;
             case "insert":
@@ -125,7 +125,7 @@ public class DatabaseLaunch {
                 break;
             case "select":
                 parseSelect(userCommand);
-                break;*/
+                break;
             case "help":
                 help();
                 break;
@@ -367,8 +367,8 @@ public class DatabaseLaunch {
          * */
         String tableName;
         String logiOper;
-        int value = -1;
-        boolean isExist =false;
+        boolean isExist = false;
+
         ArrayList<Condition> conditions = new ArrayList<>();
 
         if(!PartsEqual(userCommand, "delete from")) {
@@ -404,7 +404,7 @@ public class DatabaseLaunch {
             return;
         }
 
-        DeleteQueryInfo deleteQueryInfo = new DeleteQueryInfo(tableName,value,conditions,logiOper);
+        DeleteQueryInfo deleteQueryInfo = new DeleteQueryInfo(tableName,conditions,logiOper);
         // TODO EXECUTE QUERY
     }
 

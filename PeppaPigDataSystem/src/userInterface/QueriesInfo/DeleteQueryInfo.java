@@ -8,14 +8,12 @@ import java.util.ArrayList;
  * */
 public class DeleteQueryInfo {
     public String tableName;
-    public int rowid_value;
     public ArrayList<Condition> conditions;
     public boolean isDeleteAll = false;
     public String logiOper;
 
-    public DeleteQueryInfo(String tableName, int value, ArrayList<Condition> conditions, String logiOper){
+    public DeleteQueryInfo(String tableName,ArrayList<Condition> conditions, String logiOper){
         this.tableName = tableName;
-        this.rowid_value = value;
         this.conditions = conditions;
         if(conditions == null){
             isDeleteAll = true;
