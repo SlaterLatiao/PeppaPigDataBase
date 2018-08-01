@@ -24,14 +24,14 @@ public class InsertQueryExe {
         ArrayList<String> userColumnsNames = info.columns;
         ArrayList<String> userValues = info.values;
 
-        String[] colVal = new String[tableColumns.size()];
+        String[] colVal = new String[tableColumns.size()-1];
 
         for(String u_c : userColumnsNames){
             boolean isSuccess = false;
-            for(int i = 0; i < tableColumns.size(); i++){
-                if(u_c.equals(tableColumns.get(i).getColumnName())){
+            for(int i = 0; i < colVal.length; i++){
+                if(u_c.equals(tableColumns.get(i+1).getColumnName())){
                     if(colVal[i] == null) {
-                        colVal[i] = u_c;
+                        colVal[i] = userValues.get(i);
                         isSuccess = true;
                     }
                 }
@@ -44,12 +44,13 @@ public class InsertQueryExe {
 
         //2) Every record needs to set datatypes
         ArrayList<Byte> dataTypes = new ArrayList<>();
-        for(Column col:tableColumns){
-            if(col.getDataType().dataTypeName.equals("text")){
-                dataTypes.add((byte)(col.getDataType().serialCode+col.getColumnName().length()));
+        for(int i=1;i<tableColumns.size();i++){
+            if(tableColumns.get(i).getDataType().dataTypeName.equals("text")){
+                dataTypes.add((byte)(tableColumns.get(i).getDataType().serialCode+tableColumns.get(i).getColumnName().length()));
             }else{
-                dataTypes.add(col.getDataType().serialCode);
+                dataTypes.add(tableColumns.get(i).getDataType().serialCode);
             }
+
         }
 
         //3) Every record needs to set values
@@ -58,7 +59,7 @@ public class InsertQueryExe {
             values.add(colValStr);
         }
 
-        Record newRec = new Record((byte)tableColumns.size(),(byte)dataTypes.size(),dataTypes,values);
+        Record newRec = new Record((byte)tableColumns.size()-1,(byte)dataTypes.size(),dataTypes,values);
         currTable.insert(newRec);
 
     }

@@ -33,7 +33,7 @@ public class WhereAPI {
                 int indexCol = -1;
                 for(int i = 0; i < user_tableAllColumn.size(); i++){
                     if(cond.getColumn().equals(user_tableAllColumn.get(i).getColumnName())) {
-                        indexCol = i;
+                        indexCol = i-1;
                     }
                 }
 

@@ -484,7 +484,6 @@ public class Page {
 				maxRowId = raf.readInt();
 			}
 			raf.close();
-			System.out.println("maxRowId:" + maxRowId);
 			return maxRowId;
 		} catch (Exception e) {
 			e.printStackTrace();

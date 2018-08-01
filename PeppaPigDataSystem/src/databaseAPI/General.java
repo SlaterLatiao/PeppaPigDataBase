@@ -32,8 +32,8 @@ public class General {
                 return false;
             } else {
                 for (Record r : records) {
-                    if (tableName.equals(r.getValuesOfColumns().get(1))){
-                        if (columnName.equals(r.getValuesOfColumns().get(2))) {
+                    if (tableName.equals(r.getValuesOfColumns().get(0))){
+                        if (columnName.equals(r.getValuesOfColumns().get(1))) {
                             return true;
                         }
                     }
