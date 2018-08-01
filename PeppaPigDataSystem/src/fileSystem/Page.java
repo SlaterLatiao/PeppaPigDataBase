@@ -369,6 +369,8 @@ public class Page {
 		ArrayList<Page> children = new ArrayList<Page>();
 		Page page;
 		int pnBuffer;
+		if (nRecords == 0)
+			return children;
 		page = new Page(tableFile.getAbsolutePath(), rPointer);
 		children.add(page);
 		for (int i = 0; i < nRecords; i++) {
