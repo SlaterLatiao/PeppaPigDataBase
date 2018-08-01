@@ -36,4 +36,8 @@ public class Table {
         bplusTree.remove(rowid);
     }
 
+    public void updateRecord(int rowid,Record record){
+        bplusTree.update(rowid,record);
+    }
+
 }

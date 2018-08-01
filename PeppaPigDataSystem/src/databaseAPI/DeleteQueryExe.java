@@ -1,7 +1,6 @@
 package databaseAPI;
 
 import Common.Constants;
-import fileSystem.Record;
 import fileSystem.Table;
 import userInterface.QueriesInfo.DeleteQueryInfo;
 
@@ -15,9 +14,9 @@ public class DeleteQueryExe {
         String tablePath;
         // check whether the table is a system table
         if(info.tableName.equals(Constants.SYSTEM_TABLES_TABLENAME) || info.tableName.equals(Constants.SYSTEM_COLUMNS_TABLENAME)){
-            tablePath = Constants.SYSTEM_CATALOG_PATH;
+            tablePath = Constants.SYSTEM_CATALOG_PATH + info.tableName + Constants.DEFAULT_FILE_EXTENSION;
         }else{
-            tablePath = Constants.SYSTEM_USER_PATH;
+            tablePath = Constants.SYSTEM_USER_PATH + info.tableName + Constants.DEFAULT_FILE_EXTENSION;
         }
 
         Table targetTable = new Table(tablePath);
