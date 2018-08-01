@@ -79,6 +79,7 @@ public class CheckSupportDataType {
             //its double
             dataType = "double";
         }
+        
         else if(str.equals("null")){
             //its null
             dataType = "null";
