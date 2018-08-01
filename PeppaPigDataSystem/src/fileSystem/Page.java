@@ -94,7 +94,7 @@ public class Page {
 
 		try {
 			raf = new RandomAccessFile(tableFile, "rw");
-			raf.setLength(pNum * Constants.PAGE_SIZE);
+			raf.setLength(pNum* Constants.PAGE_SIZE);
 			raf.seek(getFileAddr(0));
 
 			// write page type into both page and file
