@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import Common.Constants;
 
-import databaseAPI.CreateTableQueryExe;
+import databaseAPI.*;
 import userInterface.QueriesInfo.*;
 import userInterface.Utils.Condition;
 import userInterface.Utils.Errors;
@@ -194,7 +194,6 @@ public class DatabaseLaunch {
             tableName = userCommand.toLowerCase().substring(startIndex, endIndex).trim();
 
             // check whether the table is already exist
-            //TODO: NEED METHOD SUPPORT FROM databaseAPI.CreateTableQueryExe WHICH RETURNS A BOOLEAN VALUE
             isExist = databaseAPI.General.checkTableExists(tableName);
             if(isExist){
                 System.out.println(Errors.TABLE_EXISTS.replace("%1",tableName));
@@ -354,6 +353,7 @@ public class DatabaseLaunch {
         values = getColumnsList(valuesStrings);
 
         InsertQueryInfo insertQueryInfo = new InsertQueryInfo(tableName,columns,values);
+        InsertQueryExe.executeQuery(insertQueryInfo);
     }
 
 
@@ -404,7 +404,7 @@ public class DatabaseLaunch {
         }
 
         DeleteQueryInfo deleteQueryInfo = new DeleteQueryInfo(tableName,conditions,logiOper);
-        // TODO EXECUTE QUERY
+        DeleteQueryExe.executeQuery(deleteQueryInfo);
     }
 
 
@@ -458,6 +458,13 @@ public class DatabaseLaunch {
             columnName = setString.substring(0,assignIndex).trim();
             value = setString.substring(assignIndex+1).trim();
         }
+
+        // check whether the column exists
+        if(!General.checkColumnExists(tableName,columnName)){
+            System.out.println(Errors.COLUMN_NOT_EXISTS.replace("%1",columnName));
+            return;
+        }
+
         restString = restString.substring(whereIndex+"where".length()).trim();
         String logiOper = getLogicalOperator(restString);
         int logiOperIndex = -1;
@@ -472,7 +479,7 @@ public class DatabaseLaunch {
             return;
         }
         UpdateQueryInfo updateQueryInfo = new UpdateQueryInfo(tableName,columnName,value,conditions,logiOper);
-        // TODO EXECUTE QUERY
+        UpdateQueryExe.executeQuery(updateQueryInfo);
     }
 
 
