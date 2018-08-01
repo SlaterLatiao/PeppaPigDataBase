@@ -106,7 +106,8 @@ public class Page {
 			// list of record start addresses is empty
 			rStarts = new ArrayList<Short>();
 			// start of content is end of page
-			raf.writeShort(Constants.PAGE_SIZE);
+			startAddr = Constants.PAGE_SIZE;
+			raf.writeShort(startAddr);
 			// new node is rightmost page in initialization
 			rPointer = Constants.RIGET_MOST_PAGE;
 			raf.writeInt(rPointer);
@@ -114,9 +115,6 @@ public class Page {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		type = Constants.LEAF_TABLE_PAGE;
-
 	}
 
 	public Page(String filePath, int pNum) {
