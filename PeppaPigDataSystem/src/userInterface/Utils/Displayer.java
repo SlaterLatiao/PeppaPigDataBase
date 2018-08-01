@@ -22,6 +22,7 @@ public class Displayer {
     public Displayer(TableView table){
         this.table = table;
         initDisplayer();
+        displayTable(headerList,recordList,new int[]{1});
     }
 
     public void initDisplayer(){
