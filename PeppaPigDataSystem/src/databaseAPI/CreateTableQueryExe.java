@@ -55,7 +55,7 @@ public class CreateTableQueryExe {
         rowidDataType.add(new DataType("tinyint").serialCode); // ordinal_position
         rowidDataType.add(new DataType("tinyint").serialCode); // is_nullable
         rowidDataType.add(new DataType("tinyint").serialCode); // is_pirmary
-        rowidDataType.add((byte)(new DataType("text").serialCode + "index_name".length())); // index_name
+        rowidDataType.add((byte)(new DataType("text").serialCode + "null".length())); // index_name
 
 
         ArrayList<String> rowidValues = new ArrayList<>();
@@ -65,12 +65,15 @@ public class CreateTableQueryExe {
         rowidValues.add("1");
         rowidValues.add("0");
         rowidValues.add("0");
-        rowidValues.add("");
+        rowidValues.add("NULL");
 
         Record rowid = new Record(Constants.DAVIS_COLUMNS_NUM_OF_COLUMNS,(byte) rowidDataType.size(),rowidDataType,rowidValues);
         colTable.insert(rowid);
 
-             //Insert other columns into columns_talbe
+        System.out.println(info.tableName);
+        System.out.println(info.columns.size());
+
+        //Insert other columns into columns_talbe
         for(int i=0; i<info.columns.size(); i++){
             Column c = info.columns.get(i);
 
@@ -81,7 +84,7 @@ public class CreateTableQueryExe {
             colDataTypes.add(new DataType("tinyint").serialCode); // ordinal_position
             colDataTypes.add(new DataType("tinyint").serialCode); // is_nullable
             colDataTypes.add(new DataType("tinyint").serialCode); // is_pirmary
-            colDataTypes.add((byte)(new DataType("text").serialCode + "index_name".length())); // index_name
+            colDataTypes.add((byte)(new DataType("text").serialCode + c.getIndexName().length())); // index_name
 
             ArrayList<String> columnValues = new ArrayList<>();
 
@@ -99,7 +102,7 @@ public class CreateTableQueryExe {
             }else{
                 columnValues.add("0");
             }
-            columnValues.add("");
+            columnValues.add("null");
 
             Record columnRecord =  new Record(Constants.DAVIS_COLUMNS_NUM_OF_COLUMNS,(byte)colDataTypes.size(),colDataTypes,columnValues);
             colTable.insert(columnRecord);
