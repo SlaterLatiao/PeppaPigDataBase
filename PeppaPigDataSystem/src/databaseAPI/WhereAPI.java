@@ -370,8 +370,8 @@ public class WhereAPI {
             }
             else if (dataTypeValue.equals("date")){
                 try {
-                    Date D_valofIndexCol=new SimpleDateFormat("dd/MM/yyyy").parse(valofIndexCol);
-                    Date D_value=new SimpleDateFormat("dd/MM/yyyy").parse(value);
+                    Date D_valofIndexCol=new SimpleDateFormat("yyyy/MM/dd").parse(valofIndexCol);
+                    Date D_value=new SimpleDateFormat("yyyy/MM/dd").parse(value);
 
                     if(D_value.compareTo(D_valofIndexCol) == 0){
                         return true;
@@ -421,8 +421,8 @@ public class WhereAPI {
             }
             else if (dataTypeValue.equals("date")){
                 try {
-                    Date D_valofIndexCol=new SimpleDateFormat("dd/MM/yyyy").parse(valofIndexCol);
-                    Date D_value=new SimpleDateFormat("dd/MM/yyyy").parse(value);
+                    Date D_valofIndexCol=new SimpleDateFormat("yyyy/MM/dd").parse(valofIndexCol);
+                    Date D_value=new SimpleDateFormat("yyyy/MM/dd").parse(value);
 
                     if(D_value.compareTo(D_valofIndexCol) != 0){
                         return true;
@@ -472,8 +472,8 @@ public class WhereAPI {
             }
             else if (dataTypeValue.equals("date")){
                 try {
-                    Date D_valofIndexCol=new SimpleDateFormat("dd/MM/yyyy").parse(valofIndexCol);
-                    Date D_value=new SimpleDateFormat("dd/MM/yyyy").parse(value);
+                    Date D_valofIndexCol=new SimpleDateFormat("yyyy/MM/dd").parse(valofIndexCol);
+                    Date D_value=new SimpleDateFormat("yyyy/MM/dd").parse(value);
 
                     if(D_value.compareTo(D_valofIndexCol) > 0){
                         return true;
@@ -523,8 +523,8 @@ public class WhereAPI {
             }
             else if (dataTypeValue.equals("date")){
                 try {
-                    Date D_valofIndexCol=new SimpleDateFormat("dd/MM/yyyy").parse(valofIndexCol);
-                    Date D_value=new SimpleDateFormat("dd/MM/yyyy").parse(value);
+                    Date D_valofIndexCol=new SimpleDateFormat("yyyy/MM/dd").parse(valofIndexCol);
+                    Date D_value=new SimpleDateFormat("yyyy/MM/dd").parse(value);
 
                     if(D_value.compareTo(D_valofIndexCol) < 0){
                         return true;
@@ -574,8 +574,8 @@ public class WhereAPI {
             }
             else if (dataTypeValue.equals("date")){
                 try {
-                    Date D_valofIndexCol=new SimpleDateFormat("dd/MM/yyyy").parse(valofIndexCol);
-                    Date D_value=new SimpleDateFormat("dd/MM/yyyy").parse(value);
+                    Date D_valofIndexCol=new SimpleDateFormat("yyyy/MM/dd").parse(valofIndexCol);
+                    Date D_value=new SimpleDateFormat("yyyy/MM/dd").parse(value);
 
                     if(D_value.compareTo(D_valofIndexCol) >= 0){
                         return true;
@@ -625,8 +625,8 @@ public class WhereAPI {
             }
             else if (dataTypeValue.equals("date")){
                 try {
-                    Date D_valofIndexCol=new SimpleDateFormat("dd/MM/yyyy").parse(valofIndexCol);
-                    Date D_value=new SimpleDateFormat("dd/MM/yyyy").parse(value);
+                    Date D_valofIndexCol=new SimpleDateFormat("yyyy/MM/dd").parse(valofIndexCol);
+                    Date D_value=new SimpleDateFormat("yyyy/MM/dd").parse(value);
 
                     if(D_value.compareTo(D_valofIndexCol) <= 0){
                         return true;
