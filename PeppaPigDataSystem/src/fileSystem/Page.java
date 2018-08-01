@@ -20,7 +20,6 @@ public class Page {
 	private List<Record> records;
 	File tableFile;
 	private RandomAccessFile raf;
-	
 
 	// private static final byte TINYINT_SC =
 	// DataType.getInstance().nameToSerialCode("tinyint");
@@ -118,6 +117,21 @@ public class Page {
 
 		type = Constants.LEAF_TABLE_PAGE;
 
+	}
+
+	public Page(String filePath, int pNum) {
+		this.pNum = pNum;
+		records = new ArrayList<Record>();
+		tableFile = new File(filePath);
+
+		try {
+			raf = new RandomAccessFile(tableFile, "r");
+			raf.seek(getFileAddr(0));
+			readContent();
+			raf.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Page getNewPage(byte type) {
@@ -354,8 +368,19 @@ public class Page {
 	}
 
 	public List<Page> getChildren() {
-		// TODO Auto-generated method stub
-		return null;
+		Record cRecord;
+		ArrayList<Page> children = new ArrayList<Page>();
+		Page page;
+		int pnBuffer;
+		page = new Page(tableFile.getAbsolutePath(), rPointer);
+		children.add(page);
+		for (int i = 0; i < nRecords; i++) {
+			cRecord = records.get(i);
+			pnBuffer = Integer.valueOf(cRecord.getValuesOfColumns().get(i));
+			page = new Page(tableFile.getAbsolutePath(), pnBuffer);
+			children.add(page);
+		}
+		return children;
 	}
 
 	public void remove(int row_id) {
@@ -420,8 +445,21 @@ public class Page {
 	}
 
 	public void exchangeContent(Page page) {
-		// TODO Auto-generated method stub
-
+		try {
+			byte[] b = new byte[Constants.PAGE_SIZE];
+			byte[] c = new byte[Constants.PAGE_SIZE];
+			// write page into root(0th page)
+			raf = new RandomAccessFile(tableFile, "rw");
+			raf.readFully(b, (int) getFileAddr(0), Constants.PAGE_SIZE);
+			raf.readFully(c, (int) page.getFileAddr(0), Constants.PAGE_SIZE);
+			raf.seek(page.getFileAddr(0));
+			raf.writeBytes(new String(b));
+			raf.seek(getFileAddr(0));
+			raf.writeBytes(new String(c));
+			raf.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public int getMaxRowID() {
@@ -452,5 +490,22 @@ public class Page {
 		}
 		return -1;
 
+	}
+
+	public Page getNext() {
+		if (rPointer == -1)
+			return null;
+		return new Page(tableFile.getAbsolutePath(), rPointer);
+	}
+
+	public void addLeftChild(int pNum) {
+		try {
+			raf = new RandomAccessFile(tableFile, "r");
+			raf.seek(getFileAddr(4));
+			raf.writeInt(pNum);
+			raf.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

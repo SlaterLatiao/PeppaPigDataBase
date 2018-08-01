@@ -18,16 +18,17 @@ public class Record {
 	private short childrenRecord;
 	private DataType data;
 
-	public Record(int pageNumOfRec,byte numOfColumn,ArrayList<Byte> dataTypes,ArrayList<String> valuesOfColumns){
+	public Record(int pageNumOfRec, byte numOfColumn, ArrayList<Byte> dataTypes, ArrayList<String> valuesOfColumns) {
 		this.pageNumOfRec = pageNumOfRec;
 		this.numOfColumn = numOfColumn;
 		this.dataTypes = dataTypes;
 		this.valuesOfColumns = valuesOfColumns;
 		data = DataType.getInstance();
-        calculatePayLoad();
+		calculatePayLoad();
 	}
-	
-	public Record(int rowId,short payLoad, byte numOfColumn,ArrayList<Byte> dataTypes,ArrayList<String> valuesOfColumns){
+
+	public Record(int rowId, short payLoad, byte numOfColumn, ArrayList<Byte> dataTypes,
+			ArrayList<String> valuesOfColumns) {
 		this.rowId = rowId;
 		this.payLoad = payLoad;
 		this.numOfColumn = numOfColumn;
@@ -36,14 +37,25 @@ public class Record {
 		data = DataType.getInstance();
 	}
 
-	/*public Record() {
-		payLoad = 0;
+	public Record(int rowId, int child) {
+		this.rowId = rowId;
+		payLoad = 6;
+		numOfColumn = 1;
+		dataTypes = new ArrayList<Byte>();
+		dataTypes.add((byte) 3);
+		valuesOfColumns = new ArrayList<String>();
+		valuesOfColumns.add(Integer.toString(child));
 		data = DataType.getInstance();
-	}*/
+	}
+
+	/*
+	 * public Record() { payLoad = 0; data = DataType.getInstance(); }
+	 */
 
 	public int getPageNumOfRec() {
 		return pageNumOfRec;
 	}
+
 	public void setPageNumOfRec(int pageNumOfRec) {
 		this.pageNumOfRec = pageNumOfRec;
 	}

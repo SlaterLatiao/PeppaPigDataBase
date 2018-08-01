@@ -21,7 +21,7 @@ class Node {
 	protected Page page;
 	protected Node parent;
 	protected Node next;
-	
+
 	Node(Page page) {
 		this.page = page;
 		this.isLeaf = page.isLeaf();
@@ -32,7 +32,10 @@ class Node {
 			for (Page p : list)
 				children.add(new Node(p));
 		} else {
-			next = new Node(page.getNext());
+			Page nextPage = page.getNext();
+			if (nextPage == null)
+				next = null;
+			next = new Node(nextPage);
 		}
 	}
 
@@ -115,7 +118,7 @@ class Node {
 	int getRecordsSize() {
 		return records.size();
 	}
-	
+
 	List<Record> getRecords() {
 		return records;
 	}
@@ -125,8 +128,8 @@ class Node {
 	}
 
 	Node split(Record r) {
-		// get split page
-		Page split = page.getNewPage(Constants.LEAF_TABLE_PAGE);
+		byte type = isLeaf ? Constants.LEAF_TABLE_PAGE : Constants.INTERIOR_TABLE_PAGE;
+		Page split = page.getNewPage(type);
 		Node newLeaf = new Node(split);
 		newLeaf.addRecord(r);
 		return newLeaf;
@@ -150,23 +153,10 @@ class Node {
 		page.addRecord(r);
 	}
 
-	void addChild(Node child) {
-		children.add(child);
-		// page.addChild(child.page);
-	}
-
-	void addInner(Record r) {
-		records.add(r);
-		int key = r.getRowId();
-		page.addInner(key);
-	}
-
 	Node newRoot() {
-		// TODO: need to create a new inner page
 		Node newroot = new Node(page.getNewPage(Constants.INTERIOR_TABLE_PAGE));
 		return newroot;
 	}
-
 
 	public boolean isLeaf() {
 		return isLeaf;
@@ -196,6 +186,18 @@ class Node {
 
 	public Node getNext() {
 		return next;
+	}
+
+	public void addLeftChild(Node child) {
+		children.add(child);
+		page.addLeftChild(child.getPageNum());
+	}
+
+	void addChild(Node child, Record inner) {
+		records.add(inner);
+		children.add(child);
+		page.addRecord(inner);
+		
 	}
 
 }
