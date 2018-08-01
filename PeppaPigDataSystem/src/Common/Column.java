@@ -7,14 +7,14 @@ public class Column {
     private DataType dataType;
     private boolean isPrimary;
     private boolean isNullable;
-    private boolean hasIndex;
+    private String indexName;
 
     public Column(String name,DataType type,boolean isPrimary,boolean isNull){
         this.columnName = name;
         this.dataType = type;
         this.isPrimary = isPrimary;
         this.isNullable = isNull;
-        this.hasIndex = false;
+        this.indexName = "";
     }
 
     public String getColumnName() {
@@ -49,12 +49,12 @@ public class Column {
         isNullable = aNull;
     }
 
-    public boolean isHasIndex() {
-        return hasIndex;
+    public String getIndexName() {
+        return indexName;
     }
 
-    public void setHasIndex(boolean hasIndex) {
-        this.hasIndex = hasIndex;
+    public void setIndexName(String indexName) {
+        this.indexName = indexName;
     }
 }
 
