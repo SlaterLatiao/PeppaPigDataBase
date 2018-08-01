@@ -471,6 +471,10 @@ public class Page {
 				raf.seek(pnum * Constants.PAGE_SIZE);
 				pt = raf.readByte();
 			}
+			
+			if (pnum == 2) {
+				pnum = 1;
+			}
 
 			raf.seek(pnum * Constants.PAGE_SIZE + 1);
 			byte recordNum = raf.readByte();
