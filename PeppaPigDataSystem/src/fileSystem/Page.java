@@ -164,7 +164,7 @@ public class Page {
 	public void setRPointer(Page p) {
 		int pnum = p.getPNum();
 		try {
-			raf = new RandomAccessFile(tableFile, "wr");
+			raf = new RandomAccessFile(tableFile, "rw");
 			// set right pointer to page p
 			rPointer = pnum;
 			// move to r pointer position
