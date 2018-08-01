@@ -32,4 +32,8 @@ public class Table {
         return rowids_Records;
     }
 
+    public void deleteRecord(int rowid){
+        bplusTree.remove(rowid);
+    }
+
 }
