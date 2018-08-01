@@ -18,6 +18,10 @@ public class Record {
 	private short childrenRecord;
 	private DataType data;
 
+	public Record(ArrayList<String> valuesOfColumns){
+        this.valuesOfColumns = valuesOfColumns;
+    }
+
 	public Record(int pageNumOfRec, byte numOfColumn, ArrayList<Byte> dataTypes, ArrayList<String> valuesOfColumns) {
 		this.pageNumOfRec = pageNumOfRec;
 		this.numOfColumn = numOfColumn;
