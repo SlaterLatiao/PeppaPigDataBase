@@ -6,10 +6,9 @@ import fileSystem.Record;
 import fileSystem.Table;
 import userInterface.Utils.Condition;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class WhereAPI {
     public static ArrayList<Integer> doWhere_getRowId (String tableName, ArrayList<Condition> conditions, String logiOper){
@@ -370,7 +369,17 @@ public class WhereAPI {
 
             }
             else if (dataTypeValue.equals("date")){
+                try {
+                    Date D_valofIndexCol=new SimpleDateFormat("dd/MM/yyyy").parse(valofIndexCol);
+                    Date D_value=new SimpleDateFormat("dd/MM/yyyy").parse(value);
 
+                    if(D_value.compareTo(D_valofIndexCol) == 0){
+                        return true;
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
             else if (dataTypeValue.equals("text")){
                 if(value.compareTo(valofIndexCol) == 0){
@@ -411,7 +420,17 @@ public class WhereAPI {
 
             }
             else if (dataTypeValue.equals("date")){
+                try {
+                    Date D_valofIndexCol=new SimpleDateFormat("dd/MM/yyyy").parse(valofIndexCol);
+                    Date D_value=new SimpleDateFormat("dd/MM/yyyy").parse(value);
 
+                    if(D_value.compareTo(D_valofIndexCol) != 0){
+                        return true;
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
             else if (dataTypeValue.equals("text")){
                 if(value.compareTo(valofIndexCol) != 0){
@@ -452,7 +471,17 @@ public class WhereAPI {
 
             }
             else if (dataTypeValue.equals("date")){
+                try {
+                    Date D_valofIndexCol=new SimpleDateFormat("dd/MM/yyyy").parse(valofIndexCol);
+                    Date D_value=new SimpleDateFormat("dd/MM/yyyy").parse(value);
 
+                    if(D_value.compareTo(D_valofIndexCol) > 0){
+                        return true;
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
             else if (dataTypeValue.equals("text")){
                 if(value.compareTo(valofIndexCol) > 0){
@@ -493,7 +522,17 @@ public class WhereAPI {
 
             }
             else if (dataTypeValue.equals("date")){
+                try {
+                    Date D_valofIndexCol=new SimpleDateFormat("dd/MM/yyyy").parse(valofIndexCol);
+                    Date D_value=new SimpleDateFormat("dd/MM/yyyy").parse(value);
 
+                    if(D_value.compareTo(D_valofIndexCol) < 0){
+                        return true;
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
             else if (dataTypeValue.equals("text")){
                 if(value.compareTo(valofIndexCol) < 0){
@@ -534,7 +573,17 @@ public class WhereAPI {
 
             }
             else if (dataTypeValue.equals("date")){
+                try {
+                    Date D_valofIndexCol=new SimpleDateFormat("dd/MM/yyyy").parse(valofIndexCol);
+                    Date D_value=new SimpleDateFormat("dd/MM/yyyy").parse(value);
 
+                    if(D_value.compareTo(D_valofIndexCol) >= 0){
+                        return true;
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
             else if (dataTypeValue.equals("text")){
                 if(value.compareTo(valofIndexCol) > 0 || value.compareTo(valofIndexCol) == 0){
@@ -575,7 +624,17 @@ public class WhereAPI {
 
             }
             else if (dataTypeValue.equals("date")){
+                try {
+                    Date D_valofIndexCol=new SimpleDateFormat("dd/MM/yyyy").parse(valofIndexCol);
+                    Date D_value=new SimpleDateFormat("dd/MM/yyyy").parse(value);
 
+                    if(D_value.compareTo(D_valofIndexCol) <= 0){
+                        return true;
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
             else if (dataTypeValue.equals("text")){
                 if(value.compareTo(valofIndexCol) < 0 || value.compareTo(valofIndexCol) == 0){
