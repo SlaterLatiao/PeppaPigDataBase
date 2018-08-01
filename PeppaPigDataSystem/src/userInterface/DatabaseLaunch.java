@@ -332,15 +332,14 @@ public class DatabaseLaunch {
                 System.out.println(Errors.SYNTAX_ERROR.replace("%1",userCommand));
                 return;
             }
-            tableName = table_column_substring.substring(closeBrkIndex).trim();
+            tableName = table_column_substring.substring(closeBrkIndex+1).trim();
             String[] col = table_column_substring.substring(openBrkIndex+1,closeBrkIndex).trim().split(",");
             columns = getColumnsList(col);
         }
-
         // check whether the table is already exist
         isExist = databaseAPI.General.checkTableExists(tableName);
         if(!isExist){
-            System.out.println(Errors.TABLE_NOT_EXISTS);
+            System.out.println(Errors.TABLE_NOT_EXISTS.replace("%1",tableName));
             return;
         }
 
