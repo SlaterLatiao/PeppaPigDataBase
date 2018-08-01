@@ -187,41 +187,40 @@ public class Page {
 			// set type attribute based on data from file
 			type = raf.readByte();
 			// this is a leaf page
-			if (type == Constants.LEAF_TABLE_PAGE || type == Constants.LEAF_INDEX_PAGE) {
-				// read number of records
-				nRecords = raf.readByte();
-				startAddr = raf.readShort();
-				rPointer = raf.readInt();
+			// read number of records
+			nRecords = raf.readByte();
+			startAddr = raf.readShort();
+			rPointer = raf.readInt();
 
-				rStarts = new ArrayList<Short>();
-				// construct list of start addresses
-				for (int i = 0; i < nRecords; i++)
-					rStarts.add(raf.readShort());
+			rStarts = new ArrayList<Short>();
+			// construct list of start addresses
+			for (int i = 0; i < nRecords; i++)
+				rStarts.add(raf.readShort());
 
-				for (int i = 0; i < nRecords; i++) {
-					// goes to start of record content
-					raf.seek(getFileAddr(rStarts.get(i)));
+			for (int i = 0; i < nRecords; i++) {
+				// goes to start of record content
+				raf.seek(getFileAddr(rStarts.get(i)));
 
-					// read payload
-					short payLoad = raf.readShort();
-					// read row id
-					int rowId = raf.readInt();
-					// read number of columns
-					byte nColumns = raf.readByte();
-					ArrayList<Byte> dataTypes = new ArrayList<Byte>();
-					// construct list of data types
-					for (int j = 0; j < nColumns; j++)
-						dataTypes.add(raf.readByte());
+				// read payload
+				short payLoad = raf.readShort();
+				// read row id
+				int rowId = raf.readInt();
+				// read number of columns
+				byte nColumns = raf.readByte();
+				ArrayList<Byte> dataTypes = new ArrayList<Byte>();
+				// construct list of data types
+				for (int j = 0; j < nColumns; j++)
+					dataTypes.add(raf.readByte());
 
-					ArrayList<String> values = new ArrayList<String>();
-					// read each record value and append to list
-					for (int j = 0; j < nColumns; j++) {
-						byte dataType = dataTypes.get(j);
-						values = readDataByType(values, dataType);
-					}
-					records.add(new Record(rowId, payLoad, nColumns, dataTypes, values));
+				ArrayList<String> values = new ArrayList<String>();
+				// read each record value and append to list
+				for (int j = 0; j < nColumns; j++) {
+					byte dataType = dataTypes.get(j);
+					values = readDataByType(values, dataType);
 				}
+				records.add(new Record(rowId, payLoad, nColumns, dataTypes, values));
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -444,14 +443,14 @@ public class Page {
 			raf = new RandomAccessFile(tableFile, "rw");
 			raf.seek(getFileAddr(0));
 			raf.readFully(b);
-			raf.seek( page.getFileAddr(0));
+			raf.seek(page.getFileAddr(0));
 			raf.readFully(c);
 			raf.seek(page.getFileAddr(0));
-			for(int i = 0;i<Constants.PAGE_SIZE;i++){
+			for (int i = 0; i < Constants.PAGE_SIZE; i++) {
 				raf.writeByte(b[i]);
 			}
 			raf.seek(getFileAddr(0));
-			for(int j = 0;j<Constants.PAGE_SIZE;j++){
+			for (int j = 0; j < Constants.PAGE_SIZE; j++) {
 				raf.writeByte(c[j]);
 			}
 			raf.close();
@@ -471,7 +470,7 @@ public class Page {
 				raf.seek(pnum * Constants.PAGE_SIZE);
 				pt = raf.readByte();
 			}
-			
+
 			if (pnum == 2) {
 				pnum = 1;
 			}
