@@ -3,9 +3,7 @@ package userInterface;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import Common.Constants;
-
 import databaseAPI.*;
 import userInterface.QueriesInfo.*;
 import userInterface.Utils.Condition;
@@ -159,7 +157,7 @@ public class DatabaseLaunch {
         String tableName = Constants.SYSTEM_TABLES_TABLENAME;
         ArrayList<Condition> selectCondition = new ArrayList<>();
         SelectQueryInfo showTable = new SelectQueryInfo(columnsList,tableName,selectCondition,null);
-        // TODO EXECUTE QUERY
+        SelectQueryExe.executeQuery(showTable);
     }
 
 
@@ -517,7 +515,7 @@ public class DatabaseLaunch {
                 ArrayList<Condition> selectCondition = new ArrayList<>();
                 selectCondition.add(null);
                 SelectQueryInfo selectQueryInfo = new SelectQueryInfo(columns,tableName,selectCondition,null);
-                // TODO EXECUTE QUERY
+                SelectQueryExe.executeQuery(selectQueryInfo);
             }
         }else{// query with select condition
             tableName = restQueryString.substring(0, whereIndex).trim();
@@ -541,7 +539,7 @@ public class DatabaseLaunch {
                     return;
                 }
                 SelectQueryInfo selectQueryInfo = new SelectQueryInfo(columns,tableName,selectCondition,logiOper);
-                // TODO EXECUTE QUERY
+                SelectQueryExe.executeQuery(selectQueryInfo);
             }
         }
     }
