@@ -26,19 +26,19 @@ public class CheckSupportDataType {
     private static String getIntType(int num) {
         String intType;
 
-        if(-pow(2,7) <= num && num >= pow(2,7) - 1){
+        if(-pow(2,7) >= num && num <= pow(2,7) - 1){
             //its tinyInt
             intType = "tinyint";
         }
-        else if(-pow(2,15) <= num && num >= pow(2,15) - 1){
+        else if(-pow(2,15) >= num && num <= pow(2,15) - 1){
             //its smallInt
             intType = "smallint";
         }
-        else if(-pow(2,31) <= num && num >= pow(2,31) - 1){
+        else if(-pow(2,31) >= num && num <= pow(2,31) - 1){
             //its Int
             intType = "int";
         }
-        else if(-pow(2,63) <= num && num >= pow(2,63) - 1){
+        else if(-pow(2,63) >= num && num <= pow(2,63) - 1){
             //its bigInt
             intType = "bigint";
         }
