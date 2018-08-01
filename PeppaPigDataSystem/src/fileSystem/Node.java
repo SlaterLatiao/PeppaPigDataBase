@@ -35,7 +35,8 @@ class Node {
 			Page nextPage = page.getNext();
 			if (nextPage == null)
 				next = null;
-			next = new Node(nextPage);
+			else
+				next = new Node(nextPage);
 		}
 	}
 
