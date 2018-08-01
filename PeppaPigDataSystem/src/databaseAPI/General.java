@@ -16,7 +16,7 @@ public class General {
             return false;
         } else {
             for (Record r : records) {
-                if (tableName.equals(r.getValuesOfColumns().get(1))) {
+                if (tableName.equals(r.getValuesOfColumns().get(0))) {
                     return true;
                 }
             }
