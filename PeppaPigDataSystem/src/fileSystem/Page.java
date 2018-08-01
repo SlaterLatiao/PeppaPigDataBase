@@ -447,9 +447,13 @@ public class Page {
 			raf.seek( page.getFileAddr(0));
 			raf.readFully(c);
 			raf.seek(page.getFileAddr(0));
-			raf.writeBytes(new String(b));
+			for(int i = 0;i<Constants.PAGE_SIZE;i++){
+				raf.writeByte(b[i]);
+			}
 			raf.seek(getFileAddr(0));
-			raf.writeBytes(new String(c));
+			for(int j = 0;j<Constants.PAGE_SIZE;j++){
+				raf.writeByte(c[j]);
+			}
 			raf.close();
 		} catch (IOException e) {
 			e.printStackTrace();
