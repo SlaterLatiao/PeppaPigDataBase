@@ -2,7 +2,6 @@ package userInterface.Utils;
 
 import Common.Column;
 import fileSystem.Record;
-
 import java.util.ArrayList;
 
 public class TableView {

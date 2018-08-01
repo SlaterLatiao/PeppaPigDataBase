@@ -105,9 +105,9 @@ public class DatabaseLaunch {
         String command = commandTokens[0].toLowerCase();
 
         switch (command) {
-           /* case "show":
+            case "show":
                 showTable(userCommand);
-                break;*/
+                break;
             case "create":
                 parseCreate(userCommand);
                 break;

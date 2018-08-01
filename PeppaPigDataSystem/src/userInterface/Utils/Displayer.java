@@ -167,31 +167,30 @@ public class Displayer {
         columns.add(column4);
 
         ArrayList<Record> records = new ArrayList<>();
-        Record record1 = new Record();
         ArrayList<String> value1 = new ArrayList<>();
         value1.add("Jhon");
         value1.add("18");
         value1.add("1234567890");
         value1.add("Coit rd,Dallas,Tx");
-        record1.setValuesOfColumns(value1);
+        Record record1 = new Record(0,(byte) 0,null,value1);
         records.add(record1);
 
-        Record record2 = new Record();
+
         ArrayList<String> value2 = new ArrayList<>();
         value2.add("Smith");
         value2.add("42");
         value2.add("0123456789");
         value2.add("West Plano pkwy,Dallas,Tx");
-        record2.setValuesOfColumns(value2);
+        Record record2 = new Record(0,(byte) 0,null,value2);
         records.add(record2);
 
-        Record record3 = new Record();
+
         ArrayList<String> value3 = new ArrayList<>();
         value3.add("Harry Potter");
         value3.add("15");
         value3.add("9999999999");
         value3.add("Magic world in somewhere,Dallas,Tx");
-        record3.setValuesOfColumns(value3);
+        Record record3 = new Record(0,(byte) 0,null,value3);
         records.add(record3);
 
         TableView table = new TableView("tb1",columns,records);
