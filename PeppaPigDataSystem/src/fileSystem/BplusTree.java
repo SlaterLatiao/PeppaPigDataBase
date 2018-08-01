@@ -105,7 +105,7 @@ public class BplusTree {
 			Record inner = new Record(key, newInner.getPageNum());
 			// no parent, create one
 			if (node.getParent() == null) {
-				// create a new root node
+				// create a new root node 
 				Node newroot = root.newRoot();
 				int newRootPnum = newroot.getPageNum();
 				root.exchangeContent(newroot);
