@@ -398,11 +398,12 @@ public class Page {
 			byte recordNum = raf.readByte();
 			if (recordNum != 0) {
 				raf.seek(pnum * Constants.PAGE_SIZE + Constants.PAGE_HEADER_LENGTH + 2 * (recordNum - 1));
-				byte maxRecordAddr = raf.readByte();
+				short maxRecordAddr = raf.readShort();
 				raf.seek(pnum * Constants.PAGE_SIZE + maxRecordAddr + 2);
 				maxRowId = raf.readInt();
 			}
 			raf.close();
+			System.out.println("maxRowId:" + maxRowId);
 			return maxRowId;
 		} catch (Exception e) {
 			e.printStackTrace();
