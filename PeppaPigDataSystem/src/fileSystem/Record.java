@@ -23,8 +23,8 @@ public class Record {
 		this.numOfColumn = numOfColumn;
 		this.dataTypes = dataTypes;
 		this.valuesOfColumns = valuesOfColumns;
-		calculatePayLoad();
 		data = DataType.getInstance();
+        calculatePayLoad();
 	}
 	
 	public Record(int rowId,short payLoad, byte numOfColumn,ArrayList<Byte> dataTypes,ArrayList<String> valuesOfColumns){
@@ -57,34 +57,34 @@ public class Record {
 	}
 
 	public void calculatePayLoad() {
-		for (int i = 0; i < this.getNumOfColumn(); i++) {
-			if (this.getDataTypes().get(i) == data.nameToSerialCode("null")) {
+		for (int i = 0; i < this.numOfColumn; i++) {
+			if (this.dataTypes.get(i) == data.nameToSerialCode("null")) {
 			}
-			if (this.getDataTypes().get(i) == data.nameToSerialCode("tinyint")) {
+			if (this.dataTypes.get(i) == data.nameToSerialCode("tinyint")) {
 				this.payLoad += 1;
 			}
-			if (this.getDataTypes().get(i) == data.nameToSerialCode("smallint")) {
+			if (this.dataTypes.get(i) == data.nameToSerialCode("smallint")) {
 				this.payLoad += 2;
 			}
-			if (this.getDataTypes().get(i) == data.nameToSerialCode("int")) {
+			if (this.dataTypes.get(i) == data.nameToSerialCode("int")) {
 				this.payLoad += 4;
 			}
-			if (this.getDataTypes().get(i) == data.nameToSerialCode("bigint")) {
+			if (this.dataTypes.get(i) == data.nameToSerialCode("bigint")) {
 				this.payLoad += 8;
 			}
-			if (this.getDataTypes().get(i) == data.nameToSerialCode("float")) {
+			if (this.dataTypes.get(i) == data.nameToSerialCode("float")) {
 				this.payLoad += 4;
 			}
-			if (this.getDataTypes().get(i) == data.nameToSerialCode("double")) {
+			if (this.dataTypes.get(i) == data.nameToSerialCode("double")) {
 				this.payLoad += 8;
 			}
-			if (this.getDataTypes().get(i) == data.nameToSerialCode("datetime")) {
+			if (this.dataTypes.get(i) == data.nameToSerialCode("datetime")) {
 				this.payLoad += 8;
 			}
-			if (this.getDataTypes().get(i) == data.nameToSerialCode("date")) {
+			if (this.dataTypes.get(i) == data.nameToSerialCode("date")) {
 				this.payLoad += 8;
 			}
-			if (this.getDataTypes().get(i) > data.nameToSerialCode("text")) {
+			if (this.dataTypes.get(i) > data.nameToSerialCode("text")) {
 				byte length = (byte) (this.getDataTypes().get(i) - data.nameToSerialCode("text"));
 				this.payLoad += length;
 			}

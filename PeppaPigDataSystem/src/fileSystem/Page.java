@@ -20,6 +20,7 @@ public class Page {
 	private List<Record> records;
 	File tableFile;
 	private RandomAccessFile raf;
+	
 
 	// private static final byte TINYINT_SC =
 	// DataType.getInstance().nameToSerialCode("tinyint");
@@ -359,12 +360,53 @@ public class Page {
 
 	public void remove(int row_id) {
 		// TODO Auto-generated method stub
+		try {
+			raf = new RandomAccessFile(tableFile, "rw");
 
+			raf.seek(getFileAddr(1));
+			raf.writeByte(nRecords - 1);
+
+			int index_rowId = -1;
+			for (int i = 0; i < nRecords; i++) {
+				raf.seek(getFileAddr(rStarts.get(i)));
+				if (raf.readInt() == row_id) {
+					index_rowId = i;
+					break;
+				}
+			}
+			rStarts.remove(index_rowId);
+			nRecords--;
+
+			raf.seek(getFileAddr(Constants.PAGE_HEADER_LENGTH));
+			for (int i = 0; i < nRecords; i++) {
+				raf.writeShort(rStarts.get(i));
+			}
+			raf.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void update(int k, Record r) {
-		// TODO Auto-generated method stub
-
+		try {
+			raf = new RandomAccessFile(tableFile, "rw");
+			// get the position(address or index in this page) of the record with row_id k.
+			raf.seek(getFileAddr(rStarts.get(k)));
+			raf.writeShort(r.getPayLoad());
+			raf.writeInt(r.getRowId());
+			raf.writeByte(r.getNumOfColumn());
+			for (int i = 0; i < r.getNumOfColumn(); i++)
+				raf.writeByte(r.getDataTypes().get(i));
+			// write column contents
+			for (int i = 0; i < r.getNumOfColumn(); i++) {
+				String content = r.getValuesOfColumns().get(i);
+				byte dataType = r.getDataTypes().get(i);
+				writeDataByType(content, dataType);
+			}
+			raf.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void addInner(int key) {
