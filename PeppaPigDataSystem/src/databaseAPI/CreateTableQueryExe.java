@@ -84,7 +84,8 @@ public class CreateTableQueryExe {
             colDataTypes.add(new DataType("tinyint").serialCode); // ordinal_position
             colDataTypes.add(new DataType("tinyint").serialCode); // is_nullable
             colDataTypes.add(new DataType("tinyint").serialCode); // is_pirmary
-            colDataTypes.add((byte)(new DataType("text").serialCode + c.getIndexName().length())); // index_name
+            //colDataTypes.add((byte)(new DataType("text").serialCode + c.getIndexName().length()+4)); // index_name
+            colDataTypes.add((byte)(new DataType("text").serialCode + 32)); // index_name
 
             ArrayList<String> columnValues = new ArrayList<>();
 
@@ -102,7 +103,7 @@ public class CreateTableQueryExe {
             }else{
                 columnValues.add("0");
             }
-            columnValues.add("null");
+            columnValues.add("NULL");
 
             Record columnRecord =  new Record(Constants.DAVIS_COLUMNS_NUM_OF_COLUMNS,(byte)colDataTypes.size(),colDataTypes,columnValues);
             colTable.insert(columnRecord);
