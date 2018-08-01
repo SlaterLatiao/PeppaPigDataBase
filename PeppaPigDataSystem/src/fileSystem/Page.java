@@ -136,7 +136,7 @@ public class Page {
 
 	public Page getNewPage(byte type) {
 		Page page = new Page(type, getMaxPnum() + 1, tableFile);
-		page.pNum = this.pNum + 1;
+		page.expand();
 		return page;
 	}
 
@@ -504,6 +504,15 @@ public class Page {
 			raf.seek(getFileAddr(4));
 			raf.writeInt(pNum);
 			raf.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void expand() {
+		try {
+			raf = new RandomAccessFile(tableFile, "rw");
+			raf.setLength((pNum + 1) * Constants.PAGE_SIZE);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
