@@ -435,7 +435,7 @@ public class DatabaseLaunch {
             System.out.println(Errors.TABLE_NOT_EXISTS);
             return;
         }
-        String restString = updateString.toLowerCase().substring(setIndex+1).trim();
+        String restString = updateString.toLowerCase().substring(setIndex+"set".length()).trim();
         int whereIndex = restString.indexOf("where");
         int assignIndex; //index of "="
         if(whereIndex == -1){
