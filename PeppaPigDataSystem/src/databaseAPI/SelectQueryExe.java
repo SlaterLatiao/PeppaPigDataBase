@@ -5,6 +5,8 @@ import Common.Constants;
 import fileSystem.Record;
 import fileSystem.Table;
 import userInterface.QueriesInfo.SelectQueryInfo;
+import userInterface.Utils.Displayer;
+import userInterface.Utils.TableView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,28 +23,57 @@ public class SelectQueryExe {
         }
         Table targetTable = new Table(tablePath);
 
-        List<Record> targetBodyRecords = null;
+        List<Record> targetBodyFullRecords = null;
 
         if(info.isSelectAll){
-            targetBodyRecords = targetTable.getAllRecord();
+            targetBodyFullRecords = targetTable.getAllRecord();
         }
         else{
             // get all rowids for the records which need to be selected
             ArrayList<Integer> rowids = WhereAPI.doWhere_getRowId(info.tableName,info.conditions,info.logiOper);
 
-            targetBodyRecords = targetTable.getRowidsRecord(rowids);
+            targetBodyFullRecords = targetTable.getRowidsRecord(rowids);
         }
 
-        List<String> targetHeaderColumns = null;
+        // get all targetHeaderFullColumns of the table
+        ArrayList<Column> targetHeaderFullColumns = General.getColumns(info.tableName);
 
-        // get all columns of the table
-        ArrayList<Column> columns = General.getColumns(info.tableName);
-        for(int i=0; i<columns.size();i++){
-            if(columns.get(i).getColumnName().equals(info.columns.get(i))){
-                targetHeaderColumns.add(columns.get(i).getColumnName());
+        // Filter column full to column filter
+        ArrayList<Column> targetHeaderFilterColumns = null;
+
+        // get the column ordinal_position which need to be updated
+        ArrayList<Integer> pos = null;
+        for(int i=0; i<targetHeaderFullColumns.size();i++){
+            if(targetHeaderFullColumns.get(i).getColumnName().equals(info.columns.get(i))){
+                pos.add(i);
+                targetHeaderFilterColumns.add(targetHeaderFullColumns.get(i));
             }
         }
 
-        //use records to print out into a table
+        ArrayList<Record> targetBodyFilterRecords = null;
+
+        //Filter record full to record filter
+        for(Record r : targetBodyFullRecords){
+            ArrayList<String> valCol = null;
+
+            for(int p : pos){
+                valCol.add(r.getValuesOfColumns().get(p));
+            }
+
+            Record tempR = new Record(valCol);
+
+            targetBodyFilterRecords.add(tempR);
+        }
+
+        if(info.isSelectAll){
+            TableView selectAllTableView = new TableView(info.tableName, targetHeaderFullColumns,targetBodyFullRecords);
+            Displayer tempDisplay = new Displayer(selectAllTableView);
+        }
+        else{
+            TableView selectAllTableView = new TableView(info.tableName, targetHeaderFilterColumns,targetBodyFilterRecords);
+            Displayer tempDisplay = new Displayer(selectAllTableView);
+        }
+
+
     }
 }
