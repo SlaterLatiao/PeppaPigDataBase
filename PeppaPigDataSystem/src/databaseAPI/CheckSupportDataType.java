@@ -68,16 +68,16 @@ public class CheckSupportDataType {
                 dataType = "text";
             }
         }
-        else if(isDouble(str)){
-            //its double
-            dataType = "double";
-        }
         else if(isInt(str)){
             //its int
 
             int testInteger = Integer.parseInt(str);
 
             dataType = getIntType(testInteger);
+        }
+        else if(isDouble(str)){
+            //its double
+            dataType = "double";
         }
         else if(str.equals("null")){
             //its null
