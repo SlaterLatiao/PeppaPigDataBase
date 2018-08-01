@@ -343,7 +343,7 @@ public class WhereAPI {
     }
 
     private static boolean equalsCompare(String valofIndexCol, String value) {
-        if(CheckSupportDataType.CheckSupportDataType(valofIndexCol, value)){
+        if(CheckSupportDataType.CheckSupportDataType(CheckSupportDataType.getDataType(valofIndexCol), CheckSupportDataType.getDataType(value))){
             String dataTypeValue = CheckSupportDataType.getDataType(value);
             if(CheckSupportDataType.isInt(value)){
                 //convert to int
@@ -394,7 +394,7 @@ public class WhereAPI {
     }
 
     private static boolean notEqualsCompare(String valofIndexCol, String value) {
-        if(CheckSupportDataType.CheckSupportDataType(valofIndexCol, value)){
+        if(CheckSupportDataType.CheckSupportDataType(CheckSupportDataType.getDataType(valofIndexCol), CheckSupportDataType.getDataType(value))){
             String dataTypeValue = CheckSupportDataType.getDataType(value);
             if(CheckSupportDataType.isInt(value)){
                 //convert to int
@@ -445,7 +445,7 @@ public class WhereAPI {
     }
 
     private static boolean greaterCompare(String valofIndexCol, String value) {
-        if(CheckSupportDataType.CheckSupportDataType(valofIndexCol, value)){
+        if(CheckSupportDataType.CheckSupportDataType(CheckSupportDataType.getDataType(valofIndexCol), CheckSupportDataType.getDataType(value))){
             String dataTypeValue = CheckSupportDataType.getDataType(value);
             if(CheckSupportDataType.isInt(value)){
                 //convert to int
@@ -496,7 +496,7 @@ public class WhereAPI {
     }
 
     private static boolean lessCompare(String valofIndexCol, String value) {
-        if(CheckSupportDataType.CheckSupportDataType(valofIndexCol, value)){
+        if(CheckSupportDataType.CheckSupportDataType(CheckSupportDataType.getDataType(valofIndexCol), CheckSupportDataType.getDataType(value))){
             String dataTypeValue = CheckSupportDataType.getDataType(value);
             if(CheckSupportDataType.isInt(value)){
                 //convert to int
@@ -547,7 +547,7 @@ public class WhereAPI {
     }
 
     private static boolean greaterEqualsCompare(String valofIndexCol, String value) {
-        if(CheckSupportDataType.CheckSupportDataType(valofIndexCol, value)){
+        if(CheckSupportDataType.CheckSupportDataType(CheckSupportDataType.getDataType(valofIndexCol), CheckSupportDataType.getDataType(value))){
             String dataTypeValue = CheckSupportDataType.getDataType(value);
             if(CheckSupportDataType.isInt(value)){
                 //convert to int
@@ -598,7 +598,7 @@ public class WhereAPI {
     }
 
     private static boolean lessEqualsCompare(String valofIndexCol, String value) {
-        if(CheckSupportDataType.CheckSupportDataType(valofIndexCol, value)){
+        if(CheckSupportDataType.CheckSupportDataType(CheckSupportDataType.getDataType(valofIndexCol), CheckSupportDataType.getDataType(value))){
             String dataTypeValue = CheckSupportDataType.getDataType(value);
             if(CheckSupportDataType.isInt(value)){
                 //convert to int
