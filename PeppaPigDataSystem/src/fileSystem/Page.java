@@ -494,7 +494,7 @@ public class Page {
 
 	public void addLeftChild(int pNum) {
 		try {
-			raf = new RandomAccessFile(tableFile, "r");
+			raf = new RandomAccessFile(tableFile, "rw");
 			raf.seek(getFileAddr(4));
 			raf.writeInt(pNum);
 			raf.close();
