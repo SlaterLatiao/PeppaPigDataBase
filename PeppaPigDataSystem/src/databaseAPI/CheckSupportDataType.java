@@ -90,8 +90,11 @@ public class CheckSupportDataType {
         return dataType;
     }
 
-    public static boolean checkSupportInt(String strDataTypeRecord, String strDataTypeCond){
+    public static boolean checkSupportInt(String strDataTypeRecordRaw, String strDataTypeCondRaw){
         boolean condition = false;
+
+        String strDataTypeRecord=getDataType(strDataTypeRecordRaw);
+        String strDataTypeCond=getDataType(strDataTypeCondRaw);
 
         if(strDataTypeRecord.equals("bigint")){
             if(strDataTypeCond.equals("bigint") || strDataTypeCond.equals("int") || strDataTypeCond.equals("smallint") || strDataTypeCond.equals("tinyint")){
@@ -120,8 +123,11 @@ public class CheckSupportDataType {
         return condition;
     }
 
-    public static boolean checkSupportFloatingNum(String strDataTypeRecord, String strDataTypeCond){
+    public static boolean checkSupportFloatingNum(String strDataTypeRecordRaw, String strDataTypeCondRaw){
         boolean condition = false;
+
+        String strDataTypeRecord=getDataType(strDataTypeRecordRaw);
+        String strDataTypeCond=getDataType(strDataTypeCondRaw);
 
         if(strDataTypeRecord.equals("double")){
             if(strDataTypeCond.equals("double")){
