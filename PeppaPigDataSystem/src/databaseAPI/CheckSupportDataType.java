@@ -90,7 +90,7 @@ public class CheckSupportDataType {
         return dataType;
     }
 
-    public static boolean checkSupportInt(String strDataTypeCond, String strDataTypeRecord){
+    public static boolean checkSupportInt(String strDataTypeRecord, String strDataTypeCond){
         boolean condition = false;
 
         if(strDataTypeRecord.equals("bigint")){
@@ -120,16 +120,16 @@ public class CheckSupportDataType {
         return condition;
     }
 
-    public static boolean checkSupportFloatingNum(String strDataTypeCond, String strDataTypeRecord){
+    public static boolean checkSupportFloatingNum(String strDataTypeRecord, String strDataTypeCond){
         boolean condition = false;
 
-        if(strDataTypeCond.equals("double")){
-            if(strDataTypeRecord.equals("double")){
+        if(strDataTypeRecord.equals("double")){
+            if(strDataTypeCond.equals("double")){
                 condition = true;
             }
         }
-        else if(strDataTypeCond.equals("float")){
-            if(strDataTypeRecord.equals("double")){
+        else if(strDataTypeRecord.equals("float")){
+            if(strDataTypeCond.equals("double")){
                 condition = true;
             }
         }
@@ -140,25 +140,22 @@ public class CheckSupportDataType {
         return condition;
     }
 
-    public static Boolean CheckSupportDataType(String strDataTypeCond, String strDataTypeRecord){
+    public static Boolean CheckSupportDataType(String strDataTypeRecord, String strDataTypeCond){
         Boolean condition = false;
 
         //Smaller Ints can fit into larger ints?
         if(getDataType(strDataTypeCond).equals("bigint") || getDataType(strDataTypeCond).equals("int") || getDataType(strDataTypeCond).equals("smallint") || getDataType(strDataTypeCond).equals("tinyint")){
-            if(checkSupportInt(strDataTypeCond, strDataTypeRecord)){
+            if(checkSupportInt(strDataTypeRecord, strDataTypeCond)){
                 condition = true;
             }
         }
         else if(getDataType(strDataTypeCond).equals("double")){
-            if(checkSupportFloatingNum(strDataTypeCond, strDataTypeRecord)){
+            if(checkSupportFloatingNum(strDataTypeRecord, strDataTypeCond)){
                 condition = true;
             }
         }
         else if(getDataType(strDataTypeCond).equals(getDataType(strDataTypeRecord))){
             condition = true;
-        }
-        else if(strDataTypeCond == null){
-            condition = false;
         }
         else{
             //Something weird happened if you reach here
