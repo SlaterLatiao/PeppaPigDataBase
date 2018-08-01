@@ -434,11 +434,6 @@ public class Page {
 		}
 	}
 
-	public void addInner(int key) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public void setPNum(int n) {
 		// TODO Auto-generated method stub
 

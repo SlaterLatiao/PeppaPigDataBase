@@ -25,7 +25,7 @@ class Node {
 	Node(Page page) {
 		this.page = page;
 		this.isLeaf = page.isLeaf();
-		records = page.getRecordList();
+		records = new ArrayList<Record>(page.getRecordList());
 		if (!isLeaf) {
 			List<Page> list = page.getChildren();
 			children = new ArrayList<Node>();
