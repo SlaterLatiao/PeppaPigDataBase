@@ -133,6 +133,10 @@ class Node {
 		Page split = page.getNewPage(type);
 		Node newLeaf = new Node(split);
 		newLeaf.addRecord(r);
+		if (type == Constants.LEAF_TABLE_PAGE) {
+		page.setRPointer(split);
+		next = newLeaf;
+		}
 		return newLeaf;
 	}
 
