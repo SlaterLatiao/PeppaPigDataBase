@@ -442,8 +442,10 @@ public class Page {
 			byte[] c = new byte[Constants.PAGE_SIZE];
 			// write page into root(0th page)
 			raf = new RandomAccessFile(tableFile, "rw");
-			raf.readFully(b, (int) getFileAddr(0), Constants.PAGE_SIZE);
-			raf.readFully(c, (int) page.getFileAddr(0), Constants.PAGE_SIZE);
+			raf.seek(getFileAddr(0));
+			raf.readFully(b);
+			raf.seek( page.getFileAddr(0));
+			raf.readFully(c);
 			raf.seek(page.getFileAddr(0));
 			raf.writeBytes(new String(b));
 			raf.seek(getFileAddr(0));

@@ -108,11 +108,11 @@ public class BplusTree {
 				// create a new root node
 				Node newroot = root.newRoot();
 				int newRootPnum = newroot.getPageNum();
+				root.exchangeContent(newroot);
 				node.setPNum(newRootPnum);
 				newroot.setPNum(0);
 				newroot.addLeftChild(node);
 				newroot.addChild(newInner, inner);
-				root.exchangeContent(newroot);
 				root = newroot;
 			}
 			// parent exists, insert mid into parent
