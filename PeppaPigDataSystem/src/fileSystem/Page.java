@@ -383,7 +383,6 @@ public class Page {
 	}
 
 	public void remove(int row_id) {
-		// TODO Auto-generated method stub
 		try {
 			raf = new RandomAccessFile(tableFile, "rw");
 
@@ -433,9 +432,8 @@ public class Page {
 		}
 	}
 
-	public void setPNum(int n) {
-		// TODO Auto-generated method stub
-
+	public void setPNum(int pnum) {
+		pNum = pnum;
 	}
 
 	public void exchangeContent(Page page) {
