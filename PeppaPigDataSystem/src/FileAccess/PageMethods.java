@@ -132,7 +132,8 @@ public class PageMethods {
         ArrayList<Page> children = new ArrayList<Page>();
         Page page;
         int pnBuffer;
-
+        page = new Page(tableFile.getAbsolutePath(),rPointer);
+        children.add(page);
         for(int i =1;i<nRecords;i++){
             cRecord=records.get(i);
             pnBuffer=Integer.valueOf(cRecord.getValuesOfColumns().get(0));
