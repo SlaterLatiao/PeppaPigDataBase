@@ -134,7 +134,7 @@ public class PageMethods {
         int pnBuffer;
         page = new Page(tableFile.getAbsolutePath(),rPointer);
         children.add(page);
-        for(int i =1;i<nRecords;i++){
+        for(int i =0;i<nRecords;i++){
             cRecord=records.get(i);
             pnBuffer=Integer.valueOf(cRecord.getValuesOfColumns().get(0));
             page = new Page(tableFile.getAbsolutePath(),pnBuffer);
@@ -143,6 +143,58 @@ public class PageMethods {
         return children;
     }
 //##################################################################################################################
+
+
+
+//##################################################################################################################
+    public void addLeftChild(int pNum){
+        try {
+            raf = new RandomAccessFile(tableFile, "r");
+            raf.seek(getFileAddr(4));
+            raf.writeInt(pNum);
+            raf.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void addChild(Record r){
+        //TODO
+        try {
+            raf = new RandomAccessFile(tableFile, "rw");
+
+            raf.seek(getFileAddr(1));
+            raf.writeByte(++nRecords);
+            startAddr = (short) (startAddr - r.getSpace() - 1);
+            raf.writeShort(this.startAddr);
+
+            rStarts.add(startAddr);
+            raf.skipBytes(4 + 2 * (nRecords - 1));
+            raf.writeShort(this.startAddr);
+
+            records.add(r);
+            raf.seek(getFileAddr(startAddr));
+            raf.writeShort(r.getPayLoad());
+            raf.writeInt(r.getRowId());
+            raf.writeByte(r.getNumOfColumn());
+            // write column types
+            for (int i = 0; i < r.getNumOfColumn(); i++)
+                raf.writeByte(r.getDataTypes().get(i));
+            // write column contents
+            for (int i = 0; i < r.getNumOfColumn(); i++) {
+                String content = r.getValuesOfColumns().get(i);
+                byte dataType = r.getDataTypes().get(i);
+                writeDataByType(content, dataType);
+            }
+
+            raf.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+//##################################################################################################################
+
+
+
 
 //##################################################################################################################
 //FOR CONSTRUCTOR page()
@@ -160,9 +212,7 @@ public class PageMethods {
             e.printStackTrace();
         }
     }
-
 //##################################################################################################################
-
 
 
 
