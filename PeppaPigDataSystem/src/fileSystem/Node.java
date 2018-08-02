@@ -205,4 +205,8 @@ class Node {
 		
 	}
 
+	public void dropTable() {
+		page.dropTable();
+	}
+
 }

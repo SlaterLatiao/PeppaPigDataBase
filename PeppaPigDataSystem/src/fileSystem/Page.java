@@ -508,4 +508,8 @@ public class Page {
 			e.printStackTrace();
 		}
 	}
+
+	public void dropTable() {
+		tableFile.delete();
+	}
 }

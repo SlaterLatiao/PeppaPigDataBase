@@ -39,5 +39,9 @@ public class Table {
     public void updateRecord(int rowid,Record record){
         bplusTree.update(rowid,record);
     }
+    
+    public void dropTable() {
+    	bplusTree.dropTable();
+    }
 
 }
