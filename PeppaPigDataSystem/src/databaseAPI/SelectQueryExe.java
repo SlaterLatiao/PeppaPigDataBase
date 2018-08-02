@@ -43,7 +43,7 @@ public class SelectQueryExe {
         ArrayList<Column> targetHeaderFilterColumns = new ArrayList<>();
 
         // get the column ordinal_position which need to be updated
-        ArrayList<Integer> pos = null;
+        ArrayList<Integer> pos = new ArrayList<>();
         for(int i=0; i<targetHeaderFullColumns.size();i++){
             if(targetHeaderFullColumns.get(i).getColumnName().equals(info.columns.get(i))){
                 pos.add(i);
