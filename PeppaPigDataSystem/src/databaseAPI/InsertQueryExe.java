@@ -46,10 +46,11 @@ public class InsertQueryExe {
         ArrayList<Byte> dataTypes = new ArrayList<>();
         for(int i=1;i<tableColumns.size();i++){
             if(tableColumns.get(i).getDataType().dataTypeName.equals("text")){
-                dataTypes.add((byte)(tableColumns.get(i).getDataType().serialCode+tableColumns.get(i).getColumnName().length()));
+                dataTypes.add((byte)(tableColumns.get(i).getDataType().serialCode+info.values.get(i-1).length()));
             }else{
                 dataTypes.add(tableColumns.get(i).getDataType().serialCode);
             }
+
         }
 
         //3) Every record needs to set values
