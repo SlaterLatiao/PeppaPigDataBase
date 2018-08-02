@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Common.Constants;
-import Common.DataType;
 
-public class indexPage {
+public class IndexPage {
     private int pNum;
     private byte nRecords;
     File tableFile;
@@ -23,11 +22,11 @@ public class indexPage {
 
     private short startAddr;
     private int rPointer;
-    private List<Record> records;
+    private List<IndexRecord> records;
 
-    public indexPage(String filePath) {
+    public IndexPage(String filePath) {
         pNum = 0;
-        records = new ArrayList<Record>();
+        records = new ArrayList<IndexRecord>();
         tableFile = new File(filePath);
 
         try {
@@ -65,11 +64,11 @@ public class indexPage {
         }
     }
 
-    public indexPage(byte type, int pno, File tableFile) {
+    public IndexPage(byte type, int pno, File tableFile) {
         pNum = pno;
 
         this.tableFile = tableFile;
-        records = new ArrayList<Record>();
+        records = new ArrayList<IndexRecord>();
 
         try {
             raf = new RandomAccessFile(tableFile, "rw");
@@ -96,9 +95,9 @@ public class indexPage {
         }
     }
 
-    public indexPage(String filePath, int pNum) {
+    public IndexPage(String filePath, int pNum) {
         this.pNum = pNum;
-        records = new ArrayList<Record>();
+        records = new ArrayList<IndexRecord>();
         tableFile = new File(filePath);
 
         try {
@@ -180,7 +179,7 @@ public class indexPage {
                         byte dataType = dataTypes.get(j);
                         values = readDataByType(values, dataType);
                     }
-                    records.add(new Record(rowId, payLoad, nColumns, dataTypes, values));
+                    records.add(new IndexRecord(rowId, payLoad, nColumns, dataTypes, values));
                 }
             }
         } catch (Exception e) {
@@ -195,7 +194,7 @@ public class indexPage {
     }
 
 
-    public void addRecord(Record r) {
+    public void addRecord(IndexRecord r) {
 
         try {
 
@@ -322,26 +321,29 @@ public class indexPage {
         }
     }
 
-    public List<Record> getRecordList() {
+    public List<IndexRecord> getRecordList() {
         return records;
     }
 
-    public List<Page> getChildren() {
+    public List<IndexPage> getChildren() {
         Record cRecord;
-        ArrayList<Page> children = new ArrayList<Page>();
-        Page page;
+        ArrayList<IndexPage> children = new ArrayList<IndexPage>();
+        IndexPage page;
         int pnBuffer;
         if (nRecords == 0)
             return children;
-        page = new Page(tableFile.getAbsolutePath(), rPointer);
+        page = new IndexPage(tableFile.getAbsolutePath(), rPointer);
         children.add(page);
         for (int i = 0; i < nRecords; i++) {
             cRecord = records.get(i);
             pnBuffer = Integer.valueOf(cRecord.getValuesOfColumns().get(i));
-            page = new Page(tableFile.getAbsolutePath(), pnBuffer);
+            page = new IndexPage(tableFile.getAbsolutePath(), pnBuffer);
             children.add(page);
         }
         return children;
+    }
+    public List<IndexRecord> getList(){
+        return records;
     }
 
     public void remove(int row_id) {
@@ -372,7 +374,7 @@ public class indexPage {
         }
     }
 
-    public void update(int k, Record r) {
+    public void update(int k,IndexRecord r) {
         try {
             raf = new RandomAccessFile(tableFile, "rw");
             // get the position(address or index in this page) of the record with row_id k.
@@ -398,7 +400,7 @@ public class indexPage {
         pNum = pnum;
     }
 
-    public void exchangeContent(indexPage page) {
+    public void exchangeContent(IndexPage page) {
         try {
             byte[] b = new byte[Constants.PAGE_SIZE];
             byte[] c = new byte[Constants.PAGE_SIZE];
