@@ -108,8 +108,8 @@ public class IndexPage {
         }
     }
 
-    public Page getNewPage(byte type) {
-        Page page = new Page(type, getMaxPnum() + 1, tableFile);
+    public IndexPage split(byte type) {
+        IndexPage page = new IndexPage(type, getMaxPnum() + 1, tableFile);
         return page;
     }
 
