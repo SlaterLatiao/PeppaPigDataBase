@@ -92,7 +92,7 @@ public class CreateTableQueryExe {
             columnValues.add(info.tableName);
             columnValues.add(c.getColumnName());
             columnValues.add(c.getDataType().dataTypeName);
-            columnValues.add(Integer.toString(i+1));
+            columnValues.add(Integer.toString(i+2));
             if(c.isNullable()){
                 columnValues.add("1");
             }else{

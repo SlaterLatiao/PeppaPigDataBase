@@ -1,9 +1,5 @@
 package userInterface.Utils;
 
-
-import Common.Column;
-import Common.DataType;
-import fileSystem.Record;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -63,6 +59,16 @@ public class Displayer {
                 fillCell(stringBuilder,value,cellIndex,columnMaxWidth);
             }
         }
+        /*for(int j=0; j<recordList.size(); j++){
+            for(int i = 0; i < rowHeight; i++){
+                stringBuilder.append(NEW_LINE);
+            }
+
+            for(int cellIndex = 0; cellIndex < recordList.get(j).size(); cellIndex++){
+                String value = recordList.get(j).get(cellIndex);
+                fillCell(stringBuilder,value,cellIndex,columnMaxWidth);
+            }
+        }*/
 
         stringBuilder.append(NEW_LINE);
         createDividerLine(stringBuilder, headerList.size(), columnMaxWidth);

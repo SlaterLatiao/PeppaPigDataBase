@@ -38,8 +38,13 @@ public class TableView {
         ArrayList<ArrayList<String>> allValues = new ArrayList<>();
         ArrayList<String> recordValues;
         for(Record r:records){
-            recordValues = r.getValuesOfColumns();
+            recordValues = new ArrayList<>();
+            recordValues.add(r.getRowId().toString());
+            for(String s:r.getValuesOfColumns()){
+                recordValues.add(s.trim());
+            }
             allValues.add(recordValues);
+
         }
         return  allValues;
     }

@@ -18,9 +18,9 @@ public class SelectQueryExe {
         // get target table for the oldRecords
         String tablePath;
         if(info.tableName.equals(Constants.SYSTEM_TABLES_TABLENAME) || info.tableName.equals(Constants.SYSTEM_COLUMNS_TABLENAME)){
-            tablePath = Constants.SYSTEM_CATALOG_PATH + info.tableName + Constants.DEFAULT_FILE_EXTENSION;
+            tablePath = Constants.SYSTEM_CATALOG_PATH +"/"+ info.tableName + Constants.DEFAULT_FILE_EXTENSION;
         }else{
-            tablePath = Constants.SYSTEM_USER_PATH + info.tableName + Constants.DEFAULT_FILE_EXTENSION;
+            tablePath = Constants.SYSTEM_USER_PATH + "/"+info.tableName + Constants.DEFAULT_FILE_EXTENSION;
         }
         Table targetTable = new Table(tablePath);
 
@@ -44,7 +44,7 @@ public class SelectQueryExe {
 
         //Filter record full to record filter
         ArrayList<Record> targetBodyFilterRecords = new ArrayList<>();
-        if(info.isSelectAll) {
+        if(!info.isSelectAll) {
             // get the column ordinal_position which need to be updated
             ArrayList<Integer> pos = new ArrayList<>();
             for (int i = 0; i < targetHeaderFullColumns.size(); i++) {

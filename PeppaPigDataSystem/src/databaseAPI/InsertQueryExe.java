@@ -50,7 +50,6 @@ public class InsertQueryExe {
             }else{
                 dataTypes.add(tableColumns.get(i).getDataType().serialCode);
             }
-
         }
 
         //3) Every record needs to set values
