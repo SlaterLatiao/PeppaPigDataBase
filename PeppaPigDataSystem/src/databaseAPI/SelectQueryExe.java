@@ -40,7 +40,7 @@ public class SelectQueryExe {
         ArrayList<Column> targetHeaderFullColumns = General.getColumns(info.tableName);
 
         // Filter column full to column filter
-        ArrayList<Column> targetHeaderFilterColumns = null;
+        ArrayList<Column> targetHeaderFilterColumns = new ArrayList<>();
 
         // get the column ordinal_position which need to be updated
         ArrayList<Integer> pos = null;
