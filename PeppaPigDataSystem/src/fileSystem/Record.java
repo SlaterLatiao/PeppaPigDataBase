@@ -12,8 +12,8 @@ public class Record {
 	private short payLoad;
 	protected int rowId;
 	private byte numOfColumn;
-	private ArrayList<Byte> dataTypes;
-	private ArrayList<String> valuesOfColumns;
+	protected ArrayList<Byte> dataTypes;
+	protected ArrayList<String> valuesOfColumns;
 	// only for inner page
 	private short childrenRecord;
 	private DataType data;

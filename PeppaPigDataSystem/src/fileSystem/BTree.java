@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 
-public class BTree extends BplusTree {
+public class BTree{
 
 	protected BNode root;
 
