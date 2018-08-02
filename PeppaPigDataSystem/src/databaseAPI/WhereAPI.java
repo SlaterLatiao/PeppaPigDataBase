@@ -73,14 +73,14 @@ public class WhereAPI {
                 }
             }
         }
-        else if(logiOper.equals("NOT")){
+        else if(logiOper.equals("not")){
             //find valid row id's for each condition
             for(Condition cond : user_Conditions){
                 //loop each condition column name find the correlating index on the actual column table
                 int indexCol = -1;
                 for(int i = 0; i < user_tableAllColumn.size(); i++){
                     if(cond.getColumn().equals(user_tableAllColumn.get(i).getColumnName())) {
-                        indexCol = i;
+                        indexCol = i-1;
                     }
                 }
 
@@ -120,11 +120,11 @@ public class WhereAPI {
                 }
             }
         }
-        else if(logiOper.equals("AND")) {
+        else if(logiOper.equals("and")) {
             //find valid row id's for each condition
 
-            ArrayList<Integer> validRowID_T1 = null;
-            ArrayList<Integer> validRowID_T2 = null;
+            ArrayList<Integer> validRowID_T1 = new ArrayList<>();
+            ArrayList<Integer> validRowID_T2 = new ArrayList<>();
 
             //find valid row id's for CONDITION 1-------------------------------------------------------------------
 
@@ -132,7 +132,7 @@ public class WhereAPI {
             int indexCol = -1;
             for(int i = 0; i < user_tableAllColumn.size(); i++){
                 if(user_Conditions.get(0).getColumn().equals(user_tableAllColumn.get(i).getColumnName())) {
-                    indexCol = i;
+                    indexCol = i-1;
                 }
             }
 
@@ -177,7 +177,7 @@ public class WhereAPI {
             indexCol = -1;
             for(int i = 0; i < user_tableAllColumn.size(); i++){
                 if(user_Conditions.get(1).getColumn().equals(user_tableAllColumn.get(i).getColumnName())) {
-                    indexCol = i;
+                    indexCol = i-1;
                 }
             }
 
@@ -223,11 +223,11 @@ public class WhereAPI {
 
             validRowID.addAll(validRowIDFinal);
         }
-        else if(logiOper.equals("OR")) {
+        else if(logiOper.equals("or")) {
             //find valid row id's for each condition
 
-            ArrayList<Integer> validRowID_T1 = null;
-            ArrayList<Integer> validRowID_T2 = null;
+            ArrayList<Integer> validRowID_T1 = new ArrayList<>();
+            ArrayList<Integer> validRowID_T2 = new ArrayList<>();
 
             //find valid row id's for CONDITION 1-------------------------------------------------------------------
 
@@ -235,7 +235,7 @@ public class WhereAPI {
             int indexCol = -1;
             for(int i = 0; i < user_tableAllColumn.size(); i++){
                 if(user_Conditions.get(0).getColumn().equals(user_tableAllColumn.get(i).getColumnName())) {
-                    indexCol = i;
+                    indexCol = i-1;
                 }
             }
 
@@ -280,7 +280,7 @@ public class WhereAPI {
             indexCol = -1;
             for(int i = 0; i < user_tableAllColumn.size(); i++){
                 if(user_Conditions.get(1).getColumn().equals(user_tableAllColumn.get(i).getColumnName())) {
-                    indexCol = i;
+                    indexCol = i-1;
                 }
             }
 

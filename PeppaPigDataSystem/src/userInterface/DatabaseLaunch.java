@@ -532,7 +532,7 @@ public class DatabaseLaunch {
                     if(logiOper.equals("error")){
                         System.out.println(Errors.SYNTAX_ERROR.replace("%1",queryString));
                     }
-                    logiOperIndex = whereString.indexOf(logiOper);
+                    logiOperIndex = whereString.trim().indexOf(logiOper);
                 }
                 ArrayList<Condition> selectCondition = getSelectConditionList(tableName,whereString,logiOper,logiOperIndex);
                 if(selectCondition == null){
@@ -555,7 +555,7 @@ public class DatabaseLaunch {
         System.out.println("CREATE INDEX       Create a new index on single column of exist table.   SYNTAX: create index <index_name> on <table_name> (column_name);");
         System.out.println("DROP INDEX         Remove a index.                                       SYNTAX: drop index <table_name>.<index_name>;");
         System.out.println("SELECT             Display table records with specified conditions.      SYNTAX: select <column_list> from <table_name> [where <condition>];");
-        System.out.println("INSERT INTO        Insert data into table.                               SYNTAX: insert into <table_name > <column_list> values <value_list>;");
+        System.out.println("INSERT INTO        Insert data into table.                               SYNTAX: insert into <table_name > <column_list> values (<value_list>);");
         System.out.println("UPDATE TABLE       Modify records data with specified conditions.        SYNTAX: update table <table_name> set <column_name> = <value> [where<condition>];");
         System.out.println("VERSION            Display the program version.                          SYNTAX: version;");
         System.out.println("HELP               Display this help information.                        SYNTAX: help;");
@@ -597,7 +597,7 @@ public class DatabaseLaunch {
 
     public static String getLogicalOperator(String whereString){
         if(whereString.contains("not")){
-            int notIndex = whereString.indexOf("not");
+            int notIndex = whereString.trim().indexOf("not");
             if(notIndex != 0){
                 return "error";
             }
@@ -644,7 +644,7 @@ public class DatabaseLaunch {
             subCondition.add(con);
         }else{
             String con1 = whereString.substring(0,logiOperIndex).trim();
-            String con2 = whereString.substring(logiOperIndex+logiOper.length()).trim();
+            String con2 = whereString.substring(logiOperIndex+logiOper.length()+1).trim();
             subCondition.add(con1);
             subCondition.add(con2);
         }
