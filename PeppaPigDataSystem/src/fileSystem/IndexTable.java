@@ -15,7 +15,7 @@ public class IndexTable {
     }
 
     public List<IndexRecord> getAllIndexRecord(){
-        List<IndexRecord> allRecords = new ArrayList<Record>();
+        List<IndexRecord> allRecords = new ArrayList<IndexRecord>();
         allRecords = bTree.getAll();
         return allRecords;
     }

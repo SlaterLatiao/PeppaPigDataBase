@@ -10,6 +10,7 @@ public class BTree{
 
 	public BTree(String path) {
 		root = new BNode(new IndexPage(path));
+		
 	}
 	
 	public Record get(IndexRecord key) {
