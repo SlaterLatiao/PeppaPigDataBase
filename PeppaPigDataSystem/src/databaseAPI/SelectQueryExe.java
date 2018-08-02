@@ -24,7 +24,7 @@ public class SelectQueryExe {
         }
         Table targetTable = new Table(tablePath);
 
-        List<Record> targetBodyFullRecords = null;
+        List<Record> targetBodyFullRecords = new ArrayList<>();
 
         if(info.isSelectAll){
             targetBodyFullRecords = targetTable.getAllRecord();
@@ -51,11 +51,11 @@ public class SelectQueryExe {
             }
         }
 
-        ArrayList<Record> targetBodyFilterRecords = null;
+        ArrayList<Record> targetBodyFilterRecords = new ArrayList<>();
 
         //Filter record full to record filter
         for(Record r : targetBodyFullRecords){
-            ArrayList<String> valCol = null;
+            ArrayList<String> valCol =new ArrayList<>();
 
             for(int p : pos){
                 valCol.add(r.getValuesOfColumns().get(p));
