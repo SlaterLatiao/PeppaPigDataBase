@@ -653,8 +653,8 @@ public class DatabaseLaunch {
             Condition con = null;
             if(s.contains("<=")){
                 String[] tmp = s.split("<=");
-                if(databaseAPI.General.checkColumnExists(tableName,tmp[0])){
-                    con = new Condition(tmp[0],"<=",tmp[1]);
+                if(databaseAPI.General.checkColumnExists(tableName,tmp[0].trim())){
+                    con = new Condition(tmp[0].trim(),"<=",tmp[1].trim());
                 }else{
                     System.out.println(Errors.SYNTAX_ERROR);
                     return null;
@@ -662,8 +662,8 @@ public class DatabaseLaunch {
             }
             else if(s.contains(">=")){
                 String[] tmp = s.split(">=");
-                if(databaseAPI.General.checkColumnExists(tableName,tmp[0])){
-                    con = new Condition(tmp[0],">=",tmp[1]);
+                if(databaseAPI.General.checkColumnExists(tableName,tmp[0].trim())){
+                    con = new Condition(tmp[0].trim(),">=",tmp[1].trim());
                 }else{
                     System.out.println(Errors.SYNTAX_ERROR);
                     return null;
@@ -671,8 +671,8 @@ public class DatabaseLaunch {
             }
             else if(s.contains(">")){
                 String[] tmp = s.split(">");
-                if(databaseAPI.General.checkColumnExists(tableName,tmp[0])){
-                    con = new Condition(tmp[0],">",tmp[1]);
+                if(databaseAPI.General.checkColumnExists(tableName,tmp[0].trim())){
+                    con = new Condition(tmp[0].trim(),">",tmp[1].trim());
                 }else{
                     System.out.println(Errors.SYNTAX_ERROR);
                     return null;
@@ -680,8 +680,8 @@ public class DatabaseLaunch {
             }
             else if(s.contains("<")){
                 String[] tmp = s.split("<");
-                if(databaseAPI.General.checkColumnExists(tableName,tmp[0])){
-                    con = new Condition(tmp[0],"<",tmp[1]);
+                if(databaseAPI.General.checkColumnExists(tableName,tmp[0].trim())){
+                    con = new Condition(tmp[0].trim(),"<",tmp[1].trim());
                 }else{
                     System.out.println(Errors.SYNTAX_ERROR);
                     return null;
@@ -689,8 +689,8 @@ public class DatabaseLaunch {
             }
             else if(s.contains("=")){
                 String[] tmp = s.split("=");
-                if(databaseAPI.General.checkColumnExists(tableName,tmp[0])){
-                    con = new Condition(tmp[0],"=",tmp[1]);
+                if(databaseAPI.General.checkColumnExists(tableName,tmp[0].trim())){
+                    con = new Condition(tmp[0].trim(),"=",tmp[1].trim());
                 }else{
                     System.out.println(Errors.SYNTAX_ERROR);
                     return null;
