@@ -162,48 +162,4 @@ public class Displayer {
             stringBuilder.append(" ");
         }
     }
-
-
-   /* public static void main(String[] args) {
-        ArrayList<Column> columns = new ArrayList<>();
-        Column column1 = new Column("Name",new DataType("text"),false,false);
-        Column column2 = new Column("Age",new DataType("int"),false,false);
-        Column column3 = new Column("Phone",new DataType("int"),false,false);
-        Column column4 = new Column("Address",new DataType("text"),false,false);
-        columns.add(column1);
-        columns.add(column2);
-        columns.add(column3);
-        columns.add(column4);
-
-        ArrayList<Record> records = new ArrayList<>();
-        ArrayList<String> value1 = new ArrayList<>();
-        value1.add("Jhon");
-        value1.add("18");
-        value1.add("1234567890");
-        value1.add("Coit rd,Dallas,Tx");
-        Record record1 = new Record(0,(byte) 0,null,value1);
-        records.add(record1);
-
-
-        ArrayList<String> value2 = new ArrayList<>();
-        value2.add("Smith");
-        value2.add("42");
-        value2.add("0123456789");
-        value2.add("West Plano pkwy,Dallas,Tx");
-        Record record2 = new Record(0,(byte) 0,null,value2);
-        records.add(record2);
-
-
-        ArrayList<String> value3 = new ArrayList<>();
-        value3.add("Harry Potter");
-        value3.add("15");
-        value3.add("9999999999");
-        value3.add("Magic world in somewhere,Dallas,Tx");
-        Record record3 = new Record(0,(byte) 0,null,value3);
-        records.add(record3);
-
-        TableView table = new TableView("tb1",columns,records);
-        Displayer displayer = new Displayer(table);
-        displayer.displayTable(displayer.headerList,displayer.recordList,new int[]{1});
-    }*/
 }
