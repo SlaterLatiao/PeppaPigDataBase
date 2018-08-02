@@ -56,9 +56,9 @@ public class General {
 
     public static boolean checkCreateIndex(String tableName, String columnName, String indexName){
         //First check if indexName exists in any column of davis column table
-        if(checkIndexExists(indexName)){
+        /*if(checkIndexExists(indexName)){
             return false;
-        }
+        }*/
         //Second check if table,column for that index exists in Tables, table and column table
         if(checkColumnExists(tableName, columnName)){
             return true;
