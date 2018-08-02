@@ -700,7 +700,11 @@ public class DatabaseLaunch {
                 String[] tmp = s.split("<>");
                 con = new Condition(tmp[0],"<>",tmp[1]);
             }*/
-            selectConditions.add(con);
+            if(con == null){
+                return null;
+            }else{
+                selectConditions.add(con);
+            }
         }
 
         /*System.out.println(selectConditions.get(0).getColumn()+" "+selectConditions.get(0).getValue());

@@ -27,7 +27,7 @@ public class SelectQueryExe {
 
         List<Record> targetBodyFullRecords = new ArrayList<>();
 
-        if(info.conditions.size()== 0){
+        if(info.conditions.size() == 0 || (info.conditions.size()==1 && info.conditions.get(0)==null)){
             targetBodyFullRecords = targetTable.getAllRecord();
         }
         else{
