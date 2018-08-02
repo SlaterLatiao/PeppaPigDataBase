@@ -16,9 +16,7 @@ public class IndexPage {
     private List<Short> rStarts;
 
 
-
     private byte type;
-
 
     private short startAddr;
     private int rPointer;
@@ -342,7 +340,7 @@ public class IndexPage {
         }
         return children;
     }
-    public List<IndexRecord> getList(){
+    public List<IndexRecord> getRecords(){
         return records;
     }
 
