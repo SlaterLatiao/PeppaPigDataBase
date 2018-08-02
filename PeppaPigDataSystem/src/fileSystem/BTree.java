@@ -15,9 +15,9 @@ public class BTree{
 	public Record get(IndexRecord key) {
 		return root.get(key);
 	}
-	// TODO: 
-	public List<Record> getAll() {
-		return null;
+
+	public List<IndexRecord> getAll() {
+		return root.getAll();
 	}
 	
 	public void insertOrUpdate(IndexRecord record) {

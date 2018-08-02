@@ -118,6 +118,10 @@ public class BNode{
 	IndexRecord getRecord(int k) {
 		return records.get(k);
 	}
+	
+	List<IndexRecord> getAll() {
+		return records;
+	}
 
 	void updateRecord(IndexRecord record, int k) {
 		records.set(k, record);
@@ -146,4 +150,7 @@ public class BNode{
 	void addRecord(IndexRecord mid) {
 		records.add(mid);
 	}
+
+
+
 }
