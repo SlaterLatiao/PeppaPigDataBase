@@ -1,6 +1,7 @@
 package databaseAPI;
 
 import Common.Constants;
+import fileSystem.IndexTable;
 import fileSystem.Table;
 import userInterface.QueriesInfo.CreateIndexQueryInfo;
 

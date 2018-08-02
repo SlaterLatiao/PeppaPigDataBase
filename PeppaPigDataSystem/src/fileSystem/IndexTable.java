@@ -3,9 +3,6 @@ package fileSystem;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author LI LIU 2018-07-21
- * */
 public class IndexTable {
 
     private BTree bTree;

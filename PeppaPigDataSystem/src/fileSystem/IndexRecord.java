@@ -3,9 +3,6 @@ package fileSystem;
 import java.util.ArrayList;
 import Common.DataType;
 
-/**
- * @author Jinru Shi & Li Liu 2018-07-23
- */
 public class IndexRecord extends Record implements Comparable<IndexRecord> {
 
 	public IndexRecord(ArrayList<String> valuesOfColumns) {
