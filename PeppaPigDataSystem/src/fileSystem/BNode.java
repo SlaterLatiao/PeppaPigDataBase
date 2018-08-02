@@ -18,6 +18,7 @@ public class BNode{
 		this.isLeaf = page.isLeaf();
 		records = new ArrayList<IndexRecord>(page.getRecords());
 		List<IndexPage> list = page.getChildren();
+		page.write();
 		children = new ArrayList<BNode>();
 		for (IndexPage p : list)
 			children.add(new BNode(p));
@@ -133,7 +134,6 @@ public class BNode{
 	
 	void addChild(BNode child) {
 		children.add(child);
-		// TODO: write into page
 	}
 	
 	BNode newRoot() {
@@ -149,6 +149,11 @@ public class BNode{
 
 	void addRecord(IndexRecord mid) {
 		records.add(mid);
+	}
+
+
+	public void drop() {
+		page.dropIndex();
 	}
 
 

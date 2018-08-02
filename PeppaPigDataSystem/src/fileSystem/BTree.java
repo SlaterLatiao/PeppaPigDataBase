@@ -10,7 +10,6 @@ public class BTree{
 
 	public BTree(String path) {
 		root = new BNode(new IndexPage(path));
-		
 	}
 	
 	public Record get(IndexRecord key) {
@@ -61,6 +60,11 @@ public class BTree{
 				insert(mid, node.getParent(), newNode);
 			}
 		}
+	}
+
+	public void drop() {
+		root.drop();
+		
 	}
 
 

@@ -17,4 +17,8 @@ public class IndexTable {
         return allRecords;
     }
 
+    public void drop(){
+    	bTree.drop();
+    }
+    
 }
