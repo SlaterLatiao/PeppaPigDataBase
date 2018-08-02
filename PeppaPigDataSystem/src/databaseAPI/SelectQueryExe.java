@@ -27,16 +27,14 @@ public class SelectQueryExe {
 
         List<Record> targetBodyFullRecords = new ArrayList<>();
 
-        targetBodyFullRecords = targetTable.getAllRecord();
-
-        /*if(info.conditions == null){
+        if(info.conditions.get(0) == null){
             targetBodyFullRecords = targetTable.getAllRecord();
         }
         else{
             //get all rowids for the records which need to be selected
             ArrayList<Integer> rowids = WhereAPI.doWhere_getRowId(info.tableName,info.conditions,info.logiOper);
             targetBodyFullRecords = targetTable.getRowidsRecord(rowids);
-        }*/
+        }
 
         // get all targetHeaderFullColumns of the table
         ArrayList<Column> targetHeaderFullColumns = General.getColumns(info.tableName);
