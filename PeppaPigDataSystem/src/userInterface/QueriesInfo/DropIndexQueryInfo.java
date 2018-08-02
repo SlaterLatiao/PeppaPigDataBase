@@ -9,4 +9,5 @@ public class DropIndexQueryInfo {
         this.tableName = tableName;
         this.indexName = indexName;
     }
+
 }

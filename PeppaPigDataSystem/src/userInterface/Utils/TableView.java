@@ -49,6 +49,7 @@ public class TableView {
         return  allValues;
     }
 
+
     public int getNumofColumns(){
         return columns.size();
     }

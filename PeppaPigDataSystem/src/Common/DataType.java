@@ -90,4 +90,5 @@ public class DataType {
     public int nameToSize(String dataTypeName){
         return sizeMap.get(dataTypeName);
     }
+
 }

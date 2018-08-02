@@ -20,4 +20,5 @@ public class UpdateQueryInfo {
         this.conditions = conditions;
         this.logiOper = logiOper;
     }
+
 }

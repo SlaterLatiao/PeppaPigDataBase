@@ -25,4 +25,5 @@ public class DeleteQueryExe {
             targetTable.deleteRecord(rowid);
         }
     }
+
 }

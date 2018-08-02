@@ -14,4 +14,5 @@ public class Errors{
     public static String INVALID_TYPE = "ERROR: '%1' is not valid data type";
     public static String PRIMARY_KEY ="ERROR: primary key must be specified at first column";
 
+
 }

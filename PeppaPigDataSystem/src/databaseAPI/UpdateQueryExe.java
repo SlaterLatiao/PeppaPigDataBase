@@ -48,4 +48,5 @@ public class UpdateQueryExe {
             targetTable.updateRecord(r.getRowId(),r);
         }
     }
+
 }

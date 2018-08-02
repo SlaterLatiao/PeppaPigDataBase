@@ -11,4 +11,5 @@ public class CreateIndexQueryInfo {
         this.tableName = tableName;
         this.columnName = columnName;
     }
+
 }

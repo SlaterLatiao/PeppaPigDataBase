@@ -73,4 +73,5 @@ public class CreateTableQueryInfo {
         List<String> tempList = Arrays.asList(Constants.DATATYPE_LIST);
         return (tempList.contains(s));
     }
+
 }

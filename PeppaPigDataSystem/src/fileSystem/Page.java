@@ -512,4 +512,5 @@ public class Page {
 	public void dropTable() {
 		tableFile.delete();
 	}
+
 }

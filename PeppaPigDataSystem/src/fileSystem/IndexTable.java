@@ -16,4 +16,5 @@ public class IndexTable {
         allRecords = bTree.getAll();
         return allRecords;
     }
+
 }

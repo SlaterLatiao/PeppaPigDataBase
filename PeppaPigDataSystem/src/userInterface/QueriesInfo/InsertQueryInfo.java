@@ -20,4 +20,5 @@ public class InsertQueryInfo {
         }
         this.values = values;
     }
+
 }

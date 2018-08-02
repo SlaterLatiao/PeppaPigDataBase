@@ -21,4 +21,5 @@ public class DeleteQueryInfo {
         this.logiOper = logiOper;
     }
 
+
 }

@@ -56,5 +56,6 @@ public class Column {
     public void setIndexName(String indexName) {
         this.indexName = indexName;
     }
+
 }
 

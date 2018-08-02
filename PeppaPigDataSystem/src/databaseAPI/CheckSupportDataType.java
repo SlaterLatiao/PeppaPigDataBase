@@ -168,4 +168,5 @@ public class CheckSupportDataType {
         }
         return condition;
     }
+
 }
