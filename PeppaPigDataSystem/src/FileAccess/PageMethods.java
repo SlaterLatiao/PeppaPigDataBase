@@ -28,23 +28,32 @@ public class PageMethods {
     }
 
 //##################################################################################################################
-
-
-//##################################################################################################################
-
-
-//##################################################################################################################
-
-    public void addLeftChild(int pNum){
-        try {
-            raf = new RandomAccessFile(tableFile, "r");
-            raf.seek(getFileAddr(4));
-            raf.writeInt(pNum);
-            raf.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//FOR FUNCTION date/dateTime to string
+    public long dateTimeStringToLong(String dateTime) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        long dateTime_long = sdf.parse(dateTime).getTime();
+        return time_long;
     }
+    public String dateTimeLongToString(long dateTime_long){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(dateTime_long);
+        return sdf.format(date);
+    }
+    public long dateStringToLong(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        long date_long = sdf.parse(date).getTime();
+        return time_long;
+    }
+    public String dateLongToString(long date_long){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(date_long);
+        return sdf.format(date);
+    }
+
+
+//##################################################################################################################
+
+
 //##################################################################################################################
 
 ////
@@ -224,6 +233,19 @@ public class PageMethods {
 //            raf = new RandomAccessFile(tableFile, "r");
 //            raf.seek(getFileAddr(0));
 //            readContent();
+//            raf.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+//##################################################################################################################
+//
+//    public void addLeftChild(int pNum){
+//        try {
+//            raf = new RandomAccessFile(tableFile, "r");
+//            raf.seek(getFileAddr(4));
+//            raf.writeInt(pNum);
 //            raf.close();
 //        } catch (Exception e) {
 //            e.printStackTrace();
