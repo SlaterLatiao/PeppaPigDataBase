@@ -390,7 +390,7 @@ public class Page {
 
 			int index_rowId = -1;
 			for (int i = 0; i < nRecords; i++) {
-				raf.seek(getFileAddr(rStarts.get(i)));
+				raf.seek(getFileAddr(rStarts.get(i)+2));
 				if (raf.readInt() == row_id) {
 					index_rowId = i;
 					break;
