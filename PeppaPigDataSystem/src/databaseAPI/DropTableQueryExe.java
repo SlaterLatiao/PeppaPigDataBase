@@ -29,7 +29,7 @@ public class DropTableQueryExe {
             }
         }
 
-        Table dropTargetTable = new Table(Constants.SYSTEM_USER_PATH + info.tableName + Constants.DEFAULT_FILE_EXTENSION);
+        Table dropTargetTable = new Table(Constants.SYSTEM_USER_PATH +"/"+ info.tableName + Constants.DEFAULT_FILE_EXTENSION);
         dropTargetTable.dropTable();
     }
 }

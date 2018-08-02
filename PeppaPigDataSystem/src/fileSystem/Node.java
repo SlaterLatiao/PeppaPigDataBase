@@ -57,7 +57,7 @@ class Node {
 		// key not found
 		if (k < 0)
 			return false;
-		int row_id = records.get(k).getRowId();
+		int row_id = node.records.get(k).getRowId();
 		node.records.remove(k);
 		node.page.remove(row_id);
 		return true;
