@@ -1,5 +1,6 @@
 package fileSystem;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
@@ -7,20 +8,23 @@ import java.util.Map.Entry;
 public class BNode{
 	
 	protected boolean isLeaf;
-	protected List<Entry<Comparable, Record>> entries;
+	protected List<IndexRecord> records;
 	protected List<BNode> children;
-	protected Page page;
+	protected IndexPage page;
 	protected BNode parent;
 
-	BNode(Page page) {
+	BNode(IndexPage page) {
 		this.page = page;
 		this.isLeaf = page.isLeaf();
-		entries = page.getEntries();
-		children = page.getChildren();
+		records = new ArrayList<IndexRecord>(page.getRecords);
+		List<IndexPage> list = page.getChildren();
+		children = new ArrayList<BNode>();
+		for (IndexPage p : list)
+			children.add(new BNode(p));
 	}
 	
 
-	Record get(Comparable key) {
+	Record get(IndexRecord key) {
 		Entry<BNode, Integer> entry = searchNode(key);
 		BNode node = entry.getKey();
 		int k = entry.getValue();
@@ -30,11 +34,11 @@ public class BNode{
 		return node.getRecord(k);
 	}
 
-	Entry<BNode, Integer> searchNode(Comparable key) {
+	Entry<BNode, Integer> searchNode(IndexRecord key) {
 		// this node is a leaf node
 		if (isLeaf) {
-			for (int i = 0; i < entries.size(); i++) {
-				if (entries.get(i).getKey().equals(key))
+			for (int i = 0; i < records.size(); i++) {
+				if (records.get(i).equals(key))
 					return new SimpleEntry<BNode, Integer>(this, i);
 			}
 			// key not found
@@ -42,21 +46,21 @@ public class BNode{
 			// this node is an inner node
 		} else {
 			// key < leftmost value, go left
-			if (key.compareTo(entries.get(0).getKey())<0) {
+			if (key.compareTo(records.get(0))<0) {
 				children.get(0).setParent(this);
 				return children.get(0).searchNode(key);
 				// key > rightmost value, go right
-			} else if (key.compareTo(entries.get(entries.size() - 1).getKey()) > 0) {
+			} else if (key.compareTo(records.get(records.size() - 1)) > 0) {
 				children.get(children.size() - 1).setParent(this);
 				return children.get(children.size() - 1).searchNode(key);
 				// find the correct child to go
 			} else {
-				int lo = 0, hi = entries.size() - 1, mid = 0;
+				int lo = 0, hi = records.size() - 1, mid = 0;
 				int diff;
 				// binary search
 				while (lo <= hi) {
 					mid = (lo + hi) / 2;
-					Comparable midKey = entries.get(mid).getKey();
+					IndexRecord midKey = records.get(mid);
 					// find the key, return
 					if (key.compareTo(midKey) == 0) {
 						return new SimpleEntry<BNode, Integer>(this, mid);
@@ -78,17 +82,17 @@ public class BNode{
 		this.parent = parent;
 	}
 	
-	Entry<Comparable, Record> getEntry(int k) {
-		return entries.get(k);
+	IndexRecord getEntry(int k) {
+		return records.get(k);
 	}
 	
 	
 	Comparable getEntryKey(int k) {
-		return entries.get(k).getKey();
+		return records.get(k);
 	}
 	
 	int getEntrySize() {
-		return entries.size();
+		return records.size();
 	}
 	
 	int getEmptySpace() {
@@ -97,9 +101,9 @@ public class BNode{
 	
 	BNode split() {
 		// get split page
-		Page split = page.split();
+		IndexPage split = page.split();
 		// refresh entries and children
-		entries = page.getEntries();
+		records = page.getRecordList();
 		children = page.getChildren();
 		return new BNode(split);
 	}
@@ -109,17 +113,15 @@ public class BNode{
 	}
 
 	private Record getRecord(int k) {
-		return entries.get(k).getValue();
+		return records.get(k);
 	}
 
-	void updateRecord(Entry<Comparable, Record> row, int k) {
-		entries.set(k, row);
-		// TODO: Update in page
+	void updateRecord(IndexRecord record, int k) {
+		records.set(k, record);
 	}
 	
-	void addEntry(Entry<Comparable, Record> row) {
-		entries.add(row);
-		// TODO: write into page
+	void addEntry(IndexRecord record) {
+		records.add(record);
 	}
 	
 	void addChild(BNode child) {
