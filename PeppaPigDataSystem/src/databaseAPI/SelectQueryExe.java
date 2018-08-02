@@ -42,28 +42,29 @@ public class SelectQueryExe {
         // Filter column full to column filter
         ArrayList<Column> targetHeaderFilterColumns = new ArrayList<>();
 
-        // get the column ordinal_position which need to be updated
-        ArrayList<Integer> pos = new ArrayList<>();
-        for(int i=0; i<targetHeaderFullColumns.size();i++){
-            if(targetHeaderFullColumns.get(i).getColumnName().equals(info.columns.get(i))){
-                pos.add(i);
-                targetHeaderFilterColumns.add(targetHeaderFullColumns.get(i));
-            }
-        }
-
-        ArrayList<Record> targetBodyFilterRecords = new ArrayList<>();
-
         //Filter record full to record filter
-        for(Record r : targetBodyFullRecords){
-            ArrayList<String> valCol =new ArrayList<>();
-
-            for(int p : pos){
-                valCol.add(r.getValuesOfColumns().get(p));
+        ArrayList<Record> targetBodyFilterRecords = new ArrayList<>();
+        if(info.isSelectAll) {
+            // get the column ordinal_position which need to be updated
+            ArrayList<Integer> pos = new ArrayList<>();
+            for (int i = 0; i < targetHeaderFullColumns.size(); i++) {
+                if (targetHeaderFullColumns.get(i).getColumnName().equals(info.columns.get(i))) {
+                    pos.add(i);
+                    targetHeaderFilterColumns.add(targetHeaderFullColumns.get(i));
+                }
             }
 
-            Record tempR = new Record(valCol);
+            for (Record r : targetBodyFullRecords) {
+                ArrayList<String> valCol = new ArrayList<>();
 
-            targetBodyFilterRecords.add(tempR);
+                for (int p : pos) {
+                    valCol.add(r.getValuesOfColumns().get(p));
+                }
+
+                Record tempR = new Record(valCol);
+
+                targetBodyFilterRecords.add(tempR);
+            }
         }
 
         if(info.isSelectAll){
