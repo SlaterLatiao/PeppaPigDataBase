@@ -24,58 +24,59 @@ public class SelectQueryExe {
         }
         Table targetTable = new Table(tablePath);
 
+
         List<Record> targetBodyFullRecords = new ArrayList<>();
 
-        if(info.isSelectAll){
+        targetBodyFullRecords = targetTable.getAllRecord();
+
+        /*if(info.conditions == null){
             targetBodyFullRecords = targetTable.getAllRecord();
         }
         else{
-            // get all rowids for the records which need to be selected
+            //get all rowids for the records which need to be selected
             ArrayList<Integer> rowids = WhereAPI.doWhere_getRowId(info.tableName,info.conditions,info.logiOper);
-
             targetBodyFullRecords = targetTable.getRowidsRecord(rowids);
-        }
+        }*/
 
         // get all targetHeaderFullColumns of the table
         ArrayList<Column> targetHeaderFullColumns = General.getColumns(info.tableName);
-
-        // Filter column full to column filter
-        ArrayList<Column> targetHeaderFilterColumns = new ArrayList<>();
-
-        //Filter record full to record filter
-        ArrayList<Record> targetBodyFilterRecords = new ArrayList<>();
-        if(!info.isSelectAll) {
-            // get the column ordinal_position which need to be updated
-            ArrayList<Integer> pos = new ArrayList<>();
-            for (int i = 0; i < targetHeaderFullColumns.size(); i++) {
-                if (targetHeaderFullColumns.get(i).getColumnName().equals(info.columns.get(i))) {
-                    pos.add(i);
-                    targetHeaderFilterColumns.add(targetHeaderFullColumns.get(i));
-                }
-            }
-
-            for (Record r : targetBodyFullRecords) {
-                ArrayList<String> valCol = new ArrayList<>();
-
-                for (int p : pos) {
-                    valCol.add(r.getValuesOfColumns().get(p));
-                }
-
-                Record tempR = new Record(valCol);
-
-                targetBodyFilterRecords.add(tempR);
-            }
-        }
 
         if(info.isSelectAll){
             TableView selectAllTableView = new TableView(info.tableName, targetHeaderFullColumns,targetBodyFullRecords);
             Displayer tempDisplay = new Displayer(selectAllTableView);
         }
         else{
+            // Filter column full to column filter
+            ArrayList<Column> targetHeaderFilterColumns = new ArrayList<>();
+            targetHeaderFilterColumns.add(targetHeaderFullColumns.get(0));
+
+            //Filter record full to record filter
+            ArrayList<Record> targetBodyFilterRecords = new ArrayList<>();
+
+            // get the column ordinal_position which need to be updated
+            ArrayList<Integer> pos = new ArrayList<>();
+            for (int i = 0; i < targetHeaderFullColumns.size(); i++) {
+                for (String col: info.columns){
+                    if (targetHeaderFullColumns.get(i).getColumnName().equals(col)) {
+                        pos.add(i);
+                        targetHeaderFilterColumns.add(targetHeaderFullColumns.get(i));
+                    }
+                }
+            }
+
+            for (Record r : targetBodyFullRecords) {
+                ArrayList<String> valCol = new ArrayList<>();
+                for (int p : pos) {
+                    valCol.add(r.getValuesOfColumns().get(p-1));
+                }
+                Record tempR = new Record(valCol);
+                tempR.setRowId(r.getRowId());
+                targetBodyFilterRecords.add(tempR);
+            }
+
             TableView selectAllTableView = new TableView(info.tableName, targetHeaderFilterColumns,targetBodyFilterRecords);
             Displayer tempDisplay = new Displayer(selectAllTableView);
+
         }
-
-
     }
 }
