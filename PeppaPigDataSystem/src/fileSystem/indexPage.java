@@ -11,13 +11,14 @@ import Common.DataType;
 
 public class indexPage {
     private int pNum;
-    private byte type;
     private byte nRecords;
     File tableFile;
     private RandomAccessFile raf;
     private List<Short> rStarts;
 
 
+
+    private byte type;
 
 
     private short startAddr;
@@ -154,7 +155,9 @@ public class indexPage {
 
     private void readContent() {
         try {
-            raf.seek(Constants.PAGE_HEADER_LENGTH-6);
+            raf.seek(0);
+            type=raf.readByte();
+            raf.skipBytes(1);
             startAddr = raf.readShort();
             rPointer = raf.readInt();
 
@@ -184,6 +187,13 @@ public class indexPage {
             e.printStackTrace();
         }
     }
+
+    public boolean isLeaf() {
+        if (type == Constants.LEAF_INDEX_PAGE || type == Constants.LEAF_TABLE_PAGE)
+            return true;
+        return false;
+    }
+
 
     public void addRecord(Record r) {
 
