@@ -17,16 +17,19 @@ public class Displayer {
 
     private ArrayList<String> headerList;
     private ArrayList<ArrayList<String>> recordList;
+    private int[] overRiddenHeaderHeight;
     private TableView table;
 
     public Displayer(TableView table){
         this.table = table;
         initDisplayer();
+        displayTable(headerList,recordList,overRiddenHeaderHeight);
     }
 
     public void initDisplayer(){
         this.headerList = table.getAllColumnNames();
         this.recordList = table.getAllValues();
+        this.overRiddenHeaderHeight = new int[]{1};
     }
 
     public void displayTable(ArrayList<String> headerList, ArrayList<ArrayList<String>> recordList,int[] overRiddenHeaderHeight)
@@ -155,7 +158,7 @@ public class Displayer {
     }
 
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         ArrayList<Column> columns = new ArrayList<>();
         Column column1 = new Column("Name",new DataType("text"),false,false);
         Column column2 = new Column("Age",new DataType("int"),false,false);
@@ -196,5 +199,5 @@ public class Displayer {
         TableView table = new TableView("tb1",columns,records);
         Displayer displayer = new Displayer(table);
         displayer.displayTable(displayer.headerList,displayer.recordList,new int[]{1});
-    }
+    }*/
 }
