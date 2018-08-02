@@ -340,6 +340,31 @@ public class IndexPage {
         }
         return children;
     }
+
+    public void write(){
+        ArrayList<Byte> dt = new ArrayList<>();
+        dt.add((byte) 0x0f);
+        ArrayList<String> voc = new ArrayList<>();
+        ArrayList<String> ts;
+        int[] is= {8,1,5,2,4,3,6,7};
+        voc.add("test1");
+        voc.add("test2");
+        voc.add("test3");
+        voc.add("test4");
+        voc.add("test5");
+        voc.add("test6");
+        voc.add("test7");
+        voc.add("test8");
+        for(int i =0;i<8;i++)
+        {
+            ts = new ArrayList<>();
+            ts.add(voc.get(i));
+            IndexRecord r = new IndexRecord(is[i], (short)7, (byte)1,dt, ts);
+            addRecord(r);
+        }
+    }
+
+
     public List<IndexRecord> getRecords(){
         return records;
     }
@@ -439,4 +464,7 @@ public class IndexPage {
         }
     }
 
+    public void dropTable() {
+        tableFile.delete();
+    }
 }
