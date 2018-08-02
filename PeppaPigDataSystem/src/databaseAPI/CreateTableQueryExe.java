@@ -70,9 +70,6 @@ public class CreateTableQueryExe {
         Record rowid = new Record(Constants.DAVIS_COLUMNS_NUM_OF_COLUMNS,(byte) rowidDataType.size(),rowidDataType,rowidValues);
         colTable.insert(rowid);
 
-        System.out.println(info.tableName);
-        System.out.println(info.columns.size());
-
         //Insert other columns into columns_talbe
         for(int i=0; i<info.columns.size(); i++){
             Column c = info.columns.get(i);
