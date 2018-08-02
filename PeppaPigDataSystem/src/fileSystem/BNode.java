@@ -108,13 +108,14 @@ public class BNode{
 		children = new ArrayList<BNode>();
 		for (IndexPage p : list)
 			children.add(new BNode(p));
+		return parent;
 	}
 
 	BNode getParent() {
 		return parent;
 	}
 
-	private Record getRecord(int k) {
+	IndexRecord getRecord(int k) {
 		return records.get(k);
 	}
 
@@ -131,9 +132,18 @@ public class BNode{
 		// TODO: write into page
 	}
 	
-	static BNode newRoot() {
-		// TODO: need to create a new inner page
+	BNode newRoot() {
 		BNode newroot = new BNode(page.split());
 		return newroot;
+	}
+
+
+	int getRecordSize() {
+		return records.size();
+	}
+
+
+	void addRecord(IndexRecord mid) {
+		records.add(mid);
 	}
 }
