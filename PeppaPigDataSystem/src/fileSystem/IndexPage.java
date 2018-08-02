@@ -464,7 +464,7 @@ public class IndexPage {
         }
     }
 
-    public void dropTable() {
+    public void dropIndex() {
         tableFile.delete();
     }
 }
