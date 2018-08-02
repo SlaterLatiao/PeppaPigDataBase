@@ -351,7 +351,7 @@ public class WhereAPI {
                 int value_int = Integer.parseInt(value);
 
                 //compare ints
-                if(value_int == valofIndex_col_int){
+                if(valofIndex_col_int == value_int){
                     return true;
                 }
             }
@@ -361,7 +361,7 @@ public class WhereAPI {
                 double value_dbl = Double.parseDouble(value);
 
                 //compare doubles
-                if(value_dbl == valofIndex_col_dbl){
+                if(valofIndex_col_dbl == value_dbl){
                     return true;
                 }
             }
@@ -373,7 +373,7 @@ public class WhereAPI {
                     Date D_valofIndexCol=new SimpleDateFormat("yyyy-MM-dd").parse(valofIndexCol);
                     Date D_value=new SimpleDateFormat("yyyy-MM-dd").parse(value);
 
-                    if(D_value.compareTo(D_valofIndexCol) == 0){
+                    if(D_valofIndexCol.compareTo(D_value) == 0){
                         return true;
                     }
 
@@ -382,7 +382,7 @@ public class WhereAPI {
                 }
             }
             else if (dataTypeValue.equals("text")){
-                if(value.compareTo(valofIndexCol) == 0){
+                if(valofIndexCol.compareTo(value) == 0){
                     return true;
                 }
             }
@@ -402,7 +402,7 @@ public class WhereAPI {
                 int value_int = Integer.parseInt(value);
 
                 //compare ints
-                if(value_int != valofIndex_col_int){
+                if(valofIndex_col_int != value_int){
                     return true;
                 }
             }
@@ -412,7 +412,7 @@ public class WhereAPI {
                 double value_dbl = Double.parseDouble(value);
 
                 //compare doubles
-                if(value_dbl != valofIndex_col_dbl){
+                if(valofIndex_col_dbl != value_dbl){
                     return true;
                 }
             }
@@ -424,7 +424,7 @@ public class WhereAPI {
                     Date D_valofIndexCol=new SimpleDateFormat("yyyy-MM-dd").parse(valofIndexCol);
                     Date D_value=new SimpleDateFormat("yyyy-MM-dd").parse(value);
 
-                    if(D_value.compareTo(D_valofIndexCol) != 0){
+                    if(D_valofIndexCol.compareTo(D_value) != 0){
                         return true;
                     }
 
@@ -433,7 +433,7 @@ public class WhereAPI {
                 }
             }
             else if (dataTypeValue.equals("text")){
-                if(value.compareTo(valofIndexCol) != 0){
+                if(valofIndexCol.compareTo(value) != 0){
                     return true;
                 }
             }
@@ -453,7 +453,7 @@ public class WhereAPI {
                 int value_int = Integer.parseInt(value);
 
                 //compare ints
-                if(value_int > valofIndex_col_int){
+                if(valofIndex_col_int > value_int){
                     return true;
                 }
             }
@@ -463,7 +463,7 @@ public class WhereAPI {
                 double value_dbl = Double.parseDouble(value);
 
                 //compare doubles
-                if(value_dbl > valofIndex_col_dbl){
+                if(valofIndex_col_dbl > value_dbl){
                     return true;
                 }
             }
@@ -475,7 +475,7 @@ public class WhereAPI {
                     Date D_valofIndexCol=new SimpleDateFormat("yyyy-MM-dd").parse(valofIndexCol);
                     Date D_value=new SimpleDateFormat("yyyy-MM-dd").parse(value);
 
-                    if(D_value.compareTo(D_valofIndexCol) > 0){
+                    if(D_valofIndexCol.compareTo(D_value) > 0){
                         return true;
                     }
 
@@ -484,7 +484,7 @@ public class WhereAPI {
                 }
             }
             else if (dataTypeValue.equals("text")){
-                if(value.compareTo(valofIndexCol) > 0){
+                if(valofIndexCol.compareTo(value) > 0){
                     return true;
                 }
             }
@@ -504,7 +504,7 @@ public class WhereAPI {
                 int value_int = Integer.parseInt(value);
 
                 //compare ints
-                if(value_int < valofIndex_col_int){
+                if(valofIndex_col_int < value_int){
                     return true;
                 }
             }
@@ -514,7 +514,7 @@ public class WhereAPI {
                 double value_dbl = Double.parseDouble(value);
 
                 //compare doubles
-                if(value_dbl < valofIndex_col_dbl){
+                if(valofIndex_col_dbl < value_dbl){
                     return true;
                 }
             }
@@ -526,7 +526,7 @@ public class WhereAPI {
                     Date D_valofIndexCol=new SimpleDateFormat("yyyy-MM-dd").parse(valofIndexCol);
                     Date D_value=new SimpleDateFormat("yyyy-MM-dd").parse(value);
 
-                    if(D_value.compareTo(D_valofIndexCol) < 0){
+                    if(D_valofIndexCol.compareTo(D_value) < 0){
                         return true;
                     }
 
@@ -535,7 +535,7 @@ public class WhereAPI {
                 }
             }
             else if (dataTypeValue.equals("text")){
-                if(value.compareTo(valofIndexCol) < 0){
+                if(valofIndexCol.compareTo(value) < 0){
                     return true;
                 }
             }
@@ -555,7 +555,7 @@ public class WhereAPI {
                 int value_int = Integer.parseInt(value);
 
                 //compare ints
-                if(value_int >= valofIndex_col_int){
+                if(valofIndex_col_int >= value_int){
                     return true;
                 }
             }
@@ -565,7 +565,7 @@ public class WhereAPI {
                 double value_dbl = Double.parseDouble(value);
 
                 //compare doubles
-                if(value_dbl >= valofIndex_col_dbl){
+                if(valofIndex_col_dbl >= value_dbl){
                     return true;
                 }
             }
@@ -577,7 +577,7 @@ public class WhereAPI {
                     Date D_valofIndexCol=new SimpleDateFormat("yyyy-MM-dd").parse(valofIndexCol);
                     Date D_value=new SimpleDateFormat("yyyy-MM-dd").parse(value);
 
-                    if(D_value.compareTo(D_valofIndexCol) >= 0){
+                    if(D_valofIndexCol.compareTo(D_value) >= 0){
                         return true;
                     }
 
@@ -586,7 +586,7 @@ public class WhereAPI {
                 }
             }
             else if (dataTypeValue.equals("text")){
-                if(value.compareTo(valofIndexCol) > 0 || value.compareTo(valofIndexCol) == 0){
+                if(valofIndexCol.compareTo(value) >= 0){
                     return true;
                 }
             }
@@ -606,7 +606,7 @@ public class WhereAPI {
                 int value_int = Integer.parseInt(value);
 
                 //compare ints
-                if(value_int <= valofIndex_col_int){
+                if(valofIndex_col_int <= value_int){
                     return true;
                 }
             }
@@ -616,7 +616,7 @@ public class WhereAPI {
                 double value_dbl = Double.parseDouble(value);
 
                 //compare doubles
-                if(value_dbl <= valofIndex_col_dbl){
+                if(valofIndex_col_dbl <= value_dbl){
                     return true;
                 }
             }
@@ -628,7 +628,7 @@ public class WhereAPI {
                     Date D_valofIndexCol=new SimpleDateFormat("yyyy-MM-dd").parse(valofIndexCol);
                     Date D_value=new SimpleDateFormat("yyyy-MM-dd").parse(value);
 
-                    if(D_value.compareTo(D_valofIndexCol) <= 0){
+                    if(D_valofIndexCol.compareTo(D_value) <= 0){
                         return true;
                     }
 
@@ -637,7 +637,7 @@ public class WhereAPI {
                 }
             }
             else if (dataTypeValue.equals("text")){
-                if(value.compareTo(valofIndexCol) < 0 || value.compareTo(valofIndexCol) == 0){
+                if(valofIndexCol.compareTo(value) <= 0){
                     return true;
                 }
             }
