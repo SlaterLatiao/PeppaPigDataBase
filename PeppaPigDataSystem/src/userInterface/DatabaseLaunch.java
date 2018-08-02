@@ -555,7 +555,7 @@ public class DatabaseLaunch {
         System.out.println("CREATE INDEX       Create a new index on single column of exist table.   SYNTAX: create index <index_name> on <table_name> (column_name);");
         System.out.println("DROP INDEX         Remove a index.                                       SYNTAX: drop index <table_name>.<index_name>;");
         System.out.println("SELECT             Display table records with specified conditions.      SYNTAX: select <column_list> from <table_name> [where <condition>];");
-        System.out.println("INSERT INTO        Insert data into table.                               SYNTAX: insert into <table_name > <column_list> values (<value_list>);");
+        System.out.println("INSERT INTO        Insert data into table.                               SYNTAX: insert into  <column_list> <table_name > values (<value_list>);");
         System.out.println("UPDATE TABLE       Modify records data with specified conditions.        SYNTAX: update table <table_name> set <column_name> = <value> [where<condition>];");
         System.out.println("VERSION            Display the program version.                          SYNTAX: version;");
         System.out.println("HELP               Display this help information.                        SYNTAX: help;");
@@ -726,6 +726,6 @@ public class DatabaseLaunch {
         }
         return true;
     }
-    
+
 }
 
