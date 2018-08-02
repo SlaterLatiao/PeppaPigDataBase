@@ -24,7 +24,7 @@ public class WhereAPI {
         //String logiOper;
 
         //a list to store valid row id's
-        ArrayList<Integer> validRowID = null;
+        ArrayList<Integer> validRowID = new ArrayList<>();
 
         if(logiOper == null){
             //find valid row id's for each condition

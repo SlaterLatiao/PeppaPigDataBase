@@ -51,7 +51,7 @@ public class BplusTree {
 		int k = entry.getValue();
 
 		// found the key, update
-		if (k > 0) {
+		if (k >= 0) {
 			// TODO: check length of new record
 			node.updateRecord(k, record);
 			// not found, insert

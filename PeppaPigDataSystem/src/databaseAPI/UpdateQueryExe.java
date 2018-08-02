@@ -20,7 +20,7 @@ public class UpdateQueryExe {
         // get the column ordinal_position which need to be updated
         for(int i=0; i<columns.size();i++){
             if(columns.get(i).getColumnName().equals(info.columnName)){
-                pos = i;
+                pos = i-1;
             }
         }
 
@@ -33,9 +33,9 @@ public class UpdateQueryExe {
         // get target table for the oldRecords
         String tablePath;
         if(info.tableName.equals(Constants.SYSTEM_TABLES_TABLENAME) || info.tableName.equals(Constants.SYSTEM_COLUMNS_TABLENAME)){
-            tablePath = Constants.SYSTEM_CATALOG_PATH + info.tableName + Constants.DEFAULT_FILE_EXTENSION;
+            tablePath = Constants.SYSTEM_CATALOG_PATH +"/"+ info.tableName + Constants.DEFAULT_FILE_EXTENSION;
         }else{
-            tablePath = Constants.SYSTEM_USER_PATH + info.tableName + Constants.DEFAULT_FILE_EXTENSION;
+            tablePath = Constants.SYSTEM_USER_PATH + "/"+ info.tableName + Constants.DEFAULT_FILE_EXTENSION;
         }
         Table targetTable = new Table(tablePath);
 
