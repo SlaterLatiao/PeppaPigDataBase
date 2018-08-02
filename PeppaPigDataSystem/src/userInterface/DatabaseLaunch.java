@@ -266,7 +266,7 @@ public class DatabaseLaunch {
                 return;
             }
             DropTableQueryInfo dropTableQueryInfo = new DropTableQueryInfo(tableName);
-            // TODO EXECUTE QUERY
+            DropTableQueryExe.executeQuery(dropTableQueryInfo);
         }else if(PartsEqual(dropString, "drop index")){
 
             int dotIndex = dropString.toLowerCase().indexOf(".");

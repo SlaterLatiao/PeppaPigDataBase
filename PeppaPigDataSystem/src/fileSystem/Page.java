@@ -374,7 +374,7 @@ public class Page {
 		children.add(page);
 		for (int i = 0; i < nRecords; i++) {
 			cRecord = records.get(i);
-			pnBuffer = Integer.valueOf(cRecord.getValuesOfColumns().get(i));
+			pnBuffer = Integer.valueOf(cRecord.getValuesOfColumns().get(0));
 			page = new Page(tableFile.getAbsolutePath(), pnBuffer);
 			children.add(page);
 		}
