@@ -9,10 +9,10 @@ public class BTree{
 	protected BNode root;
 
 	public BTree(String path) {
-		root = new BNode(new Page(path));
+		root = new BNode(new IndexPage(path));
 	}
 	
-	public Record get(Comparable key) {
+	public Record get(IndexRecord key) {
 		return root.get(key);
 	}
 	// TODO: 

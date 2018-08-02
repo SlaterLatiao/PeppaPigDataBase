@@ -16,7 +16,7 @@ public class BNode{
 	BNode(IndexPage page) {
 		this.page = page;
 		this.isLeaf = page.isLeaf();
-		records = new ArrayList<IndexRecord>(page.getRecords);
+		records = new ArrayList<IndexRecord>(page.getRecords());
 		List<IndexPage> list = page.getChildren();
 		children = new ArrayList<BNode>();
 		for (IndexPage p : list)
@@ -104,8 +104,10 @@ public class BNode{
 		IndexPage split = page.split();
 		// refresh entries and children
 		records = page.getRecordList();
-		children = page.getChildren();
-		return new BNode(split);
+		List<IndexPage> list = page.getChildren();
+		children = new ArrayList<BNode>();
+		for (IndexPage p : list)
+			children.add(new BNode(p));
 	}
 
 	BNode getParent() {
@@ -131,7 +133,7 @@ public class BNode{
 	
 	static BNode newRoot() {
 		// TODO: need to create a new inner page
-		BNode newroot = new BNode(new Page());
+		BNode newroot = new BNode(page.split());
 		return newroot;
 	}
 }
